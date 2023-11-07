@@ -1,0 +1,24 @@
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+
+header {
+    width: 100%;
+    background-color: #001840;
+    color: white;
+    font-size: 20px;
+    height: 8%;
+}
+
+
+
+.app-name {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.app-name span {
+    color: #f5c400;
+}
