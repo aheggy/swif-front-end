@@ -22,7 +22,7 @@ function Home() {
 
   return (
     <div className="container">
-      <h1>Welcome to SWIF</h1>
+      <h1>Welcome to SWIF!</h1>
       {isLoggedIn ? (
         <div>
           <p>Welcome back, {email}!</p>
