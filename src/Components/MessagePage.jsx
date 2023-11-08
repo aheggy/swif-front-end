@@ -8,7 +8,6 @@ const MessagePage = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
-  // Function to fetch messages
   const fetchMessages = async () => {
     try {
       const response = await axios.get(`${API}/messages`);
