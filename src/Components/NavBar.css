@@ -1,0 +1,27 @@
+.navbar {
+    display: flex; 
+    justify-content: flex-end;
+    background-color: blue;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar li {
+    margin: 0;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  /* Optional: Style for the "swif-link" */
+  .swif-link {
+    font-weight: bold;
+  }
+  

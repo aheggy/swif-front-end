@@ -38,7 +38,15 @@ function App() {
 								></LogIn>
 							}
 						/>
-						<Route path="/signup" element={<SignUp></SignUp>} />
+						<Route
+							path="/signup"
+							element={
+								<SignUp
+									isLoggedIn={isLoggedIn}
+									setIsLoggedIn={setIsLoggedIn}
+								></SignUp>
+							}
+						/>
 					</Routes>
 				</main>
 			</BrowserRouter>

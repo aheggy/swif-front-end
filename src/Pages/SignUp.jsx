@@ -3,11 +3,11 @@ import googleIcon from "../assets/google.png";
 import facebokIcon from "../assets/facebook.png";
 import linkedinIcon from "../assets/linkedin.png";
 import "./SignUp.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notification from "../Components/Notification";
 import api from "../api/Api";
 
-function SignUp() {
+function SignUp({ setIsLoggedIn, isLoggedIn }) {
 	const [formData, setFormData] = useState({
 		first_name: "",
 		last_name: "",
@@ -67,6 +67,12 @@ function SignUp() {
 			setText("Please fill in the fields and try again");
 		}
 	};
+	
+	useEffect(() => {
+		if (isLoggedIn) {
+			navigate("/");
+		}
+	}, [isLoggedIn]);
 
 	return (
 		<>
