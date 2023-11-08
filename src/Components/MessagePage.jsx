@@ -1,5 +1,5 @@
 import "./MessagePage.css"
-// import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 const API = process.env.REACT_APP_API_URL;
@@ -11,24 +11,24 @@ const MessagePage = () => {
   // Function to fetch messages
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`${API}/messages`); // Assuming messages are fetched from this endpoint
+      const response = await axios.get(`${API}/messages`);
       setMessages(response.data);
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
   };
 
-  // Load messages on component mount
+
   useEffect(() => {
     fetchMessages();
   }, []);
 
-  // Function to handle sending a new message
+
   const sendMessage = async () => {
     try {
-      await axios.post(`${API}/messages`, { text: newMessage, userId: 1 }); // Modify userId as needed
-      setNewMessage(''); // Clear the input after sending
-      fetchMessages(); // Refetch messages after sending a new message
+      await axios.post(`${API}/messages`, { text: newMessage, userId: 1 }); 
+      setNewMessage(''); 
+      fetchMessages(); 
     } catch (error) {
       console.error('Error sending message:', error);
     }
