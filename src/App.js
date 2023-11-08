@@ -24,8 +24,8 @@ function App() {
 							path="/"
 							element={
 								<Home
-									isLoggedIn={isLoggedIn}
-									setIsLoggedIn={setIsLoggedIn}
+									isLoggedInApp={isLoggedIn}
+									setIsLoggedInApp={setIsLoggedIn}
 								></Home>
 							}
 						/>
