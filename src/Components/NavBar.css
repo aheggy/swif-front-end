@@ -1,27 +1,29 @@
 .navbar {
-    display: flex; 
-    justify-content: flex-end;
-    background-color: blue;
-  }
-  
-  .navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .navbar li {
-    margin: 0;
-  }
-  
-  .nav-link {
-    text-decoration: none;
-    color: white;
-    margin-right: 10px;
-  }
-  
-  /* Optional: Style for the "swif-link" */
-  .swif-link {
-    font-weight: bold;
-  }
-  
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  background-color: blue;
+  padding: 0 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin: 0;
+}
+
+.navbar li {
+  margin: 0;
+}
+
+.swif-link {
+  font-weight: bold;
+  justify-self: start;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+}

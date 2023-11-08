@@ -5,12 +5,11 @@ import './NavBar.css';
 const NavBar = () => {
   return (
     <nav className="navbar">
+          <h1 className='logo'>
+            <Link to="/" className="nav-link">SWIF</Link>
+          </h1>
+
         <ul>
-          <li>
-            <Link to="/" className="nav-link">
-              <p className="swif-link">SWIF</p>
-            </Link>
-          </li>
           <li>
             <Link to="/" className="nav-link">
               Home

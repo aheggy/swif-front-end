@@ -1,0 +1,23 @@
+.notification {
+    width: 100%;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    position: relative;
+    background-color: white !important;
+    height: 3px;
+    border: solid .5px gray;
+    bottom: 2px;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.notification-container{
+    position: fixed;
+    top: 10%;
+    right: 10px;
+    width: 300px;
+}
