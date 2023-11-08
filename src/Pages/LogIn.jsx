@@ -59,12 +59,7 @@ function LogIn({ setIsLoggedIn, isLoggedIn }) {
 
 	return (
 		<>
-			<Notification
-				error={error}
-				seterror={setError}
-				text={text}
-				color="#f33535"
-			></Notification>
+
 			<div className="background-sign-in">
 				<div className="form-login">
 					<div className="card">

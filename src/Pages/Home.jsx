@@ -10,11 +10,9 @@ function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Replace this with actual login logic (e.g., checking credentials)
     if (email.trim() === '' || password.trim() === '') {
       alert('Please fill in all fields.');
     } else {
-      // Simulating a successful login
       setIsLoggedIn(true);
       setIsSubmitted(true);
     }
