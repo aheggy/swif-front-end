@@ -10,7 +10,7 @@ function Home({ setIsLoggedInApp, isLoggedInApp }) {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!isLoggedIn) {
+		if (!isLoggedInApp) {
 			navigate("/login");
 		}
 	}, [isLoggedInApp]);

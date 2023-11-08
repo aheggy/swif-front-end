@@ -1,17 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavBar.css";
 import "./NabBar.css";
-import { useState, useEffect } from "react";
 import api from "../api/Api";
 
 const NavBar = ({ setIsLoggedIn, isLoggedIn }) => {
-	const navigate = useNavigate();
 	const handleLogout = () => {
 		api.post("/logout").then(() => {
 			localStorage.removeItem("auth_token");
 			setIsLoggedIn(false);
 		});
 	};
+	
 	return (
 		<nav className="navbar">
 			<ul>
