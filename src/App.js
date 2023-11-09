@@ -1,57 +1,36 @@
-import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home";
-import LogIn from "./Pages/LogIn";
-import SignUp from "./Pages/SignUp";
-import NavBar from "./Components/NavBar";
-import { useState } from "react";
+import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+
+
+import Home from "./Pages/Home.jsx"
+import NavBar from "./Components/NavBar"
+import MessagePage from "./Components/MessagePage"
+import Login from "./Pages/LogIn"
+import SignUp from './Pages/SignUp';
+
+
 
 function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(
-		!!localStorage.getItem("auth_token")
-	);
 
-	return (
-		<>
-			<BrowserRouter>
-				<NavBar
-					isLoggedIn={isLoggedIn}
-					setIsLoggedIn={setIsLoggedIn}
-				></NavBar>
-				<main>
-					<Routes>
-						<Route
-							path="/"
-							element={
-								<Home
-									isLoggedInApp={isLoggedIn}
-									setIsLoggedInApp={setIsLoggedIn}
-								></Home>
-							}
-						/>
-						<Route
-							path="/login"
-							element={
-								<LogIn
-									isLoggedIn={isLoggedIn}
-									setIsLoggedIn={setIsLoggedIn}
-								></LogIn>
-							}
-						/>
-						<Route
-							path="/signup"
-							element={
-								<SignUp
-									isLoggedIn={isLoggedIn}
-									setIsLoggedIn={setIsLoggedIn}
-								></SignUp>
-							}
-						/>
-					</Routes>
-				</main>
-			</BrowserRouter>
-		</>
-	);
+  const [isLoggedIn, setIsLoggedIn] = useState("")
+
+  return (
+    <div className="App">
+      <Router>
+        <NavBar/>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/message" element={<MessagePage />}/>
+            <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
+            <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
+          </Routes>
+      </Router>
+      
+    </div>
+  );
 }
 
 export default App;

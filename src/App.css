@@ -1,7 +1,12 @@
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
 
-main{
-  height: 92%;
-  width: 100%;
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

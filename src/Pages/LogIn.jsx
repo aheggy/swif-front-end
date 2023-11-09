@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import googleIcon from "../assets/google.png";
-import facebokIcon from "../assets/facebook.png";
-import linkedinIcon from "../assets/linkedin.png";
 import "./Login.css";
 import { useEffect, useState } from "react";
 import Notification from "../Components/Notification";
-import api from "../api/Api";
+import API from "../API/API";
 
 function LogIn({ setIsLoggedIn, isLoggedIn }) {
 	const [formData, setFormData] = useState({
@@ -25,7 +22,7 @@ function LogIn({ setIsLoggedIn, isLoggedIn }) {
 		e.preventDefault();
 		console.log(formData);
 		if (formData["email"] && formData["password"]) {
-			api.post("/login", formData).then((res)=>{
+			API.post("/login", formData).then((res)=>{
 				console.log(res.data);
                 localStorage.setItem("auth_token", res.data.token);
 				setIsLoggedIn(true);
@@ -62,12 +59,7 @@ function LogIn({ setIsLoggedIn, isLoggedIn }) {
 
 	return (
 		<>
-			<Notification
-				error={error}
-				seterror={setError}
-				text={text}
-				color="#f33535"
-			></Notification>
+
 			<div className="background-sign-in">
 				<div className="form-login">
 					<div className="card">
@@ -138,24 +130,6 @@ function LogIn({ setIsLoggedIn, isLoggedIn }) {
 								<div className="line-container">
 									<span className="line-text">OR</span>
 									<hr className="line" />
-								</div>
-
-								<div className="d-flex d-row social-imgs">
-									<img
-										src={googleIcon}
-										className="rounded"
-										alt=""
-									/>
-									<img
-										src={facebokIcon}
-										className="rounded"
-										alt=""
-									/>
-									<img
-										src={linkedinIcon}
-										className="rounded"
-										alt=""
-									/>
 								</div>
 
 								<div className="d-flex align-items-center justify-content-center">
