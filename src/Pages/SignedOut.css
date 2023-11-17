@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Noto Sans Indic Siyaq Numbers:700|Noto Sans Indic Siyaq Numbers:400');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 
 html,
 #root {
@@ -6,7 +6,7 @@ html,
     width: 100vw;
     margin: 0px;
     padding: 0px;
-    font-family: 'Noto Sans Indic Siyaq Numbers';
+    font-family: 'Roboto', sans-serif;
 }
 
 .App {
@@ -23,10 +23,8 @@ html,
 
     These styles are designed to ensure that the app takes up the entire screen.
     The first block sets the HTML and #root element to full viewport height and width 
-    without any margins or padding. The second block, targeting the element with the class .App, 
-    adjusts its height to fill the entire viewport minus 100 pixels, accommodating a navigation 
-    element at the top. In summary, these styles aim to create a responsive layout where the app 
-    utilizes the entire screen while accounting for a 100-pixel navigation space at the top.
+    without any margins or padding. The second block, targeting the element with the class 
+    .App, adjusts its height to fill the entire viewport minus (but) 100 pixels, accommodating a navigation element at the top. Acording to this, these styles lead us to create a responsive layout where the app utilizes the entire screen while we keep the space for a 100-pixel navigation space at the top (probably a navbar)
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap');
@@ -69,7 +67,6 @@ html,
 
 .signout-title {
     padding: 20px 40px;
-    text-wrap: wrap;
     color: #505cc5
 }
 
@@ -121,7 +118,6 @@ html,
 .signout-message{
     font-family: 'Kalam', cursive;
     text-align: center;
-    text-wrap: wrap;
     font-size: 20px;
     min-height: 50px;
 }

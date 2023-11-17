@@ -1,15 +1,15 @@
-import "./SignOut.css";
+import "./SignedOut.css";
 import "../assets/css/AstronautAnimation.css";
-import "../assets/css/animatedBtn.css";
+import "../assets/css/ButtonsAnimation.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-// We can activate this component by usin the route:   <Route path="/signout" element={<SignOut />}/>
+// We can activate this component by using the route:   <Route path="/signout" element={<SignOut />}/>
 // in the App.js file
 
 
-function SignOut() {
+function SignedOut() {
 	const navigate = useNavigate()
 	const [hoveredElement, setHoveredElement] = useState(null);
 	const handleHover = (event) => {
@@ -52,7 +52,7 @@ function SignOut() {
 					onMouseLeave={handleMouseLeave}
 				>
 					<p id="div2" className="signout-message">
-						signout message
+						Swif Slogan for signed out message
 					</p>
 					<div id="div2" className="signout-buttons">
 						<button id="div2"
@@ -77,28 +77,7 @@ function SignOut() {
 								</div>
 							</div>
 						</button>
-						<button id="div2"
-						onClick={
-							()=>{
-								navigate("/signup")
-							}
-						}
-						>
-							<div id="div2" className="animated-btn">
-								<div id="div2">
-									<span id="div2">
-										<p id="div2">You do not have an account?</p>
-										<p id="div2"></p>
-									</span>
-								</div>
-								<div id="div2">
-									<span id="div2">
-										<p id="div2">Go to Sign Up Page</p>
-										<p id="div2"></p>
-									</span>
-								</div>
-							</div>
-						</button>
+						
 					</div>
 				</div>
 				<div
@@ -159,4 +138,4 @@ function SignOut() {
 	);
 }
 
-export default SignOut;
+export default SignedOut;
