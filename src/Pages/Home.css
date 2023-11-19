@@ -4,6 +4,13 @@ body {
     margin: 0;
     padding: 0;
 }
+.home{
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
 
 .container {
     max-width: 600px;
@@ -14,6 +21,18 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     margin-top: 50px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+img{
+    width: 90%;
+    height: 100%;
+    border-radius: 50px;
+}
+
+.mission-statement{
+    width: 70%;
 }
 
 h1 {

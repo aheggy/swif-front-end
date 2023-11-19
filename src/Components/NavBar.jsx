@@ -2,13 +2,13 @@ import React, {useEffect, useState}from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import './NavBar.css'; 
 import isTokenExpired from "../Components/ProtectedRoute"
-import { getUsernameFromToken } from '../utilities/tokenUtilities';
+// import { getUsernameFromToken } from '../utilities/tokenUtilities';
 
 const NavBar = () => {
   
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const navigate = useNavigate();
-  const username = getUsernameFromToken(token)
+  // const navigate = useNavigate();
+  // const username = getUsernameFromToken(token)
 
   const logout = () => {
     localStorage.removeItem("token")
@@ -34,7 +34,7 @@ const NavBar = () => {
   return (
     <nav >
       <div className="logo">
-        <Link to="/" className="nav-link">Your Logo</Link>
+        <Link to="/" className="nav-link">SWIF</Link>
       </div>
       <ul className="nav-links">
         {token && !isTokenExpired(token) ? (

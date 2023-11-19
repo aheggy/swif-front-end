@@ -44,33 +44,46 @@ function Home() {
   };
 
   return (
-    <div className="container">
-      <h1>Welcome to SWIF!</h1>
-      <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            name='username'
-            placeholder="Username"
-            value={loginData.username}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="password"
-            name='password'
-            placeholder="Password"
-            value={loginData.password}
-            onChange={handleInputChange}
-            required
-          />
-          <button type="submit">Login</button>
-          <p>
-            <a href="forgot-password">Forgot Password?</a>
-          </p>
-          <p>
-            Don't have an account? <Link to="/signup">Sign Up</Link>
-          </p>
-      </form>
+    <div className='home'>
+      <div className='mission-statement'>
+        <p>SWIF: Connecting Minds, Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.</p>
+        <p>Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.</p>
+      </div>
+      <div className="container">
+      <div className='login-container'>
+        <h1>Welcome to SWIF!</h1>
+        <form onSubmit={handleLogin}>
+            <input
+              type="text"
+              name='username'
+              placeholder="Username"
+              value={loginData.username}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="password"
+              name='password'
+              placeholder="Password"
+              value={loginData.password}
+              onChange={handleInputChange}
+              required
+            />
+            <button type="submit">Login</button>
+            <p>
+              <a href="forgot-password">Forgot Password?</a>
+            </p>
+            <p>
+              Don't have an account? <Link to="/signup">Sign Up</Link>
+            </p>
+        </form>
+      </div>
+
+      <div className='landing-image'>
+        <img src="../homePageImage.webp" alt="" />
+      </div>
+      </div>
+      
 
     </div>
   );
