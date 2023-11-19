@@ -1,7 +1,8 @@
-import "./MessagePage.css"
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./MessagePage.css";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 const API = process.env.REACT_APP_API_URL;
 
 const MessagePage = () => {
@@ -10,28 +11,32 @@ const MessagePage = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`${API}/messages`);
+      const response = await axios.get(`${API}/messages`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       setMessages(response.data);
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
   };
-
+  
 
   useEffect(() => {
     fetchMessages();
   }, []);
 
-
   const sendMessage = async () => {
     try {
-      await axios.post(`${API}/messages`, { text: newMessage, userId: 1 }); 
-      setNewMessage(''); 
-      fetchMessages(); 
+      await axios.post(`${API}/messages`, { text: newMessage });
+      setNewMessage('');
+      fetchMessages();
     } catch (error) {
       console.error('Error sending message:', error);
     }
   };
+
   return (
     <div className='message-container'>
       <h2>Messages</h2>

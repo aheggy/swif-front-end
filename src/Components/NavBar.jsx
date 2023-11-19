@@ -1,42 +1,70 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; 
+import React, {useEffect, useState}from 'react';
+import { Link, useNavigate } from 'react-router-dom'; 
 import './NavBar.css'; 
+import isTokenExpired from "../Components/ProtectedRoute"
+import { getUsernameFromToken } from '../utilities/tokenUtilities';
 
 const NavBar = () => {
-  return (
-    <nav className="navbar">
-          <h1 className='logo'>
-            <Link to="/" className="nav-link">SWIF</Link>
-          </h1>
+  
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const navigate = useNavigate();
+  const username = getUsernameFromToken(token)
 
-        <ul>
-          <li>
-            <Link to="/" className="nav-link">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/about" className="nav-link">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link to="/courses" className="nav-link">
-              Courses
-            </Link>
-          </li>
-          <li>
-            <Link to="/swif-connect" className="nav-link">
-              Swif-Connect
-            </Link>
-          </li>
-          <li>
-            <Link to="/login" className="nav-link">
-              Login
-            </Link>
-          </li>
-        </ul>
-      </nav>
+  const logout = () => {
+    localStorage.removeItem("token")
+    setToken(null);
+    console.log(!!token)
+    window.location.href=`/`
+  }
+
+  useEffect(() => {
+    // Update token state when localStorage changes
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem("token"));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+
+  return (
+    <nav >
+      <div className="logo">
+        <Link to="/" className="nav-link">Your Logo</Link>
+      </div>
+      <ul className="nav-links">
+        {token && !isTokenExpired(token) ? (
+          <>
+            <li>
+              <Link to="/swifconnect" className="nav-link">Swif-Connect</Link>
+            </li>
+            <li>
+              <Link to="/people" className="nav-link">People</Link>
+            </li>
+            <li>
+              <Link to="/message" className="nav-link">Message</Link>
+            </li>
+            <li>
+              <Link onClick={logout} className="nav-link">Sign Out</Link>
+            </li>
+          </>
+      ) : (
+        <>
+        <li>
+          <Link to="/Review" className="nav-link">Review</Link>
+        </li>
+        <li>
+          <Link to="/login" className="nav-link">Login</Link>
+        </li>
+        </>
+      )}
+
+      </ul>
+    </nav>
   );
 };
 

@@ -25,16 +25,6 @@ p {
     margin-bottom: 20px;
 }
 
-input[type="text"],
-input[type="email"],
-button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 button {
     background-color: #007bff;
     color: #fff;
