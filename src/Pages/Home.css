@@ -1,21 +1,15 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
 .mission-statement{
     display: grid;
     width: 90%;
     grid-template-rows: 1;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px 50px;
+    padding: 10px 50px;
     margin: auto;
     font-weight: bold;
     
 }
 .home{
-    padding-top: 70px;
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
     justify-items: center;
@@ -24,14 +18,14 @@ body {
 
 .container {
     max-width: 600px;
-    margin: 0 auto;
+    margin: auto;
     text-align: center;
     background-color: #fff;
-    padding: 20px;
+    padding: 70px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    margin-top: 50px;
     display: grid;
+    margin-top: 10px;
     grid-template-columns: 50% 50%;
     background: #47a0f8;
 
@@ -42,14 +36,9 @@ body {
 }
 
 img{
-    width: 90%;
-    height: 100%;
+    width: 100%;
+    height: 90%;
     border-radius: 50px;
-}
-
-
-h1 {
-    font-size: 28px;
 }
 
 p {
