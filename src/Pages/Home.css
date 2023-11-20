@@ -4,6 +4,16 @@ body {
     margin: 0;
     padding: 0;
 }
+.mission-statement{
+    display: grid;
+    width: 90%;
+    grid-template-rows: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 50px;
+    margin: auto;
+    font-weight: bold;
+    
+}
 .home{
     padding-top: 70px;
     display: flex;
@@ -23,6 +33,12 @@ body {
     margin-top: 50px;
     display: grid;
     grid-template-columns: 50% 50%;
+    background: #47a0f8;
+
+}
+
+.login-container{
+    margin: auto;
 }
 
 img{
@@ -31,9 +47,6 @@ img{
     border-radius: 50px;
 }
 
-.mission-statement{
-    width: 70%;
-}
 
 h1 {
     font-size: 28px;

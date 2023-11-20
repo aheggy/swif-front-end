@@ -46,7 +46,7 @@ function Home() {
   return (
     <div className='home'>
       <div className='mission-statement'>
-        <p>SWIF: Connecting Minds, Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.</p>
+        <p><strong>SWIF: Connecting Minds,</strong> Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.</p>
         <p>Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.</p>
       </div>
       <div className="container">
@@ -80,11 +80,15 @@ function Home() {
       </div>
 
       <div className='landing-image'>
-        <img src="../homePageImage.webp" alt="" />
+        <img src="../homePageImage2.webp" alt="" />
       </div>
       </div>
       
 
+    <footer>
+      <hr />
+
+    </footer>
     </div>
   );
 }
