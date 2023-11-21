@@ -47,7 +47,10 @@ export default function SwifConnect({token}) {
         // Listen for incoming messages
         const handleMessage = (messageData) => {
             console.log("Received message:", messageData); 
-            setMessages((msgs) => [...msgs, messageData]);
+            if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername?.username) ||
+                (messageData.sender_username === recipientUsername?.username && messageData.recipient_username === currentUsername)) {
+                setMessages((msgs) => [...msgs, messageData]);
+            }
         };
 
         socket.on("new_message", handleMessage)

@@ -12,6 +12,7 @@ function UserCards() {
         try {
           const response = await axios.get(`${API}/people`);
           setPeople(response.data);
+          console.log(response)
         } catch (error) {
           console.error('Error fetching people:', error);
         }
