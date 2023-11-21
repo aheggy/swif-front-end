@@ -46,10 +46,10 @@ export default function SwifConnect({token}) {
 
         // Listen for incoming messages
         const handleMessage = (messageData) => {
-            console.log("Received message:", messageData); 
-            if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername?.username) ||
-                (messageData.sender_username === recipientUsername?.username && messageData.recipient_username === currentUsername)) {
+            if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername.username) ||
+                (messageData.sender_username === recipientUsername.username && messageData.recipient_username === currentUsername)) {
                 setMessages((msgs) => [...msgs, messageData]);
+                console.log("the condetion has excuted ")
             }
         };
 
