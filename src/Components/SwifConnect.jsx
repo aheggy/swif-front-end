@@ -46,8 +46,8 @@ export default function SwifConnect({token}) {
 
         // Listen for incoming messages
         const handleMessage = (messageData) => {
-            if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername.username) ||
-                (messageData.sender_username === recipientUsername.username && messageData.recipient_username === currentUsername)) {
+            if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername) ||
+                (messageData.sender_username === recipientUsername && messageData.recipient_username === currentUsername)) {
                 setMessages((msgs) => [...msgs, messageData]);
                 console.log("the condetion has excuted ")
             }
@@ -80,7 +80,7 @@ export default function SwifConnect({token}) {
         if (newMessage !== "" && recipientUsername) {
             const messageData = {
                 sender_username: currentUsername, // replace with actual sender username
-                recipient_username: recipientUsername.username, // replace with actual recipient username
+                recipient_username: recipientUsername, // replace with actual recipient username
                 text: newMessage,
             };
 
@@ -92,7 +92,7 @@ export default function SwifConnect({token}) {
 
 
     const initiateChat = (user) => {
-        setRecipientUsername(user);
+        setRecipientUsername(user.username);
         // console.log(user.username)
         setMessages([])
         fetchChatHistory(user.username);
@@ -109,7 +109,7 @@ export default function SwifConnect({token}) {
       console.log("recipientUsername",recipientUsername)
       useEffect(() => {
         if(recipientUsername) {
-            fetchChatHistory(recipientUsername.username)
+            fetchChatHistory(recipientUsername)
         }
       },[recipientUsername])
 
@@ -161,7 +161,7 @@ export default function SwifConnect({token}) {
             <div className="available-user">
                 {isChatActive ? (
                     <div className="chat-participants">
-                        <div className="participant-circle top-circle">{recipientUsername?.first_name}</div>
+                        <div className="participant-circle top-circle">{recipientUsername}</div>
                         <div className="participant-circle bottom-circle">{currentUsername}</div>
                         <button onClick={endChat}>End Chat</button>
                     </div>
