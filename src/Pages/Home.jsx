@@ -45,9 +45,11 @@ function Home() {
 
   return (
     <div className='home'>
-      <div className='mission-statement'>
-        <p><strong>SWIF: Connecting Minds,</strong> Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.</p>
-        <p>Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.</p>
+      <div className='mission-statement'> 
+        <p><strong><i>Don't worry, we're all awkward.</i></strong> But everyone needs to study. And SWIF is for everyone. <br></br><br></br>But it's especially for the awkward ones.</p>
+        <p>The ones that have trouble connecting in person. The ones that want a change from the people they know IRL. 
+          
+          <br></br>Use SWIF to find people from all over the world. And all walks of life. Filter down and study with those people.</p>
       </div>
       <div className="container">
       <div className='login-container'>
