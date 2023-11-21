@@ -21,8 +21,8 @@ export default function SwifConnect({token}) {
     const [availableUsers, setAvailableUsers] = useState([]);
     const [recipientUsername, setRecipientUsername] = useState(null);
     const currentUsername = getUsernameFromToken(token)
-    console.log("recipientUsername", recipientUsername)
-    console.log("currentUsername", currentUsername)
+    // console.log("recipientUsername", recipientUsername)
+    // console.log("currentUsername", currentUsername)
 
 
 
@@ -56,7 +56,7 @@ export default function SwifConnect({token}) {
         socket.on("new_message", handleMessage)
 
         return () => socket.off("new_message", handleMessage)
-    }, [currentUsername]);
+    }, [currentUsername, recipientUsername]);
 
     const fetchChatHistory = async (recipientUsername) => {
         const config = {
@@ -106,7 +106,7 @@ export default function SwifConnect({token}) {
         setRecipientUsername(null);
     };
 
-      console.log("recipientUsername",recipientUsername)
+    //   console.log("recipientUsername",recipientUsername)
       useEffect(() => {
         if(recipientUsername) {
             fetchChatHistory(recipientUsername)
@@ -134,7 +134,7 @@ export default function SwifConnect({token}) {
         <div className="swif-connect-container">
             <div className="chat-container">
                 <div className="chat-box">
-                    {console.log("messages",messages)}
+                    {/* {console.log("messages",messages)} */}
                     {messages.map((message, index) => (
                         <div key={index} className={message.sender_username === currentUsername ? "sent" : "received"}>
                         <div><b>{message.sender_username}</b>: {message.message_content}</div>
