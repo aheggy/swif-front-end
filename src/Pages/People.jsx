@@ -1,4 +1,5 @@
 import UserCards from "../Components/UserCards";
+import "./People.css"
 
 export default function People() {
   return (

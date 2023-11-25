@@ -1,0 +1,18 @@
+.user-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 200px;
+    margin: 10px;
+}
+
+.user-image{
+    width: 180px;
+    height: 220px;
+}
+
+.user-info{
+
+}

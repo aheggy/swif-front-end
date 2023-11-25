@@ -1,5 +1,5 @@
 import React, {useEffect, useState}from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css'; 
 import isTokenExpired from "../Components/ProtectedRoute"
 // import { getUsernameFromToken } from '../utilities/tokenUtilities';

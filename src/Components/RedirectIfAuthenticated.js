@@ -14,11 +14,12 @@ function RedirectIfAuthenticated() {
         if (username) {
           navigate(`/${username}`);
         } else {
+          localStorage.removeItem("token")
           navigate(`/`);
 
         }
       }
-    }, [navigate, token]);
+    }, [token]);
   
     return null; 
   }
