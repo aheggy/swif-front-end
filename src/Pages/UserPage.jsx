@@ -11,7 +11,7 @@ function UserPage() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`${API}/user/${username}`);
+                const response = await fetch(`${API}/people`);
                 if (response.ok) {
                     const data = await response.json();
                     setUserData(data);

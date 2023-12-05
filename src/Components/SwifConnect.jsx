@@ -3,121 +3,79 @@ import axios from "axios";
 import io from "socket.io-client";
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import "./SwifConnect.css";
+import Peer from "peerjs";
+
 
 const API = process.env.REACT_APP_API_URL;
-const socket = io(API);
+
+
+const socket = io(API, {
+    reconnection: true,
+    reconnectionAttempts: Infinity,
+    reconnectionDelay: 1000,
+});
 
 export default function SwifConnect({ token }) {
+
+
+
+
   const [isChatActive, setIsChatActive] = useState(false);
   const messageInputRef = useRef(null);
   const messagesEndRef = useRef(null);
-  const localVideoRef = useRef(null);
-  const remoteVideoRef = useRef(null);
-
+  const connectionRef = useRef(null)
+  
+  const currentUsername = getUsernameFromToken(token);
+  
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [availableUsers, setAvailableUsers] = useState([]);
   const [recipientUsername, setRecipientUsername] = useState(null);
-  const currentUsername = getUsernameFromToken(token);
 
-  const [isCallStarted, setIsCallStarted] = useState(false)
-  const [localStream, setLocalStream] = useState(null);
-  const [remoteStream, setRemoteStream] = useState(null);
-  const [peerConnection, setPeerConnection] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
+
     const fetchUsers = async () => {
-      try {
+        try {
         const response = await axios.get(`${API}/people`);
         setAvailableUsers(response.data);
-      } catch (error) {
+        } catch (error) {
         console.error('Error fetching users', error);
-      }
+        }
     };
 
     fetchUsers();
+
 
     if (currentUsername) {
       socket.emit('register', currentUsername);
     }
 
-    const handleMessage = (messageData) => {
-      if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername) ||
-          (messageData.sender_username === recipientUsername && messageData.recipient_username === currentUsername)) {
+
+    socket.on("new_message", (messageData) => {
+        console.log("Message received:", messageData);
+        console.log("currentUsername", currentUsername)
+        console.log("messageData.sender_username", messageData.sender_username)
+
+        console.log("messageData.recipientUsername", messageData.recipient_username)
+        console.log("recipientUsername", recipientUsername)
+        if ((messageData.sender_username === currentUsername && messageData.        recipient_username === recipientUsername) ||
+        (messageData.sender_username === recipientUsername && messageData.recipient_username === currentUsername)) {
+        console.log("done")
         setMessages((msgs) => [...msgs, messageData]);
-      }
+        if (messageData.recipient_username === currentUsername && messageData.sender_username !== currentUsername) {
+            // Display a notification
+            // alert(`New message from ${messageData.sender_username}`);
+            // Or update a state to show a notification in the UI
+          }
+    }
+    });
+  
+    return () => {
+      socket.off("new_message");
     };
-
-    socket.on("new_message", handleMessage);
-
-    return () => socket.off("new_message", handleMessage);
   }, [currentUsername, recipientUsername]);
-
-  const startVideoCall = async () => {
-    if (isCallStarted || !recipientUsername) return;
-
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      localVideoRef.current.srcObject = stream;
-      setLocalStream(stream);
-
-      const pc = new RTCPeerConnection({
-        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-      });
-
-      stream.getTracks().forEach(track => pc.addTrack(track, stream));
-
-      pc.ontrack = event => {
-        remoteVideoRef.current.srcObject = event.streams[0];
-      };
-
-      pc.onicecandidate = event => {
-        if (event.candidate) {
-          socket.emit('webrtc_ice_candidate', {
-            candidate: event.candidate,
-            recipient_username: recipientUsername,
-            sender_username: currentUsername,
-          });
-        }
-      };
-
-      setPeerConnection(pc);
-
-      const offer = await pc.createOffer();
-      await pc.setLocalDescription(offer);
-
-      socket.emit('webrtc_offer', {
-        sdp: offer,
-        recipient_username: recipientUsername,
-        sender_username: currentUsername,
-      });
-
-      setIsCallStarted(true);
-    } catch (err) {
-      console.error('Failed to start video call:', err);
-      // Handle errors (like user denied camera access)
-    }
-  };
-
-
-
-    const fetchChatHistory = async (username) => {
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-      params: { currentUsername, recipientUsername: username }
-    };
-
-    try {
-      const response = await axios.get(`${API}/messages`, config);
-      const filteredMessages = response.data.filter(message => {
-        return (message.sender_username === currentUsername && message.recipient_username === username) ||
-               (message.sender_username === username && message.recipient_username === currentUsername);
-      });
-      setMessages(filteredMessages);
-    } catch (error) {
-      console.error('Error fetching chat history', error);
-    }
-  };
+  
 
   const sendMessage = () => {
     if (newMessage !== "" && recipientUsername) {
@@ -126,17 +84,22 @@ export default function SwifConnect({ token }) {
         recipient_username: recipientUsername,
         text: newMessage,
       };
-
+  
       socket.emit("new_message", messageData);
+  
+      // Optionally update UI immediately for the local user
+      setMessages((msgs) => [...msgs, messageData]);
+  
       setNewMessage("");
       messageInputRef.current?.focus();
     }
   };
+  
 
   const initiateChat = (user) => {
     setRecipientUsername(user.username);
     setMessages([]);
-    fetchChatHistory(user.username);
+    // fetchChatHistory(user.username);
     setIsChatActive(true);
   };
 
@@ -145,16 +108,8 @@ export default function SwifConnect({ token }) {
     setIsChatActive(false);
     setRecipientUsername(null);
 
-    if (localStream) {
-        localStream.getTracks().forEach(track => track.stop());
-        setLocalStream(null);
-      }
-      if (peerConnection) {
-        peerConnection.close();
-        setPeerConnection(null);
-      }
-      setIsCallStarted(false);
-  };
+  }
+
 
 
   const handleKeyPress = (e) => {
@@ -173,32 +128,180 @@ export default function SwifConnect({ token }) {
   }, [messages]);
 
 
-    useEffect(() => {
-        if (!isCallStarted || !peerConnection) return;
 
-    // Set up remote stream
-        const remoteStream = new MediaStream();
-        setRemoteStream(remoteStream);
+  //////////////////////////////////////////////////////
+    //              VIDIO PART 
+  //////////////////////////////////////////////////////
+  const [isCallStarted, setIsCallStarted] = useState(false)
+  const localVideoRef = useRef(null)
+  const RemoteVideoRef = useRef(null)
+  const pc = useRef(new RTCPeerConnection(null))
+  const textRef = useRef({})
+//   const candidates = useRef([])
+  const [offerVisible, setOfferVisible] = useState(true)
+  const [answerVisible, setAnswerVisible] = useState(false)
+  const [status, setStatus] = useState("Make A call now")
 
-        peerConnection.ontrack = (event) => {
-        event.streams[0].getTracks().forEach(track => {
-            remoteStream.addTrack(track);
-        });
-        if (remoteVideoRef.current) {
-            remoteVideoRef.current.srcObject = remoteStream;
+
+  useEffect (() => {
+    socket.on("connection-success", success => {
+        console.log(success)
+    })
+
+    socket.on("sdp", data => {
+        console.log("_____________",data)
+        pc.current.setRemoteDescription(new RTCSessionDescription(data.sdp))
+        textRef.current.value = JSON.stringify(data.sdp)
+        
+        if(data.sdp.type === "offer"){
+            setOfferVisible(false)
+            setAnswerVisible(true)
+            setStatus("Incoming call...")
+        }else {
+            setStatus("Call established")
         }
-    };
-    }, [isCallStarted, peerConnection]);
+    })
+
+    socket.on("candidate", candidate => {
+        console.log("candidat_____________",candidate)
+        // candidates.current = [...candidates.current, candidate]
+        pc.current.addIceCandidate(new RTCIceCandidate(candidate))
+    })
 
 
-    useEffect(() => {
-        if (!isCallStarted || !remoteStream || !remoteVideoRef.current) return;
-        remoteVideoRef.current.srcObject = remoteStream;
-    }, [isCallStarted, remoteStream]);
+
+    const constraints = {
+        audio: false,
+        video: true,
+    }
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(stream => {
+        // display video
+        localVideoRef.current.srcObject = stream
+        stream.getTracks().forEach(track => {
+            _pc.addTrack(track, stream)
+        })
+
+    })
+    .catch(e => {
+        console.log("get user media error..", e)
+    })
+
+    const _pc = new RTCPeerConnection(null)
+    _pc.onicecandidate = (e) => {
+        if (e.candidate){
+            // console.log(JSON.stringify(e.candidate))
+            sendToPeer("candidate", e.candidate)
+        }
+    }
+
+    _pc.oniceconnectionstatechange = (e) => {
+        console.log(e)
+    }
+
+    _pc.ontrack = (e) => {
+        //we got remot stream
+        RemoteVideoRef.current.srcObject = e.streams[0]
+    }
+
+    pc.current = _pc
+
+  }, [])
+
+  const sendToPeer = (eventType, payload) => {
+    socket.emit(eventType, payload)
+  }
+
+  const processSDP = (sdp) => {
+    console.log(JSON.stringify(sdp))
+    pc.current.setLocalDescription(sdp)
+
+    sendToPeer("sdp", {sdp})
+
+  }
+
+  const createOffer = () => {
+    pc.current.createOffer({
+        offerToReceiveAudio:1,
+        offerToReceiveVideo:1,
+
+    }).then( sdp => {
+        //send the sdp to the server
+        processSDP(sdp)
+        setOfferVisible(false)
+        setStatus("calling...")
+
+    }).catch(e => console.log(e))
+  }
+
+  const createAnswer = () => {
+    pc.current.createAnswer({
+        offerToReceiveAudio:1,
+        offerToReceiveVideo:1,
+
+    }).then( sdp => {
+
+        processSDP(sdp)
+        setAnswerVisible(false)
+        setStatus("Call established")
+
+    }).catch(e => console.log(e))
+  }
+
+  const setRemoteDescription = () => {
+    const sdp = JSON.parse(textRef.current.value)
+
+    pc.current.setRemoteDescription(new RTCSessionDescription(sdp))
+  }
+
+//   const addCandidate = () => {
+//     // const candidate = JSON.parse(textRef.current.value)
+//     candidates.current.forEach(candidate => {
+//     pc.current.addIceCandidate(new RTCIceCandidate(candidate))
+//     })
+//   }
 
 
 
   
+
+
+  const getUserMedia = () => {
+    // const constraints = {
+    //     audio: false,
+    //     video: true,
+    // }
+    // navigator.mediaDevices.getUserMedia(constraints)
+    // .then(stream => {
+    //     // display video
+    //     localVideoRef.current.srcObject = stream
+    // })
+    // .catch(e => {
+    //     console.log("get user media error..", e)
+    // })
+
+    // // const stream = await navigator.mediaDevices.getUserMedia(constraints)
+    // // localVideoRef.current.srcObject = stream
+  }
+  
+
+
+
+  const showHideButtons = () => {
+    if (offerVisible) {
+        return(
+            <div>
+                <button onClick={createOffer}>Call</button>
+            </div>
+        )
+    } else if (answerVisible) {
+        return(
+            <div>
+                <button onClick={createAnswer}>Answer</button>
+            </div>
+        )
+    }
+  }
 
 
 
@@ -208,7 +311,8 @@ export default function SwifConnect({ token }) {
                 <div className="chat-box">
                     {messages.map((message, index) => (
                         <div key={index} className={message.sender_username === currentUsername ? "sent" : "received"}>
-                            <div><b>{message.sender_username}</b>: {message.message_content}</div>
+                            
+                            <div><b>{message.sender_username}</b>: {message.text}</div>
                         </div>
                     ))}
                     <div ref={messagesEndRef}/>
@@ -231,18 +335,22 @@ export default function SwifConnect({ token }) {
                 {isChatActive ? (
                     <div className="chat-participants">
                         <div className="participant-circle top-circle">
-                            <video ref={remoteVideoRef} autoPlay className="user-video" />
+                            <video ref={RemoteVideoRef} autoPlay muted className="user-video" />
                             {/* <span>{recipientUsername}</span> */}
                         </div>
                         <div className="participant-circle bottom-circle">
                             <video ref={localVideoRef} autoPlay muted className="user-video" />
                             {/* <span>{currentUsername}</span> */}
                         </div>
-                        <button onClick={endChat}>End Chat</button>
-                        <button onClick={startVideoCall}>Start Call</button>
+                        {/* <button onClick={() => createAnswer()}>answer</button> */}
+ 
+                        {showHideButtons()}
+
                     </div>
                 ) : (
-                    availableUsers.map((user, index) => (
+                    availableUsers
+                    .filter(user => user.username !== currentUsername)
+                    .map((user, index) => (
                         <div key={index} onClick={() => initiateChat(user)}>
                             {user.first_name} {user.last_name}
                             <hr />
