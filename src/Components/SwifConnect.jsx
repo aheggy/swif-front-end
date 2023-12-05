@@ -190,11 +190,11 @@ useEffect(() => {
     }
 
     _pc.ontrack = (e) => {
-        //we got remot stream
-        if (remoteVideoRef.current) {
+        // This is where you set the remote video stream
+        if (remoteVideoRef.current && e.streams && e.streams[0]) {
             remoteVideoRef.current.srcObject = e.streams[0];
         }
-    }
+    };
 
     pc.current = _pc
 
@@ -257,19 +257,25 @@ useEffect(() => {
 };
 
 
-  const createAnswer = () => {
-    pc.current.createAnswer({
-        offerToReceiveAudio:1,
-        offerToReceiveVideo:1,
+const createAnswer = () => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(stream => {
+        localVideoRef.current.srcObject = stream;
+        stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
 
-    }).then( sdp => {
+        return pc.current.createAnswer({
+            offerToReceiveAudio: 1,
+            offerToReceiveVideo: 1,
+        });
+    })
+    .then(sdp => {
+        processSDP(sdp);
+        setAnswerVisible(false);
+        setStatus("Call established");
+    })
+    .catch(e => console.log("Error creating answer or accessing user media:", e));
+};
 
-        processSDP(sdp)
-        setAnswerVisible(false)
-        setStatus("Call established")
-
-    }).catch(e => console.log(e))
-  }
 
   const setRemoteDescription = () => {
     const sdp = JSON.parse(textRef.current.value)
