@@ -132,9 +132,11 @@ useEffect(() => {
   //////////////////////////////////////////////////////
     //              VIDIO PART 
   //////////////////////////////////////////////////////
+
+
   const [isCallStarted, setIsCallStarted] = useState(false)
   const localVideoRef = useRef(null)
-  const RemoteVideoRef = useRef(null)
+  const remoteVideoRef = useRef(null)
   const pc = useRef(new RTCPeerConnection(null))
   const textRef = useRef({})
 //   const candidates = useRef([])
@@ -170,24 +172,12 @@ useEffect(() => {
 
 
 
-    const constraints = {
-        audio: false,
-        video: true,
-    }
-    navigator.mediaDevices.getUserMedia(constraints)
-    .then(stream => {
-        // display video
-        localVideoRef.current.srcObject = stream
-        stream.getTracks().forEach(track => {
-            _pc.addTrack(track, stream)
-        })
+    const pcConfig = {
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    };
 
-    })
-    .catch(e => {
-        console.log("get user media error..", e)
-    })
 
-    const _pc = new RTCPeerConnection(null)
+    const _pc = new RTCPeerConnection(pcConfig)
     _pc.onicecandidate = (e) => {
         if (e.candidate){
             // console.log(JSON.stringify(e.candidate))
@@ -196,17 +186,44 @@ useEffect(() => {
     }
 
     _pc.oniceconnectionstatechange = (e) => {
-        console.log(e)
+        console.log("ICE Connection State Change:", e)
     }
 
     _pc.ontrack = (e) => {
         //we got remot stream
-        RemoteVideoRef.current.srcObject = e.streams[0]
+        if (remoteVideoRef.current) {
+            remoteVideoRef.current.srcObject = e.streams[0];
+        }
     }
 
     pc.current = _pc
 
+
+    return () => {
+        // Clean up when component unmounts
+        socket.off("connection-success");
+        socket.off("sdp");
+        socket.off("candidate");
+        if (localVideoRef.current) {
+            localVideoRef.current.srcObject = null;
+        }
+        if (remoteVideoRef.current) {
+            remoteVideoRef.current.srcObject = null;
+        }
+        pc.current.close();
+    };
+
+
   }, [])
+
+  
+
+
+
+
+
+  
+  console.log("pc...", pc)
 
   const sendToPeer = (eventType, payload) => {
     socket.emit(eventType, payload)
@@ -221,18 +238,24 @@ useEffect(() => {
   }
 
   const createOffer = () => {
-    pc.current.createOffer({
-        offerToReceiveAudio:1,
-        offerToReceiveVideo:1,
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(stream => {
+        localVideoRef.current.srcObject = stream;
+        stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
 
-    }).then( sdp => {
-        //send the sdp to the server
-        processSDP(sdp)
-        setOfferVisible(false)
-        setStatus("calling...")
+        return pc.current.createOffer({
+            offerToReceiveAudio: 1,
+            offerToReceiveVideo: 1,
+        });
+    })
+    .then(sdp => {
+        processSDP(sdp);
+        setOfferVisible(false);
+        setStatus("Calling...");
+    })
+    .catch(e => console.log("Error creating offer or accessing user media:", e));
+};
 
-    }).catch(e => console.log(e))
-  }
 
   const createAnswer = () => {
     pc.current.createAnswer({
@@ -336,11 +359,11 @@ useEffect(() => {
                 {isChatActive ? (
                     <div className="chat-participants">
                         <div className="participant-circle top-circle">
-                            <video ref={RemoteVideoRef} autoPlay muted className="user-video" />
+                            <video ref={localVideoRef} autoPlay muted className="user-video" />
                             {/* <span>{recipientUsername}</span> */}
                         </div>
                         <div className="participant-circle bottom-circle">
-                            <video ref={localVideoRef} autoPlay muted className="user-video" />
+                            <video ref={remoteVideoRef} autoPlay muted className="user-video" />
                             {/* <span>{currentUsername}</span> */}
                         </div>
                         {/* <button onClick={() => createAnswer()}>answer</button> */}
