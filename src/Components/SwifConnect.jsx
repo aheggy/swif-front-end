@@ -365,11 +365,11 @@ const createAnswer = () => {
                 {isChatActive ? (
                     <div className="chat-participants">
                         <div className="participant-circle top-circle">
-                            <video ref={localVideoRef} autoPlay muted className="user-video" />
+                            <video ref={localVideoRef} autoPlay className="user-video" />
                             {/* <span>{recipientUsername}</span> */}
                         </div>
                         <div className="participant-circle bottom-circle">
-                            <video ref={remoteVideoRef} autoPlay muted className="user-video" />
+                            <video ref={remoteVideoRef} autoPlay className="user-video" />
                             {/* <span>{currentUsername}</span> */}
                         </div>
                         {/* <button onClick={() => createAnswer()}>answer</button> */}
