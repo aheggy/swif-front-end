@@ -1,0 +1,28 @@
+
+.userpage-aside {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.aside-menu {
+    border: 1px solid gray;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    height: calc(100% - 40px);
+    box-shadow: 5px 5px 10px 0px #00000091;
+}
+
+.userpage-aside ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.userpage-aside li {
+    margin: 0px;
+}
