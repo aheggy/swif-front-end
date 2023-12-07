@@ -1,0 +1,88 @@
+.userpage-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.userpage-content {
+    padding: 10px;
+    margin: 10px;
+    height: calc(100% - 60px);
+    grid-row: 1;
+    grid-column: 2 / 3;
+}
+
+.userpage-welcome {
+    margin-bottom: 10px;
+}
+
+.userpage-welcome span {
+    color: #2121f1
+}
+
+.userpage-message {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    align-items: center;
+    font-family: 'Kalam', cursive;
+    text-align: center;
+}
+
+.userpage-message img {
+    height: 50px;
+}
+
+.custom-card {
+    background-color: #e0e0e0;
+    width: 100%;
+    height: 200px;
+    border-radius: 0.5rem;
+    box-shadow: 3px 3px 7px 0px #00000091;
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    margin-bottom: 10px;
+}
+
+.custom-card:hover{
+    transform: scale(1.02);
+    -webkit-transform: scale(1.02);
+    -moz-transform: scale(1.02);
+    -ms-transform: scale(1.02);
+    -o-transform: scale(1.02);
+}
+
+.flex-container {
+    display: flex;
+    padding: 0.5rem;
+    gap: 0.25rem;
+}
+
+.circle {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+}
+
+.teal {
+    background-color: #38b2ac;
+}
+
+.orange {
+    background-color: #ed8936;
+}
+
+.indigo {
+    background-color: #667eea;
+}
+
+.userpage-cards{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
