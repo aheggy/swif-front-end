@@ -1,13 +1,14 @@
-.mission-statement{
+.mission-statement {
     display: grid;
     width: 90%;
     grid-template-rows: 1;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 10px 50px;
-    margin: auto;
+    margin: auto; 
     font-weight: bold;
-    
+    text-align: center; 
 }
+
 .home{
     padding-top: 10px;
     display: flex;
