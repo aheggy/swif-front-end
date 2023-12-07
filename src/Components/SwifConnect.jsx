@@ -3,7 +3,6 @@ import axios from "axios";
 import io from "socket.io-client";
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import "./SwifConnect.css";
-import Peer from "peerjs";
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -369,7 +368,7 @@ const createAnswer = () => {
                             {/* <span>{recipientUsername}</span> */}
                         </div>
                         <div className="participant-circle bottom-circle">
-                            <video ref={remoteVideoRef} autoPlay className="user-video" />
+                            <video ref={remoteVideoRef} autoPlay muted className="user-video" />
                             {/* <span>{currentUsername}</span> */}
                         </div>
                         {/* <button onClick={() => createAnswer()}>answer</button> */}
