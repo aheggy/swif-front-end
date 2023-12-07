@@ -1,7 +1,7 @@
 import React, {useEffect, useState}from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import './NavBar.css'; 
-import isTokenExpired from "../Components/ProtectedRoute"
+import { jwtDecode } from 'jwt-decode';
 // import { getUsernameFromToken } from '../utilities/tokenUtilities';
 
 const NavBar = () => {
@@ -9,6 +9,7 @@ const NavBar = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   // const navigate = useNavigate();
   // const username = getUsernameFromToken(token)
+
 
   const logout = () => {
     localStorage.removeItem("token")
@@ -31,13 +32,14 @@ const NavBar = () => {
   }, []);
 
 
+
   return (
     <nav >
       <div className="logo">
         <Link to="/" className="nav-link">SWIF</Link>
       </div>
       <ul className="nav-links">
-        {token && !isTokenExpired(token) ? (
+        {token && jwtDecode(token).exp > Date.now ()/ 1000 ? (
           <>
             <li>
               <Link to="/swifconnect" className="nav-link">Swif-Connect</Link>

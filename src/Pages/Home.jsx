@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode'; 
 import './Home.css';
@@ -43,13 +43,31 @@ function Home() {
     }
   };
 
+
+  const [displayedText, setDisplayedText] = useState('');
+  const fullText = "SWIF: Connecting Minds, Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups. Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.";
+
+  useEffect(() => {
+    const sentences = fullText.split('. ');
+    let currentSentence = 0;
+    let displayInterval = setInterval(() => {
+      setDisplayedText((text) => text + sentences[currentSentence] + '. ');
+      currentSentence++;
+      if (currentSentence === sentences.length) clearInterval(displayInterval);
+    }, 3500); // Adjust the time for each sentence
+
+    return () => clearInterval(displayInterval);
+  }, []);
+
+  
+
   return (
     <div className='home'>
-      <div className='mission-statement'> 
-        <p><strong><i>Don't worry, we're all awkward.</i></strong> But everyone needs to study. And SWIF is for everyone. <br></br><br></br>But it's especially for the awkward ones.</p>
-        <p>The ones that have trouble connecting in person. The ones that want a change from the people they know IRL. 
-          
-          <br></br>Use SWIF to find people from all over the world. And all walks of life. Filter down and study with those people.</p>
+      <div className='mission-statement'>
+        <span className="typewriter">
+          <strong>SWIF: Connecting Minds,</strong> Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
+          Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.
+        </span>
       </div>
       <div className="container">
       <div className='login-container'>

@@ -1,5 +1,9 @@
-import React, { useState, useEffect, axios } from "react";
+import "./UserCards.css"
+
+import React, { useState, useEffect } from "react";
 import UserCard from "./UserCard";
+import axios from "axios";
+
 
 const API = process.env.REACT_APP_API_URL
 
@@ -12,6 +16,7 @@ function UserCards() {
         try {
           const response = await axios.get(`${API}/people`);
           setPeople(response.data);
+          console.log(response.data)
         } catch (error) {
           console.error('Error fetching people:', error);
         }
@@ -23,7 +28,7 @@ function UserCards() {
   return (
     <div className="users-container">
       {people.map((user) => (
-        <UserCard key={user.id} user={user} />
+        <UserCard key={user.username} user={user} />
       ))}
     </div>
   );
