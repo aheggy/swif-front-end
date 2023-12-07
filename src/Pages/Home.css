@@ -56,16 +56,3 @@ button {
 button:hover {
     background-color: #0056b3;
 }
-.mission-statement .typewriter {
-    white-space: pre-wrap; /* Allows text to wrap and preserves whitespace */
-    overflow: hidden; /* Hides the overflowed text */
-    border-right: .15em solid black; /* Creates the cursor effect */
-    /* Remove the fixed width in typing animation */
-    animation: blink-caret .75s step-end infinite;
-}
-
-/* Cursor animations */
-/* @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: black; }
-} */

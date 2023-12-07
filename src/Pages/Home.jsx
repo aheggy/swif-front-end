@@ -6,30 +6,6 @@ import './Home.css';
 const API = process.env.REACT_APP_API_URL
 
 function Home() {
-
-
-
-  const [displayedText, setDisplayedText] = useState('');
-  const fullText = "SWIF: Connecting Minds, Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups. Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.";
-  const typingSpeed = 50; // Speed of typing, in milliseconds
-
-  useEffect(() => {
-    let i = 0;
-    let typeInterval = setInterval(() => {
-      if (i < fullText.length) {
-        setDisplayedText((prevText) => prevText + fullText.charAt(i));
-        i++;
-      } else {
-        clearInterval(typeInterval);
-      }
-    }, typingSpeed);
-
-    return () => clearInterval(typeInterval);
-  }, []);
-
-
-
-
   const [loginData, setLoginData] = useState({
     username: '',
     password: '',
@@ -68,10 +44,30 @@ function Home() {
   };
 
 
+  const [displayedText, setDisplayedText] = useState('');
+  const fullText = "SWIF: Connecting Minds, Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups. Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.";
+
+  useEffect(() => {
+    const sentences = fullText.split('. ');
+    let currentSentence = 0;
+    let displayInterval = setInterval(() => {
+      setDisplayedText((text) => text + sentences[currentSentence] + '. ');
+      currentSentence++;
+      if (currentSentence === sentences.length) clearInterval(displayInterval);
+    }, 3500); // Adjust the time for each sentence
+
+    return () => clearInterval(displayInterval);
+  }, []);
+
+  
+
   return (
     <div className='home'>
       <div className='mission-statement'>
-      <span className="typewriter">{displayedText}</span>
+        <span className="typewriter">
+          <strong>SWIF: Connecting Minds,</strong> Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
+          Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.
+        </span>
       </div>
       <div className="container">
       <div className='login-container'>
