@@ -36,7 +36,9 @@ const NavBar = () => {
   return (
     <nav >
       <div className="logo">
-        <Link to="/" className="nav-link">SWIF</Link>
+        {/* <Link to="/" className="nav-link">SWIF</Link> */}
+        <Link to="/" className="nav-link"><img src="../logo.jpg" alt="" /></Link>
+        
       </div>
       <ul className="nav-links">
         {token && jwtDecode(token).exp > Date.now ()/ 1000 ? (
@@ -57,10 +59,10 @@ const NavBar = () => {
       ) : (
         <>
         <li>
-          <Link to="/Review" className="nav-link">Review</Link>
+          <Link to="/review" className="nav-link">Review</Link>
         </li>
         <li>
-          <Link to="/login" className="nav-link">Login</Link>
+          <Link to="/signup" className="nav-link">Sign Up</Link>
         </li>
         </>
       )}

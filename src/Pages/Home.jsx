@@ -59,17 +59,24 @@ function Home() {
     return () => clearInterval(displayInterval);
   }, []);
 
-  
+
 
   return (
     <div className='home'>
-      <div className='mission-statement'>
-        <span className="typewriter">
-          <strong>SWIF: Connecting Minds,</strong> Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
-          Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.
-        </span>
+      <div className='mission-statment-container'>
+        <div className='mission-statement'>
+          <span className="typewriter">
+            <strong>SWIF: Connecting Minds,</strong> Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
+            Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.
+          </span>
+        </div>
+        <div className='mission-image'>
+          <img src="../sellectPartner.png" alt="" />
+        </div>
       </div>
-      <div className="container">
+      <div className="login-image-container">
+      
+      
       <div className='login-container'>
         <h1>Welcome to SWIF!</h1>
         <form onSubmit={handleLogin}>
@@ -89,7 +96,7 @@ function Home() {
               onChange={handleInputChange}
               required
             />
-            <button type="submit">Login</button>
+            <button className='submit-button' type="submit">Login</button>
             <p>
               <a href="forgot-password">Forgot Password?</a>
             </p>
@@ -98,17 +105,18 @@ function Home() {
             </p>
         </form>
       </div>
-
-      <div className='landing-image'>
+      <div className='landing-page-image'>
         <img src="../homePageImage2.webp" alt="" />
       </div>
-      </div>
-      
 
-    <footer>
+      
+      </div>
       <hr />
 
-    </footer>
+      <footer className="footer">
+        <p>© 2023 SWIF - All Rights Reserved</p>
+        <p>Follow us on <a href="https://twitter.com">Twitter</a>, <a href="https://facebook.com">Facebook</a>, and <a href="https://instagram.com">Instagram</a></p>
+      </footer>
     </div>
   );
 }

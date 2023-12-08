@@ -4,13 +4,14 @@ import { getUsernameFromToken } from '../utilities/tokenUtilities';
 import { jwtDecode } from 'jwt-decode';
 
 import Home from '../Pages/Home';
-import LoginPage from '../Pages/LogIn';
+// import LoginPage from '../Pages/LogIn';
 import SignUpPage from '../Pages/SignUp';
 import ProtectedRoute from './ProtectedRoute';
 import SwifConnect from './SwifConnect';
 import MessagePage from './MessagePage';
 import People from '../Pages/People';
 import UserPage from '../Pages/UserPage';
+import Review from '../Pages/Review';
 
 const AppRoutes = () => {
   const navigate = useNavigate();
@@ -40,8 +41,9 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<LoginPage />} />
+      {/* <Route path="/login" element={<LoginPage />} /> */}
       <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/review" element={<Review />} />
       <Route path="/messages" element={<ProtectedRoute><MessagePage /></ProtectedRoute>} />
       <Route path="/:username" element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
       <Route path="/people" element={<ProtectedRoute><People /></ProtectedRoute>} />

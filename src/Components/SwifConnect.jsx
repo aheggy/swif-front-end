@@ -102,13 +102,6 @@ useEffect(() => {
     setIsChatActive(true);
   };
 
-  const endChat = () => {
-    setMessages([]);
-    setIsChatActive(false);
-    setRecipientUsername(null);
-
-  }
-
 
 
   const handleKeyPress = (e) => {
@@ -142,6 +135,8 @@ useEffect(() => {
   const [offerVisible, setOfferVisible] = useState(true)
   const [answerVisible, setAnswerVisible] = useState(false)
   const [status, setStatus] = useState("Make A call now")
+  const [isCameraActive, setIsCameraActive] = useState(false);
+
 
 
   useEffect (() => {
@@ -241,6 +236,7 @@ useEffect(() => {
     .then(stream => {
         localVideoRef.current.srcObject = stream;
         stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
+        setIsCameraActive(true);
 
         return pc.current.createOffer({
             offerToReceiveAudio: 1,
@@ -261,6 +257,7 @@ const createAnswer = () => {
     .then(stream => {
         localVideoRef.current.srcObject = stream;
         stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
+        setIsCameraActive(true);
 
         return pc.current.createAnswer({
             offerToReceiveAudio: 1,
@@ -291,36 +288,11 @@ const createAnswer = () => {
 
 
 
-  
-
-
-  const getUserMedia = () => {
-    // const constraints = {
-    //     audio: false,
-    //     video: true,
-    // }
-    // navigator.mediaDevices.getUserMedia(constraints)
-    // .then(stream => {
-    //     // display video
-    //     localVideoRef.current.srcObject = stream
-    // })
-    // .catch(e => {
-    //     console.log("get user media error..", e)
-    // })
-
-    // // const stream = await navigator.mediaDevices.getUserMedia(constraints)
-    // // localVideoRef.current.srcObject = stream
-
-  }
-  
-
-
-
   const showHideButtons = () => {
     if (offerVisible) {
         return(
             <div>
-                <button onClick={createOffer}>Call</button>
+                <button onClick={createOffer}>Start Call</button>
             </div>
         )
     } else if (answerVisible) {
@@ -332,6 +304,34 @@ const createAnswer = () => {
     }
   }
 
+
+  const endChat = () => {
+
+    if (localVideoRef.current && localVideoRef.current.srcObject) {
+        const tracks = localVideoRef.current.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
+        localVideoRef.current.srcObject = null;
+        setIsCameraActive(false)
+      }
+    
+      if (remoteVideoRef.current && remoteVideoRef.current.srcObject) {
+        const remoteTracks = remoteVideoRef.current.srcObject.getTracks();
+        remoteTracks.forEach(track => track.stop());
+        remoteVideoRef.current.srcObject = null;
+        setIsCameraActive(false)
+      }
+
+    setMessages([]);
+    setIsChatActive(false);
+    setRecipientUsername(null);
+
+    setOfferVisible(false)
+    pc.current.close();
+    pc.current = new RTCPeerConnection(null);
+    window.location.href=`/people`; // Navigate to user's page
+
+
+  }
 
 
     return (
@@ -365,15 +365,19 @@ const createAnswer = () => {
                     <div className="chat-participants">
                         <div className="participant-circle top-circle">
                             <video ref={localVideoRef} autoPlay muted className="user-video" />
-                            {/* <span>{recipientUsername}</span> */}
+                            {!isCameraActive && <span>{currentUsername}</span>}
                         </div>
                         <div className="participant-circle bottom-circle">
                             <video ref={remoteVideoRef} autoPlay muted className="user-video" />
-                            {/* <span>{currentUsername}</span> */}
+                            {!isCameraActive && <span>{recipientUsername}</span>}
                         </div>
                         {/* <button onClick={() => createAnswer()}>answer</button> */}
- 
-                        {showHideButtons()}
+
+                        
+                        <div className="callandendchat-button">
+                             <button onClick={endChat}>End Chat</button>
+                            {showHideButtons()}
+                        </div>
 
                     </div>
                 ) : (

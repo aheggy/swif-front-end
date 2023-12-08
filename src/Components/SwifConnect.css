@@ -88,3 +88,11 @@
     transform: translate(-50%, -50%);
   }
   
+  .callandendchat-button {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-around;
+    
+  }

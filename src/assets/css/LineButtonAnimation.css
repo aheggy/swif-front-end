@@ -31,7 +31,7 @@
 .line-button-animation:hover {
     transform: scale(1.05);
     color: #000000;
-    background-color: #dfd8d8;
+    background-color: #0099fe;
     -webkit-transform: scale(1.05);
     -moz-transform: scale(1.05);
     -ms-transform: scale(1.05);
