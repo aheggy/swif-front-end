@@ -66,7 +66,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 0px;
     /* background: #47a0f8; */
-    gap: 5%;
+    /* gap: 5%; */
 }
 
 
@@ -119,6 +119,7 @@ button {
     color: blue;
     border: 1px solid blue;
     box-shadow: 0 0 20px rgb(0, 8, 255);
+    
 }
 
 .login-button{
@@ -129,14 +130,31 @@ button {
 }
 
 
-input{
-    width: 50px;
-}
-
 footer{
     width: 100%;
     background-color: #03243d;
     text-align: center;
     align-items: center;
     color: white;
+}
+
+.home-login{
+    width: 70%;
+    
+}
+
+.home-login:focus{
+    box-shadow: 0 0 10px rgb(0, 8, 255);
+
+}
+
+a.home-forgot-password:hover, .home-signup:hover{
+    text-shadow: 0 0 20px rgb(0, 8, 255);
+}
+.home-login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
 }

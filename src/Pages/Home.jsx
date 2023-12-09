@@ -82,8 +82,9 @@ function Home() {
       
       <div className='login-container'>
         <h1>Welcome to SWIF!</h1>
-        <form onSubmit={handleLogin}>
+        <form className='home-login-form' onSubmit={handleLogin}>
             <input
+              className='home-login'
               type="text"
               name='username'
               placeholder="Username"
@@ -92,6 +93,7 @@ function Home() {
               required
             />
             <input
+              className='home-login'
               type="password"
               name='password'
               placeholder="Password"
@@ -101,10 +103,10 @@ function Home() {
             />
             <button className='login-button' type="submit">Login</button>
             <p>
-              <a href="forgot-password">Forgot Password?</a>
+              <a className='home-forgot-password' href="forgot-password">Forgot Password?</a>
             </p>
             <p>
-              Don't have an account? <Link to="/signup">Sign Up</Link>
+              Don't have an account? <Link className="home-signup" to="/signup">Sign Up</Link>
             </p>
         </form>
       </div>
