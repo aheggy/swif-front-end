@@ -66,13 +66,16 @@ function Home() {
       <div className='mission-statment-container'>
         <div className='mission-statement'>
           <span className="typewriter">
-            <strong>SWIF: Connecting Minds,</strong> Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
-            Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.
+            <h1>Study With Internet Friend</h1> 
+            <p>
+              SWIF Connecting Minds,Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
+              Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.
+            </p>
           </span>
         </div>
-        <div className='mission-image'>
+        {/* <div className='mission-image'>
           <img src="../sellectPartner.png" alt="" />
-        </div>
+        </div> */}
       </div>
       <div className="login-image-container">
       
@@ -96,7 +99,7 @@ function Home() {
               onChange={handleInputChange}
               required
             />
-            <button className='submit-button' type="submit">Login</button>
+            <button className='login-button' type="submit">Login</button>
             <p>
               <a href="forgot-password">Forgot Password?</a>
             </p>
