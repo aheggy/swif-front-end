@@ -66,7 +66,7 @@ function Home() {
       <div className='mission-statment-container'>
         <div className='mission-statement'>
           <span className="typewriter">
-            <h1>Study With Internet Friend</h1> 
+            <h3>Study With Internet Friend</h3> 
             <p>
               SWIF Connecting Minds,Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
               Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.

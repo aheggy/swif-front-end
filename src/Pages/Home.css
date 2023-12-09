@@ -14,7 +14,7 @@
     flex-direction: row;
     justify-content: space-around;
     width: 98%;
-    height: 400px;
+    height: 350px;
     /* background-color: #fff; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     /* background: #47a0f8; */
@@ -31,7 +31,7 @@
     align-items: center;
     justify-content: center;
     font-size: xx-large;
-    height: 400px;
+    height: 350px;
     margin: auto;
     padding: 30px;
     border-radius: 70%;
@@ -40,18 +40,18 @@
     
 }
 
-.mission-image{ 
+/* .mission-image{ 
     border: 1px solid blue;
     width: 50%;
-}
+} */
 
-.mission-image img{
+/* .mission-image img{
     border: 500px;
     width: 100%;
     height: 90%;
     object-fit: cover;
     padding: auto;
-}
+} */
 
 .login-image-container {
     /* border: 2px solid black ; */
@@ -66,7 +66,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 0px;
     /* background: #47a0f8; */
-    /* gap: 5%; */
 }
 
 
@@ -115,8 +114,8 @@ button {
 }
 
 .login-button:hover {
-    background-color: white;
-    color: blue;
+    background-color: #479ab8;
+    color: white;
     border: 1px solid blue;
     box-shadow: 0 0 20px rgb(0, 8, 255);
     
@@ -157,4 +156,27 @@ a.home-forgot-password:hover, .home-signup:hover{
     align-items: center;
     justify-content: center;
 
+}
+
+/* Media query for screens smaller than 900px */
+@media screen and (max-width: 900px) {
+    .mission-statment-container, .login-image-container {
+        flex-direction: column; 
+    }
+
+    .mission-statement {
+        order: 1; 
+        width: 100%;
+    }
+
+    .login-container {
+        order: 2; 
+        width: 95%; 
+    }
+
+    .landing-page-image {
+        order: 3; 
+        width: 95%; 
+        height: 50%;
+    }
 }

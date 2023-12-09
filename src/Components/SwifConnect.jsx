@@ -244,7 +244,8 @@ useEffect(() => {
         });
     })
     .then(sdp => {
-        processSDP(sdp);
+      console.log("this is th sdp", sdp)
+        processSDP(sdp, currentUsername, recipientUsername);
         setOfferVisible(false);
         setStatus("Calling...");
     })
@@ -265,7 +266,7 @@ const createAnswer = () => {
         });
     })
     .then(sdp => {
-        processSDP(sdp);
+        processSDP(sdp, currentUsername, recipientUsername);
         setAnswerVisible(false);
         setStatus("Call established");
     })
