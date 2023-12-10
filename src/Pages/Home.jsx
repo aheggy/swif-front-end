@@ -61,6 +61,16 @@ function Home() {
 
 
 
+
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = (e) => {
+      e.preventDefault(); 
+      console.log('Subscribing with email:', email);
+      setEmail('');
+  };
+
+
   return (
     <div className='home'>
       <div className='mission-statment-container'>
@@ -73,9 +83,19 @@ function Home() {
             </p>
           </span>
         </div>
-        {/* <div className='mission-image'>
-          <img src="../sellectPartner.png" alt="" />
-        </div> */}
+        <div className='subscribe'>
+          <form className='subscribe-form' onSubmit={handleSubmit}>
+              <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+              />
+              <button type="submit">Subscribe</button>
+          </form>
+          {/* <img src="../sellectPartner.png" alt="" /> */}
+        </div>
       </div>
       <div className="login-image-container">
       
