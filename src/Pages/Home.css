@@ -6,6 +6,7 @@
     align-items: center;
     background-color: #017bfe;
     gap: 10px ;
+    /* margin: auto; */
 }
 
 .mission-statment-container{
@@ -45,7 +46,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    width: 30%;
+    width: 33%;
 }
 
 .subscribe-form{

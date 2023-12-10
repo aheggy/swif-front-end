@@ -131,7 +131,8 @@ function Home() {
         </form>
       </div>
       <div className='landing-page-image'>
-        <img src="../homePageImage2.webp" alt="" />
+        <img src="../homePage.jpg" alt="" />
+        {/* <img src="../homePageImage2.webp" alt="" /> */}
       </div>
 
       
