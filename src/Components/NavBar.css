@@ -60,18 +60,18 @@ nav {
     height: auto;
     float: left;
     border-radius: 50px;
-    box-shadow: 0 0 20px rgb(0, 8, 255);
-
+    
   }
   
-  @keyframes spin {
+  /* @keyframes spin {
     0% { transform: scale(1) rotateY(0); }
     50% { transform: scale(1.2) rotateY(180deg); }
     100% { transform: scale(1) rotateY(360deg); }
   }
-  
+  */
   .logo img:hover {
-    animation: spin 2s linear infinite;
+    /* animation: spin 2s linear infinite; */
+    box-shadow: 0 0 20px rgb(0, 8, 255);
 
   }
   
