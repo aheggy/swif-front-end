@@ -31,7 +31,8 @@ const AppRoutes = () => {
       if (decoded.exp > currentTime) {
         console.log("navigate to username page")
         navigate(`/${username}`);
-      }else {
+      }else if (token && decoded.exp < currentTime) {
+        localStorage.removeItem('token')
         navigate("/")
       }
 
