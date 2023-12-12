@@ -349,7 +349,7 @@ useEffect(() => {
                             {!isCameraActive && <span>{currentUsername}</span>}
                         </div>
                         <div className="participant-circle bottom-circle">
-                            <video ref={remoteVideoRef} autoPlay muted className="user-video" />
+                            <video ref={remoteVideoRef} autoPlay className="user-video" />
                             {!isCameraActive && <span>{recipientUsername}</span>}
                         </div>
                         {/* <button onClick={() => createAnswer()}>answer</button> */}
