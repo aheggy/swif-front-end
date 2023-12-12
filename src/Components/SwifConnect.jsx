@@ -55,19 +55,19 @@ useEffect(() => {
         console.log("Message received:", messageData);
         console.log("currentUsername", currentUsername)
         console.log("messageData.sender_username", messageData.sender_username)
-
         console.log("messageData.recipientUsername", messageData.recipient_username)
         console.log("recipientUsername", recipientUsername)
-        if ((messageData.sender_username === currentUsername && messageData.        recipient_username === recipientUsername) ||
-        (messageData.sender_username === recipientUsername && messageData.recipient_username === currentUsername)) {
-        console.log("done")
+
+        // if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername) ||
+        // (messageData.sender_username === recipientUsername && messageData.recipient_username === currentUsername)) {
+        // console.log("done")
         setMessages((msgs) => [...msgs, messageData]);
-        if (messageData.recipient_username === currentUsername && messageData.sender_username !== currentUsername) {
+        // if (messageData.recipient_username === currentUsername && messageData.sender_username !== currentUsername) {
             // Display a notification
             // alert(`New message from ${messageData.sender_username}`);
             // Or update a state to show a notification in the UI
-          }
-    }
+          // }
+      // }
     });
   
     return () => {
@@ -132,151 +132,131 @@ useEffect(() => {
   const pc = useRef(new RTCPeerConnection(null))
   const textRef = useRef({})
 //   const candidates = useRef([])
-  const [offerVisible, setOfferVisible] = useState(true)
-  const [answerVisible, setAnswerVisible] = useState(false)
+  const [offerVisible, setOfferVisible] = useState(false)
+  // const [answerVisible, setAnswerVisible] = useState(false)
   const [status, setStatus] = useState("Make A call now")
   const [isCameraActive, setIsCameraActive] = useState(false);
 
 
 
-  useEffect (() => {
-    socket.on("connection-success", success => {
-        console.log(success)
-    })
-
-    socket.on("sdp", data => {
-        console.log("_____________",data)
-        pc.current.setRemoteDescription(new RTCSessionDescription(data.sdp))
-        textRef.current.value = JSON.stringify(data.sdp)
-        
-        if(data.sdp.type === "offer"){
-            setOfferVisible(false)
-            setAnswerVisible(true)
-            setStatus("Incoming call...")
-        }else {
-            setStatus("Call established")
-        }
-    })
-
-    socket.on("candidate", candidate => {
-        console.log("candidat_____________",candidate)
-        // candidates.current = [...candidates.current, candidate]
-        pc.current.addIceCandidate(new RTCIceCandidate(candidate))
-    })
-
-
-
+  useEffect(() => {
     const pcConfig = {
-        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
     };
 
+    pc.current = new RTCPeerConnection(pcConfig);
 
-    const _pc = new RTCPeerConnection(pcConfig)
-    _pc.onicecandidate = (e) => {
-        if (e.candidate){
-            // console.log(JSON.stringify(e.candidate))
-            sendToPeer("candidate", e.candidate)
-        }
-    }
-
-    _pc.oniceconnectionstatechange = (e) => {
-        console.log("ICE Connection State Change:", e)
-    }
-
-    _pc.ontrack = (e) => {
-        // This is where you set the remote video stream
-        if (remoteVideoRef.current && e.streams && e.streams[0]) {
-            remoteVideoRef.current.srcObject = e.streams[0];
-        }
+    pc.current.onicecandidate = (e) => {
+      if (e.candidate) {
+        sendToPeer('candidate', { candidate: e.candidate });
+      }
+      console.log("pc after onicecandate", pc)
     };
 
-    pc.current = _pc
+    pc.current.ontrack = (e) => {
+      if (remoteVideoRef.current && e.streams && e.streams[0]) {
+        remoteVideoRef.current.srcObject = e.streams[0];
+    }
+    };
 
+    socket.on('sdp', handleRemoteSDP);
+    socket.on('candidate', handleRemoteCandidate);
 
     return () => {
-        // Clean up when component unmounts
-        socket.off("connection-success");
-        socket.off("sdp");
-        socket.off("candidate");
-        if (localVideoRef.current) {
-            localVideoRef.current.srcObject = null;
-        }
-        if (remoteVideoRef.current) {
-            remoteVideoRef.current.srcObject = null;
-        }
+      socket.off('register')
+      socket.off('sdp');
+      socket.off('candidate');
+
+      if (pc.current) {
         pc.current.close();
+      }
     };
+  }, [currentUsername, recipientUsername]);
 
+  const handleRemoteSDP = (data) => {
+    // if (data.recipient === currentUsername){
+       pc.current.setRemoteDescription(new RTCSessionDescription(data.sdp));
+      //  textRef.current.value = JSON.stringify(data.sdp)
+      // console.log("data.sdp.type", data.sdp.type, data)
+      if (data.sdp.type === 'offer') {
+        setOfferVisible(true);
+      }
+    // }
+  };
 
-  }, [])
-
+  const handleRemoteCandidate = (candidateData) => {
+    console.log("Received ICE candidate:", candidateData);
+    if (candidateData.candidate) {
+      const iceCandidate = new RTCIceCandidate({
+        candidate: candidateData.candidate.candidate,
+        sdpMid: candidateData.candidate.sdpMid,
+        sdpMLineIndex: candidateData.candidate.sdpMLineIndex,
+      });
+      pc.current.addIceCandidate(iceCandidate);
+    }
+  };
   
-
-
-
-
-
-  
-  console.log("pc...", pc)
-
-  const sendToPeer = (eventType, payload) => {
-    socket.emit(eventType, payload)
-  }
-
-  const processSDP = (sdp) => {
-    console.log(JSON.stringify(sdp))
-    pc.current.setLocalDescription(sdp)
-
-    sendToPeer("sdp", {sdp})
-
-  }
 
   const createOffer = () => {
+    console.log("1- offer created")
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then(stream => {
-        localVideoRef.current.srcObject = stream;
-        stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
-        setIsCameraActive(true);
+      localVideoRef.current.srcObject = stream;
+      stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
+      setIsCameraActive(true);
 
-        return pc.current.createOffer({
-            offerToReceiveAudio: 1,
-            offerToReceiveVideo: 1,
-        });
+      return pc.current.createOffer({
+        offerToReceiveVideo: 1,
+        offerToReceiveAudio: 1,
+      })
     })
-    .then(sdp => {
-      console.log("this is th sdp", sdp)
-        processSDP(sdp, currentUsername, recipientUsername);
-        setOfferVisible(false);
-        setStatus("Calling...");
+    .then( offer => {
+      return pc.current.setLocalDescription(offer);
+    })
+    .then (() => {
+      // const offer = pc.current.createOffer();
+      sendToPeer('sdp', { sdp: pc.current.localDescription }); 
+      
     })
     .catch(e => console.log("Error creating offer or accessing user media:", e));
-};
+  };
 
-
-const createAnswer = () => {
+  const createAnswer = () => {
+    console.log("1- Answer created");
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-    .then(stream => {
+      .then(stream => {
         localVideoRef.current.srcObject = stream;
         stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
         setIsCameraActive(true);
+  
+        return pc.current.createAnswer(); 
+      })
+      .then(answer => {
+        return pc.current.setLocalDescription(answer);
+      })
+      .then(() => {
+        sendToPeer('sdp', { sdp: pc.current.localDescription });
+      })
+      .catch(e => console.log("Error creating answer or accessing user media:", e)); 
+  };
+  
 
-        return pc.current.createAnswer({
-            offerToReceiveAudio: 1,
-            offerToReceiveVideo: 1,
-        });
-    })
-    .then(sdp => {
-        processSDP(sdp, currentUsername, recipientUsername);
-        setAnswerVisible(false);
-        setStatus("Call established");
-    })
-    .catch(e => console.log("Error creating answer or accessing user media:", e));
-};
+  const sendToPeer = (eventType, payload) => {
+    const fullPayload = {
+      ...payload,
+      sender: currentUsername,
+      recipient: recipientUsername,
+    };
+    console.log("2- SDP created")
+    socket.emit(eventType, fullPayload)
+    console.log("3- SDP created and emited", fullPayload)
+
+
+  };
 
 
   const setRemoteDescription = () => {
     const sdp = JSON.parse(textRef.current.value)
-
     pc.current.setRemoteDescription(new RTCSessionDescription(sdp))
   }
 
@@ -290,13 +270,13 @@ const createAnswer = () => {
 
 
   const showHideButtons = () => {
-    if (offerVisible) {
+    if (!offerVisible) {
         return(
             <div>
                 <button onClick={createOffer}>Start Call</button>
             </div>
         )
-    } else if (answerVisible) {
+    } else {
         return(
             <div>
                 <button onClick={createAnswer}>Answer</button>
@@ -329,7 +309,7 @@ const createAnswer = () => {
     setOfferVisible(false)
     pc.current.close();
     pc.current = new RTCPeerConnection(null);
-    window.location.href=`/people`; // Navigate to user's page
+    window.location.href=`/swifconnect`;
 
 
   }

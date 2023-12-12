@@ -47,7 +47,7 @@ function UserPage() {
 					<UserSidebar></UserSidebar>
 					<section className="userpage-content">
 						<h2 className="userpage-welcome">
-							Welcome to SWIF <span>{userData.name}</span>
+							Welcome <span>{username}</span>
 						</h2>
 						<div className="userpage-message">
 							<p>
