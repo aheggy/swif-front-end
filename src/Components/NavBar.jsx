@@ -44,13 +44,10 @@ const NavBar = () => {
         {token && jwtDecode(token).exp > Date.now ()/ 1000 ? (
           <>
             <li>
-              <Link to="/swifconnect" className="nav-link">Swif-Connect</Link>
-            </li>
-            <li>
               <Link to="/people" className="nav-link">People</Link>
             </li>
             <li>
-              <Link to="/message" className="nav-link">Message</Link>
+              <Link to="/subjects" className="nav-link">Subjects</Link>
             </li>
             <li>
               <Link onClick={logout} className="nav-link">Sign Out</Link>

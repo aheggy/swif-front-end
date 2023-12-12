@@ -33,8 +33,8 @@ function Home() {
 
         // Decode token to get the username
         const decodedToken = jwtDecode(data.token);
-        const username = decodedToken.username; // Ensure token has username
-        window.location.href=`/${username}`; // Navigate to user's page
+        const username = decodedToken.username; 
+        window.location.href=`/${username}`;
       } else {
         console.log('Login failed');
       }
@@ -45,19 +45,29 @@ function Home() {
 
 
   const [displayedText, setDisplayedText] = useState('');
-  const fullText = "SWIF: Connecting Minds, Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups. Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.";
-
+  const fullText = ["Study With Internet Friend."];
+  
   useEffect(() => {
-    const sentences = fullText.split('. ');
-    let currentSentence = 0;
-    let displayInterval = setInterval(() => {
-      setDisplayedText((text) => text + sentences[currentSentence] + '. ');
-      currentSentence++;
-      if (currentSentence === sentences.length) clearInterval(displayInterval);
-    }, 3500); // Adjust the time for each sentence
-
-    return () => clearInterval(displayInterval);
+    let currentTextIndex = 0;
+    let charIndex = 0;
+    const typeWriter = () => {
+      if (charIndex < fullText[currentTextIndex].length) {
+        setDisplayedText(fullText[currentTextIndex].substring(0, charIndex + 1));
+        charIndex++;
+        setTimeout(typeWriter, 150);
+      } else {
+        setTimeout(() => {
+          charIndex = 0;
+          currentTextIndex = (currentTextIndex + 1) % fullText.length;
+          setDisplayedText('');
+          typeWriter();
+        }, 2000); 
+      }
+    };
+  
+    typeWriter();
   }, []);
+  
 
 
 
@@ -76,7 +86,7 @@ function Home() {
       <div className='mission-statment-container'>
         <div className='mission-statement'>
           <span className="typewriter">
-            <h3>Study With Internet Friend</h3> 
+            <h3>{displayedText}</h3> 
             <p>
               SWIF Connecting Minds,Empowering Learning. We're dedicated to revolutionizing study experiences by connecting students worldwide in filtered study groups.
               Our platform nurtures academic growth and fosters meaningful social bonds, turning solitary study into a no-pressure, collaborative, enriching journey. Join SWIF and transform the way you learn, collaborate, and succeed.

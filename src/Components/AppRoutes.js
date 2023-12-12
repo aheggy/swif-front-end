@@ -12,6 +12,8 @@ import MessagePage from './MessagePage';
 import People from '../Pages/People';
 import UserPage from '../Pages/UserPage';
 import Review from '../Pages/Review';
+import SubjectPage from '../Pages/SubjectPage';
+
 
 const AppRoutes = () => {
   const navigate = useNavigate();
@@ -45,9 +47,9 @@ const AppRoutes = () => {
       {/* <Route path="/login" element={<LoginPage />} /> */}
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/review" element={<Review />} />
-      <Route path="/messages" element={<ProtectedRoute><MessagePage /></ProtectedRoute>} />
-      <Route path="/:username" element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
       <Route path="/people" element={<ProtectedRoute><People /></ProtectedRoute>} />
+      <Route path="/:username" element={<ProtectedRoute><UserPage /></ProtectedRoute>} />
+      <Route path="/subjects" element={<ProtectedRoute><SubjectPage /></ProtectedRoute>} />
       <Route path="/swifconnect" element={<ProtectedRoute><SwifConnect token={token} /></ProtectedRoute>} />
     </Routes>
   );
