@@ -160,7 +160,7 @@ const SubjectPage = () => {
 						{subjects.map((subject) => {
 							return (
 								<div className="subject" key={subject.id}>
-									<a className="card_image" href="/">
+									<a className="card_image" href="/people">
 										<div className="circle">
 											<div className="img">
 												<img src={subject.img} alt="" />
