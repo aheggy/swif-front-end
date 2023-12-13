@@ -83,6 +83,19 @@ function Home() {
   };
 
 
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var images = document.querySelectorAll('.landing-page-image .home-image');
+    var currentImage = 0;
+
+    setInterval(function() {
+        images[currentImage].style.display = 'none';
+        currentImage = (currentImage + 1) % images.length;
+        images[currentImage].style.display = 'block';
+    }, 2000); // 2000 milliseconds = 2 seconds
+});
+
+
   return (
     <div className='home'>
       <div className='mission-statment-container'>
@@ -107,6 +120,10 @@ function Home() {
               <button type="submit">Subscribe</button>
           </form>
           {/* <img src="../sellectPartner.png" alt="" /> */}
+          <div className='appStore-googlePlay'>
+            <img className='app-image' src="../appStore.png" alt="" />
+            <img className='app-image' src="../googlePlay.png" alt="" />
+          </div>
         </div>
       </div>
       <div className="login-image-container">
@@ -143,8 +160,8 @@ function Home() {
         </form>
       </div>
       <div className='landing-page-image'>
-        <img src="../homePage.jpg" alt="" />
-        {/* <img src="../homePageImage2.webp" alt="" /> */}
+        <img className='home-image' src="../homePage.jpg" alt="" />
+        <img className='home-image' src="../homePageImage.webp" alt="" />
       </div>
 
       
