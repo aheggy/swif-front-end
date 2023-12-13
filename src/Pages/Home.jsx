@@ -121,8 +121,8 @@ function Home() {
           </form>
           {/* <img src="../sellectPartner.png" alt="" /> */}
           <div className='appStore-googlePlay'>
-            <img className='app-image' src="../appStore.png" alt="" />
-            <img className='app-image' src="../googlePlay.png" alt="" />
+            <img className='app-image' src="../as.png" alt="" />
+            <img className='app-image' src="../gp.png" alt="" />
           </div>
         </div>
       </div>
@@ -161,7 +161,7 @@ function Home() {
       </div>
       <div className='landing-page-image'>
         <img className='home-image' src="../homePage.jpg" alt="" />
-        <img className='home-image' src="../homePageImage.webp" alt="" />
+        {/* <img className='home-image' src="../homePageImage.webp" alt="" /> */}
       </div>
 
       
