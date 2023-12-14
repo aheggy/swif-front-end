@@ -24,10 +24,15 @@
     transform: translateY(-5px) scale(1.005) translateZ(0);
     box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11),
         0 24px 46px var(--box-shadow-color);
+        background-color: #017bfe;
+        color: white;
+        font-weight: bold;
+        font-size: xx-large;
 }
 
 .card_image:hover .overlay {
     transform: scale(4) translateZ(0);
+
 }
 
 .card_image:hover .circle {
