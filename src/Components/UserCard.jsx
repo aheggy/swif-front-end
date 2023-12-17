@@ -25,7 +25,7 @@ export default function UserCard({ user }) {
           </p>
 
           <p className="user-name bold"> 
-            {user.first_name} 
+            {user.first_name} {user.last_name} 
           </p>
 
           <p className="chat-icon" onClick={handleChatIconClick}>💬</p>
