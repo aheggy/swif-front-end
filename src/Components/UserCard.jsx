@@ -1,13 +1,17 @@
 import "./UserCard.css"
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 
 export default function UserCard({ user }) {
 
+  const navigate = useNavigate()
 
   function handleChatIconClick(){
-    alert("chat icon clicked")
+    // alert("chat icon clicked")
+    navigate('/swifconnect')
+
   }
 
 
