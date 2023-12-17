@@ -33,7 +33,7 @@ export default function UserCard({ user }) {
         <div>
         <p className="user-info-second-line">
           <span className="bold">Status:</span> 
-          {user.isOnline ? <span className="online-status">Online</span> : <span className="offline-status">Offline</span>}
+          {user.isOnline ? <span className="online-status">Online 🟢</span> : <span className="offline-status">Offline 🔴</span>}
         </p>
         </div>
           
