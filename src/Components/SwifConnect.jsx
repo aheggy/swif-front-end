@@ -32,6 +32,19 @@ export default function SwifConnect({ token }) {
   const [recipientUsername, setRecipientUsername] = useState(null);
 
 
+  const [isCallStarted, setIsCallStarted] = useState(false)
+  const localVideoRef = useRef(null)
+  const remoteVideoRef = useRef(null)
+  const pc = useRef(new RTCPeerConnection(null))
+  const textRef = useRef({})
+//   const candidates = useRef([])
+  const [offerVisible, setOfferVisible] = useState(false)
+  // const [answerVisible, setAnswerVisible] = useState(false)
+  const [status, setStatus] = useState("Make A call now")
+  const [isCameraActive, setIsCameraActive] = useState(false);
+
+
+
 useEffect(() => {
 
     const fetchUsers = async () => {
@@ -121,24 +134,9 @@ useEffect(() => {
 
 
 
-  //////////////////////////////////////////////////////
-    //              VIDIO PART 
-  //////////////////////////////////////////////////////
 
-
-  const [isCallStarted, setIsCallStarted] = useState(false)
-  const localVideoRef = useRef(null)
-  const remoteVideoRef = useRef(null)
-  const pc = useRef(new RTCPeerConnection(null))
-  const textRef = useRef({})
-//   const candidates = useRef([])
-  const [offerVisible, setOfferVisible] = useState(false)
-  // const [answerVisible, setAnswerVisible] = useState(false)
-  const [status, setStatus] = useState("Make A call now")
-  const [isCameraActive, setIsCameraActive] = useState(false);
-
-
-
+  
+  
   useEffect(() => {
     const pcConfig = {
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
@@ -309,7 +307,8 @@ useEffect(() => {
     setOfferVisible(false)
     pc.current.close();
     pc.current = new RTCPeerConnection(null);
-    window.location.href=`/swifconnect`;
+    // window.location.href=`/swifconnect`;
+    window.location.replace(`/swifconnect`);
 
 
   }

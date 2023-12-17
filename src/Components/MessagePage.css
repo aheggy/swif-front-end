@@ -1,46 +1,16 @@
 .message-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px;
+  flex-direction: row;
+  margin: 10px;
 }
 
-.message-box {
-  min-height: 400px; 
-  width: 90%;
-  border: 1px solid rgb(21, 18, 199);
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  padding: 20px;
-  overflow-y: scroll;
+
+.user-sidebar{
+  width: 23%;
 }
 
-.message-input {
-  padding: 10px;
-  border: 1px solid #2d40d0;
-  border-radius: 5px;
-}
-
-.send-button {
-  padding: 0 50px;
-  height: 46px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4285F4;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.send-button:hover {
-  background-color: #3270E0;
-}
-
-.input-button {
-  margin-top: 10px;
-  display: flex;
-  align-items: stretch;
-  width: 90%;
+.messages-content{
+  width: 77%;
 }
 
 

@@ -1,4 +1,6 @@
 .user-card{
+
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,6 +11,44 @@
 }
 
 .user-image{
+    
+    border-radius: 10px;
     width: 180px;
-    height: 220px;
+    height: 200px;
+}
+
+.chat-icon {
+    font-size: 24px; 
+
+}
+
+.chat-icon:hover {
+    cursor: pointer; 
+
+    
+}
+
+.user-info-below-image{
+    
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.user-info-first-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+
+.user-info-first-line p {
+    margin: 0; 
+}
+
+.user-info-second-line{
+    display: flex;
+    justify-content: space-between;
 }

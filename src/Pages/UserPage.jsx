@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import "./UserPage.css";
 import "../assets/css/LineButtonAnimation.css";
@@ -8,79 +9,79 @@ import UserSidebar from "../Components/UserSidebar";
 
 const API = process.env.REACT_APP_API_URL;
 
-function UserPage() {
+function UserPage({currentUsername}) {
 	const { username } = useParams();
 	const [userData, setUserData] = useState(null);
+	const [isOwnProfile, setIsOwnProfile] = useState(false);
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await fetch(`${API}/people`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setUserData(data);
-                } else {
-					setUserData({
-						name: "test",
-					});
-				}
-			} catch (error) {
-				setUserData({
-					name: "test",
+
+	
+	useEffect(() => {
+  		setIsOwnProfile(username === currentUsername);
+
+		if (username) {
+			axios.get(`${API}/user/${encodeURIComponent(username)}`)
+				.then(response => {
+					setUserData(response.data[0]);
+				})
+				.catch(error => {
+					console.error('Error fetching user data:', error);
+					setUserData({ name: "catch error" });
 				});
-			}
-		};
+		}
+	}, [username, currentUsername]);
 
-		fetchUserData();
-	}, [username]);
+	
+
+	console.log(userData)
+
 
 	return (
-		<div>
+		<div className="user-page">
 			{userData ? (
-				// <div>
-				//     {/* Display user-specific data here */}
-				//     <p>Name: {userData.name}</p>
-				//     <p>Email: {userData.email}</p>
-				//     {/* Add more user details here */}
-				// </div>
-				<div className="userpage-container">
-					<UserSidebar></UserSidebar>
+			<>
+					{isOwnProfile && <div className="UserSidebar"><UserSidebar currentUsername={currentUsername}/></div>}
+					<div className="userpage-container">
+					<div className="user-info">
 					<section className="userpage-content">
-						<h2 className="userpage-welcome">
-							Welcome <span>{username}</span>
-						</h2>
-						<div className="userpage-message">
-							<p>
-								Your study experience with us is about to start
+						{
+							isOwnProfile && 
+							<p className="userpage-message">
+								Welcome <strong> {username} </strong>
+								<i>
+									{/* <img src={succesImg} alt="" /> */}
+								</i>
 							</p>
-							<i>
-								<img src={succesImg} alt="" />
-							</i>
-						</div>
-						<div className="userpage-cards">
-							<div class="custom-card">
-								<div class="flex-container">
-									<div class="circle teal"></div>
-									<div class="circle orange"></div>
-									<div class="circle indigo"></div>
-								</div>
-								<div class="card__content"></div>
+						}
+						<div className="about-user">
+							<div className="profile-image">
+								<img src={userData.profile_image_url} alt="Profile Image" />
 							</div>
-							<div class="custom-card">
-								<div class="flex-container">
-									<div class="circle teal"></div>
-									<div class="circle orange"></div>
-									<div class="circle indigo"></div>
-								</div>
-								<div class="card__content"></div>
+							<div className="all-info">
+								<p className="user-info">Name : <span>{userData.first_name} {userData.last_name}</span></p>
+								<p className="user-info">Gender : <span>{userData.gender}</span></p>
+								<p className="user-info">Age : <span>{userData.age}</span></p>
+								<p className="user-info">Country : <span>{userData.country}</span></p>
+								<p className="user-info">City : <span>{userData.city}</span></p>
+								<p className="user-info">BIO : <span>{userData.bio}</span></p>
 							</div>
 						</div>
+						<hr />
+
+						<div className="interested-subject">
+							<h1>Interested subject</h1>
+						</div>
+
+						
 					</section>
+					</div>
 				</div>
+			</>
 			) : (
 				<p>Loading user data...</p>
 			)}
 		</div>
+
 	);
 }
 

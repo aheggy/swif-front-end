@@ -7,7 +7,7 @@ import "../assets/css/animatedImageCard.css";
 
 import { useEffect } from "react";
 
-const SubjectPage = () => {
+const SubjectPage = ({currentUsername}) => {
 	useEffect(() => {
 		document.title = "Subject Page";
 	}, []);
@@ -148,12 +148,14 @@ const SubjectPage = () => {
 
 			],
 		},
+
 	];
 
+	console.log("this is the subject page", currentUsername)
 	return (
 		<div>
 			<div className="subjectpage-container">
-				<UserSidebar></UserSidebar>
+				<UserSidebar currentUsername={currentUsername}/>
 				<section className="subjectpage-content">
 					<h2>Subject Page</h2>
 					<div className="subjects-container">

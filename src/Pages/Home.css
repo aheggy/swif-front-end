@@ -15,7 +15,7 @@
     flex-direction: row;
     justify-content: space-around;
     width: 98%;
-    height: 300px;
+    height: auto;
     /* background-color: #fff; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     /* background: #47a0f8; */
@@ -135,9 +135,9 @@
 
 .landing-page-image{
     /* border: 1px solid green; */
-    width: 50%;
+    width: auto;
     margin: 5px auto;
-    height: 100%;
+    height: auto;
 }
 
 
@@ -161,6 +161,8 @@
     height: 100%;
     object-fit: cover;
     padding: auto;
+    object-position: top;
+
 }
 
 
@@ -229,8 +231,8 @@ a.home-forgot-password:hover, .home-signup:hover{
 
 }
 
-/* Media query for screens smaller than 900px */
-@media screen and (max-width: 950px) {
+/* Media query for screens smaller than 1000px */
+@media screen and (max-width: 1000px) {
     .mission-statment-container, .login-image-container {
         flex-direction: column; 
     }

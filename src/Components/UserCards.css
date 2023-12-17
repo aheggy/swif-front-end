@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
     grid-auto-rows: 300px;
-    margin: 20px;
+    margin: 10px;
     padding-top: 30px;
+    justify-content: center;
 }

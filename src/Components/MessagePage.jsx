@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./MessagePage.css";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import UserSidebar from './UserSidebar';
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -39,25 +40,29 @@ const MessagePage = () => {
 
   return (
     <div className='message-container'>
-      <h2>Messages</h2>
-      <div className='message-box'>
-        {messages.map((message, index) => (
-          <div key={index}>
-            <p>{message.text}</p>
-            <p>From: User ID {message.userId}</p>
-          </div>
-        ))}
+      <div className='user-sidebar'>
+        <UserSidebar />
       </div>
-      <div className='input-button'>
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          className='message-input'
-        />
-        <button onClick={sendMessage} className='send-button'>
-          Send
-        </button>
+      <div className='messages-content'>
+        <div className='message-box'>
+          {messages.map((message, index) => (
+            <div key={index}>
+              <p>{message.text}</p>
+              <p>From: User ID {message.userId}</p>
+            </div>
+          ))}
+        </div>
+        <div className='input-button'>
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            className='message-input'
+          />
+          <button onClick={sendMessage} className='send-button'>
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );

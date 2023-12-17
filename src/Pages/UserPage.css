@@ -1,20 +1,39 @@
+.user-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #017bfe;
+    font: white; */
+
+}
 .userpage-container {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 90vh;
+    margin: 10px;
     overflow: hidden;
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px 0px #00000091;
+
 }
 
+.UserSidebar {
+    height: 100%;
+    flex: 22%;
+    border-right: 2px solid #ddd; 
+}
 .userpage-content {
     padding: 10px;
     margin: 10px;
-    height: calc(100% - 60px);
-    grid-row: 1;
-    grid-column: 2 / 3;
+    width: 99%;
+
+
+
 }
 
 .userpage-welcome {
+
     margin-bottom: 10px;
 }
 
@@ -23,13 +42,71 @@
 }
 
 .userpage-message {
+    gap: 10px;
     display: flex;
     flex-direction: row;
-    width: 300px;
-    align-items: center;
+    justify-content: center;
     font-family: 'Kalam', cursive;
-    text-align: center;
+    align-items: center;
+    font-size: x-large;
 }
+strong{
+    color: blue;
+}
+
+.about-user{
+    width: 100%;
+
+    border-radius: 5px;
+    padding: 10px;
+    border-radius: 1px solid blue;
+
+}
+
+
+.interested-subject{
+    width: 100%;
+    height: 45vh;
+    border-radius: 5px;
+    padding: 10px;
+    border-radius: 2px solid blue;
+}
+
+.user-info{
+    /* border: 2px solid black; */
+    flex: 20%;
+    font-weight: bold;
+    
+}
+
+.user-info span{
+    font-weight: lighter;
+    
+}
+
+
+.profile-image{
+    border: 1px solid red;
+    width: 230px;
+    height: 220px;
+    border-radius: 5px;
+    
+}
+
+.about-user{
+    gap: 25px;
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+.name-bio-info{
+    width: auto;
+    
+}
+
+
 
 .userpage-message img {
     height: 50px;
@@ -61,28 +138,4 @@
     display: flex;
     padding: 0.5rem;
     gap: 0.25rem;
-}
-
-.circle {
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 50%;
-}
-
-.teal {
-    background-color: #38b2ac;
-}
-
-.orange {
-    background-color: #ed8936;
-}
-
-.indigo {
-    background-color: #667eea;
-}
-
-.userpage-cards{
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
 }

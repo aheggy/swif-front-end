@@ -6,6 +6,7 @@
 
 .aside-menu {
     border: 1px solid gray;
+
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
@@ -13,7 +14,7 @@
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    height: calc(100% - 40px);
+    height: 90vh;
     box-shadow: 5px 5px 10px 0px #00000091;
 }
 
