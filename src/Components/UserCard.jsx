@@ -12,6 +12,7 @@ export default function UserCard({ user, isOnline }) {
 
   function handleChatIconClick(){
     setRecipientUser(user);
+    localStorage.removeItem('recipientUser')
     localStorage.setItem('recipientUser', JSON.stringify(user));
     navigate('/swifconnect')
 

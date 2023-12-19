@@ -93,3 +93,9 @@
     justify-content: space-around;
     
   }
+
+@media screen and (max-width: 450px) {
+    .chat-container{
+        display: none;
+    }
+}

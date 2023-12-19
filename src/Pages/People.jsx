@@ -44,7 +44,7 @@ export default function People({currentUsername}) {
 
   return (
     <div className="people-container">
-      <UserSidebar></UserSidebar>
+      <UserSidebar className="sidebar"></UserSidebar>
       <UserCards userStatuses={userStatuses}/>
     </div>
   )

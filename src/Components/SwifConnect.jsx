@@ -16,12 +16,6 @@ const socket = io(API, {
 });
 
 export default function SwifConnect({ token }) {
-
-
-
-
-
-
   const [isChatActive, setIsChatActive] = useState(false);
   const messageInputRef = useRef(null);
   const messagesEndRef = useRef(null);

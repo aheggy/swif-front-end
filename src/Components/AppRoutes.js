@@ -77,7 +77,7 @@ const AppRoutes = () => {
 
   return (
     <UserProvider>
-      <ChatWindow token={token} currentUsername={currentUsername} messages={messages} />
+      {/* <ChatWindow token={token} currentUsername={currentUsername} messages={messages} /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         {/* <Route path="/login" element={<LoginPage />} /> */}
