@@ -2,7 +2,9 @@ import React, {useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { getUsernameFromToken } from '../utilities/tokenUtilities';
 import { jwtDecode } from 'jwt-decode';
-import io from "socket.io-client";
+import { io } from 'socket.io-client';
+import { UserProvider } from '../contexts/UserProvider';
+
 
 
 
@@ -31,6 +33,7 @@ const socket = io(API, {
 const AppRoutes = () => {
   const [currentUsername, setCurrentUsername] = useState("")
   const [messages, setMessages] = useState([]);
+  // const [userStatuses, setUserStatuses] = useState({})
 
 
   const navigate = useNavigate();
@@ -48,34 +51,32 @@ const AppRoutes = () => {
         if (location.pathname === '/' || location.pathname === '/signup') {
           navigate(`/${username}`);
         }
-        socket.emit('register', username);
-        socket.on("new_message", (messageData) => {
-          if (messageData.recipient_username === username) {
-            setMessages(prevMessages => [...prevMessages, messageData]);
-          }
-        });
       } else {
         localStorage.removeItem('token');
         navigate("/");
       }
     }
+
+
   }, [token, navigate, location.pathname]);
 
 
-
-
-
+  
   useEffect(() => {
-    return () => {
-      socket.off("new_message");
-    };
-  }, []);
+    const heartbeatInterval = setInterval(() => {
+      socket.emit('heartbeat', { username: currentUsername });
+    }, 5000); // Sends heartbeat every 10 seconds
+  
+    return () => clearInterval(heartbeatInterval);
+  }, [currentUsername, socket]);
+
+
 
 
 
 
   return (
-    <>
+    <UserProvider>
       <ChatWindow token={token} currentUsername={currentUsername} messages={messages} />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -85,11 +86,11 @@ const AppRoutes = () => {
         <Route path="/:username" element={<ProtectedRoute><UserPage currentUsername={currentUsername} /></ProtectedRoute>} />
         
         <Route path="/messages" element={<ProtectedRoute><MessagePage currentUsername={currentUsername}/></ProtectedRoute>} />
-        <Route path="/people" element={<ProtectedRoute><People /></ProtectedRoute>} />
+        <Route path="/people" element={<ProtectedRoute><People currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/subjects" element={<ProtectedRoute><SubjectPage currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/swifconnect" element={<ProtectedRoute><SwifConnect token={token} /></ProtectedRoute>} />
       </Routes>
-    </>
+    </UserProvider>
   );
 };
 

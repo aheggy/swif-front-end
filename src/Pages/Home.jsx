@@ -120,10 +120,6 @@ function Home() {
               <button type="submit">Subscribe</button>
           </form>
           {/* <img src="../sellectPartner.png" alt="" /> */}
-          <div className='appStore-googlePlay'>
-            <img className='app-image' src="../as.png" alt="" />
-            <img className='app-image' src="../gp.png" alt="" />
-          </div>
         </div>
       </div>
       <div className="login-image-container">

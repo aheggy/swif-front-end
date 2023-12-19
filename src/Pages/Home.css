@@ -15,7 +15,7 @@
     flex-direction: row;
     justify-content: space-around;
     width: 98%;
-    height: auto;
+    height: 30%;
     /* background-color: #fff; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     /* background: #47a0f8; */
@@ -31,13 +31,6 @@
     75% { box-shadow: -20px 0 20px rgb(255, 255, 255); }
     100% { box-shadow: 0 -20px 20px rgb(255, 255, 255); }
 }
-/* @keyframes moving-shadow {
-    0% { box-shadow: 0 -20px 20px rgb(255, 255, 255); }
-    25% { box-shadow: -20px 0 20px rgb(255, 255, 255); }
-    50% { box-shadow: 0 20px 20px rgb(255, 255, 255); }
-    75% { box-shadow: 20px 0 20px rgb(255, 255, 255); }
-    100% { box-shadow: 0 0 20px rgb(255, 255, 255); }
-} */
 
 
 .mission-statement {
@@ -47,11 +40,11 @@
     align-items: center;
     justify-content: center;
     font-size: xx-large;
-    height: 300px;
+    height: 90%;
     margin: auto;
-    padding: 30px;
-    border-radius: 70%;
+    padding: 20px;
     background-color: blue;
+    border-radius: 10px;
     color: white;
     animation: moving-shadow 8s infinite ease-in-out;
 }
@@ -64,7 +57,7 @@
     justify-content: center;
     text-align: center;
     width: 33%;
-    padding-right: 20px;
+    padding-right: 7%;
 }
 
 .subscribe-form{
@@ -76,6 +69,7 @@
     background-color: blue;
     padding: 0 5px;
     height: 43px;
+    border-radius: 5px;
     /* border-radius: 10px; */
 }
 
@@ -83,15 +77,15 @@
     background-color: white;
     color: blue;
     border: 1px solid blue;
-    box-shadow: 0 0 20px rgb(217, 255, 210);
+    /* box-shadow: 0 0 20px rgb(217, 255, 210); */
     
 }
 
-.subscribe input:focus{
-    box-shadow: 0 0 20px rgb(217, 255, 210);
-}
+
 .subscribe input{
     width: 100%;
+    border-radius: 5px;
+
 }
 .app-image {
     width: 30%; 
@@ -116,7 +110,7 @@
     justify-content: space-between;
     align-items: center;
     width: 98%;
-    height: auto;
+    height: 60%;
     text-align: center;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -157,8 +151,8 @@
 
 
 .landing-page-image img{
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     object-fit: cover;
     padding: auto;
     object-position: top;
@@ -174,7 +168,7 @@ p {
 
 .forgot-password{
     /* box-shadow: 0 0 20px rgb(0, 8, 255); */
-    text-shadow: 0 0 20px rgb(0, 8, 255);
+    /* text-shadow: 0 0 20px rgb(0, 8, 255); */
 
 }
 
@@ -190,7 +184,7 @@ button {
     background-color: #479ab8;
     color: white;
     border: 1px solid blue;
-    box-shadow: 0 0 20px rgb(0, 8, 255);
+    /* box-shadow: 0 0 20px rgb(0, 8, 255); */
     
 }
 
@@ -216,12 +210,12 @@ footer{
 }
 
 .home-login:focus{
-    box-shadow: 0 0 10px rgb(0, 8, 255);
+    /* box-shadow: 0 0 10px rgb(0, 8, 255); */
 
 }
 
 a.home-forgot-password:hover, .home-signup:hover{
-    text-shadow: 0 0 20px rgb(0, 8, 255);
+    /* text-shadow: 0 0 20px rgb(0, 8, 255); */
 }
 .home-login-form{
     display: flex;

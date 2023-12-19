@@ -1,15 +1,18 @@
 import "./UserCard.css"
-import React from "react";
+import {React, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { UserContext } from "../contexts/UserProvider";
 
 
-export default function UserCard({ user }) {
 
+export default function UserCard({ user, isOnline }) {
+  const{setRecipientUser} = useContext(UserContext)
   const navigate = useNavigate()
 
   function handleChatIconClick(){
-    // alert("chat icon clicked")
+    setRecipientUser(user);
+    localStorage.setItem('recipientUser', JSON.stringify(user));
     navigate('/swifconnect')
 
   }
@@ -37,7 +40,7 @@ export default function UserCard({ user }) {
         <div>
         <p className="user-info-second-line">
           <span className="bold">Status:</span> 
-          {user.isOnline ? <span className="online-status">Online 🟢</span> : <span className="offline-status">Offline 🔴</span>}
+          {isOnline === true? <span className="online-status">Online 🟢</span> : <span className="offline-status">Offline 🔴</span>}
         </p>
         </div>
           

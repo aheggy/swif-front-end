@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import "./SwifConnect.css";
+import { UserContext } from "../contexts/UserProvider";
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -15,6 +16,8 @@ const socket = io(API, {
 });
 
 export default function SwifConnect({ token }) {
+
+
 
 
 
@@ -42,6 +45,32 @@ export default function SwifConnect({ token }) {
   // const [answerVisible, setAnswerVisible] = useState(false)
   const [status, setStatus] = useState("Make A call now")
   const [isCameraActive, setIsCameraActive] = useState(false);
+
+
+
+  // const { recipientUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const savedRecipientUser = JSON.parse(localStorage.getItem('recipientUser'));
+    if (savedRecipientUser) {
+      setRecipientUsername(savedRecipientUser.username);
+      setMessages([]);
+
+    }
+  }, [recipientUsername]);
+
+  // useEffect(() => {
+  //   if (recipientUser) {
+  //     setRecipientUsername(recipientUser.username);
+  //     // any other setup you need for starting a chat with this user
+  //     console.log("this is the recipientuser get passed form user card:", recipientUser.username)
+  //     setRecipientUsername(recipientUser.username);
+  //     setMessages([]);
+  //     // fetchChatHistory(user.username);
+  //     setIsChatActive(true);
+  //   }
+  // }, [recipientUser]);
+
 
 
 
@@ -108,13 +137,6 @@ useEffect(() => {
   };
   
 
-  const initiateChat = (user) => {
-    setRecipientUsername(user.username);
-    setMessages([]);
-    // fetchChatHistory(user.username);
-    setIsChatActive(true);
-  };
-
 
 
   const handleKeyPress = (e) => {
@@ -169,7 +191,7 @@ useEffect(() => {
         pc.current.close();
       }
     };
-  }, [currentUsername, recipientUsername]);
+  }, [currentUsername, recipientUsername, socket]);
 
   const handleRemoteSDP = (data) => {
     // if (data.recipient === currentUsername){
@@ -341,7 +363,6 @@ useEffect(() => {
             </div>
 
             <div className="available-user">
-                {isChatActive ? (
                     <div className="chat-participants">
                         <div className="participant-circle top-circle">
                             <video ref={localVideoRef} autoPlay muted className="user-video" />
@@ -352,24 +373,11 @@ useEffect(() => {
                             {!isCameraActive && <span>{recipientUsername}</span>}
                         </div>
                         {/* <button onClick={() => createAnswer()}>answer</button> */}
-
-                        
                         <div className="callandendchat-button">
                              <button onClick={endChat}>End Chat</button>
                             {showHideButtons()}
                         </div>
-
                     </div>
-                ) : (
-                    availableUsers
-                    .filter(user => user.username !== currentUsername)
-                    .map((user, index) => (
-                        <div key={index} onClick={() => initiateChat(user)}>
-                            {user.first_name} {user.last_name}
-                            <hr />
-                        </div>
-                    ))
-                )}
             </div>
         </div>
     );

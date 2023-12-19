@@ -13,6 +13,7 @@ const NavBar = () => {
 
   const logout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("recipientUser")
     setToken(null);
     console.log(!!token)
     window.location.href=`/`

@@ -1,35 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
-import "./ChatWindow.css"
+import { useState, useRef, useEffect } from "react";
+import { io } from "socket.io-client";
 
 const API = process.env.REACT_APP_API_URL;
-const socket = io(API);
+
+const socket = io(API, {
+  reconnection: true,
+  reconnectionAttempts: Infinity,
+  reconnectionDelay: 1000,
+});
+
 
 export default function ChatWindow({ token, currentUsername }) {
     const [isVisible, setIsVisible] = useState(false);
     const [messages, setMessages] = useState([]);
-
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
         socket.on("new_message", (messageData) => {
-            console.log("messageData", messageData)
             if (messageData.recipient_username === currentUsername) {
                 setMessages(prevMessages => [...prevMessages, messageData]);
-                setIsVisible(true);
+                // Auto-open the chat window when a new message is received
+                if (!isVisible) {
+                    setIsVisible(true);
+                }
             }
         });
 
         return () => {
             socket.off("new_message");
         };
-    }, [currentUsername]);
+    }, [currentUsername, isVisible]);
 
-    const handleClose = () => {
-        setIsVisible(false);
+    useEffect(() => {
+        if (isVisible) {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [messages, isVisible]);
+
+    const handleToggle = () => {
+        setIsVisible(!isVisible);
     };
 
+    const handleClose = () => {
+
+    }
+
+    
     return (
         <>
+            <button className="toggle-chat-btn" onClick={handleToggle}>Chat</button>
             {isVisible && (
                 <div className="chat-popup">
                     <div className="chat-header">
@@ -42,6 +61,7 @@ export default function ChatWindow({ token, currentUsername }) {
                                 <b>{message.sender_username}</b>: {message.text}
                             </div>
                         ))}
+                        <div ref={messagesEndRef} />
                     </div>
                 </div>
             )}
