@@ -1,9 +1,9 @@
 .toggle-chat-btn {
   position: fixed;
   bottom: 20px;
-  right: 330px; /* Adjust as needed */
+  right: 330px; 
   z-index: 1001;
-  /* Other styling as needed */
+
 }
 
 .chat-popup {

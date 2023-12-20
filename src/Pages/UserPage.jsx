@@ -23,6 +23,7 @@ function UserPage({currentUsername}) {
 			axios.get(`${API}/user/${encodeURIComponent(username)}`)
 				.then(response => {
 					setUserData(response.data[0]);
+					console.log("this is the userpage", response.data[0])
 				})
 				.catch(error => {
 					console.error('Error fetching user data:', error);
