@@ -34,6 +34,8 @@ const AppRoutes = () => {
   const [currentUsername, setCurrentUsername] = useState("")
   const [messages, setMessages] = useState([]);
   // const [userStatuses, setUserStatuses] = useState({})
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
 
 
   const navigate = useNavigate();
@@ -48,11 +50,14 @@ const AppRoutes = () => {
       if (decoded.exp > currentTime) {
         const username = getUsernameFromToken(token);
         setCurrentUsername(username);
+        setIsAuthenticated(true);
         if (location.pathname === '/' || location.pathname === '/signup') {
           navigate(`/${username}`);
+
         }
       } else {
         localStorage.removeItem('token');
+        setIsAuthenticated(false);
         navigate("/");
       }
     }
@@ -66,8 +71,11 @@ const AppRoutes = () => {
     socket.emit('register', currentUsername);
   } 
 
+
   setInterval(() => {
-    socket.emit('heartbeat', { username: currentUsername });
+    if (currentUsername) {
+      socket.emit('heartbeat', { username: currentUsername });
+    }
   }, 3000); 
 
 
