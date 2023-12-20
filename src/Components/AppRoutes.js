@@ -62,14 +62,13 @@ const AppRoutes = () => {
 
 
   
-  useEffect(() => {
-    const heartbeatInterval = setInterval(() => {
-      socket.emit('heartbeat', { username: currentUsername });
-    }, 1000); // Sends heartbeat every 10 seconds
-  
-    return () => clearInterval(heartbeatInterval);
-  }, [currentUsername, socket]);
+  if (currentUsername) {
+    socket.emit('register', currentUsername);
+  } 
 
+  setInterval(() => {
+    socket.emit('heartbeat', { username: currentUsername });
+  }, 3000); 
 
 
 
