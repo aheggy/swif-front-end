@@ -101,7 +101,7 @@ function Home() {
       <div className='mission-statment-container'>
         <div className='mission-statement'>
           <span className="typewriter">
-
+          <h1>Welcome to SWIF!</h1>
             
           </span>
         </div>
@@ -111,9 +111,13 @@ function Home() {
       
       
       <div className='login-container'>
-        <h1>Welcome to SWIF!</h1>
+
+        <div className='mission-statment'>
+
         <h3>{displayedText}</h3> 
         <h3>{textH2}</h3>
+        </div>
+
         <form className='home-login-form' onSubmit={handleLogin}>
             <input
               className='home-login'

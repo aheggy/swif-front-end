@@ -6,21 +6,11 @@
     align-items: center;
     background-color: #017bfe;
     gap: 10px ;
+    color: white;
     /* margin: auto; */
 }
 
-.mission-statment-container{
-    /* border: 2px solid red ; */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 98%;
-    height: 30%;
-    /* background-color: #fff; */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* background: #47a0f8; */
 
-}
 
 
 
@@ -33,60 +23,6 @@
 }
 
 
-.mission-statement {
-    display: flex;
-    width: 50%;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    font-size: xx-large;
-    height: 90%;
-    margin: auto;
-    padding: 20px;
-    background-color: blue;
-    border-radius: 10px;
-    color: white;
-    animation: moving-shadow 8s infinite ease-in-out;
-}
-
-
-
-.subscribe{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    width: 33%;
-    padding-right: 7%;
-}
-
-.subscribe-form{
-    display: flex;
-    width: 100%;
-}
-
-.subscribe button{
-    background-color: blue;
-    padding: 0 5px;
-    height: 43px;
-    border-radius: 5px;
-    /* border-radius: 10px; */
-}
-
-.subscribe button:hover {
-    background-color: white;
-    color: blue;
-    border: 1px solid blue;
-    /* box-shadow: 0 0 20px rgb(217, 255, 210); */
-    
-}
-
-
-.subscribe input{
-    width: 100%;
-    border-radius: 5px;
-
-}
 .app-image {
     width: 30%; 
     height: auto;
@@ -115,13 +51,17 @@
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 0px;
+    color: blue;
     /* background: #47a0f8; */
 }
 
+.mission-statment{
+    margin-bottom: 50px;
+}
 
 .login-container{
     /* border: 1px solid blue; */
-    margin: 5px;
+    margin: 50px;
     width: 50%;
     font-weight: bold;
 
@@ -160,17 +100,6 @@
 }
 
 
-p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    
-}
-
-.forgot-password{
-    /* box-shadow: 0 0 20px rgb(0, 8, 255); */
-    /* text-shadow: 0 0 20px rgb(0, 8, 255); */
-
-}
 
 button {
     background-color: #007bff;
@@ -190,13 +119,14 @@ button {
 
 .login-button{
     width: 40%;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: blue;
 
 }
 
 
 footer{
+    padding: 20px 0;
     width: 100%;
     background-color: #03243d;
     text-align: center;
