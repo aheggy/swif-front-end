@@ -6,7 +6,6 @@
 }
   
 .users-container {
-  overflow-y: auto; /* If you want a scrollable list */
-  /* other styles as needed */
+  overflow-y: auto; 
 }
   

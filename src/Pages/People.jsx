@@ -40,6 +40,11 @@ export default function People({currentUsername}) {
 
   }, [currentUsername, socket])
 
+  setInterval(() => {
+    if (currentUsername) {
+      socket.emit('heartbeat', { username: currentUsername });
+    }
+  }, 3000); 
 
 
   return (

@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import "./SwifConnect.css";
 import { UserContext } from "../contexts/UserProvider";
-
+import Whiteboard from "./Whiteboard";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -39,6 +39,14 @@ export default function SwifConnect({ token }) {
   // const [answerVisible, setAnswerVisible] = useState(false)
   const [status, setStatus] = useState("Make A call now")
   const [isCameraActive, setIsCameraActive] = useState(false);
+
+
+
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const screenStreamRef = useRef(null);
+  const remoteScreenRef = useRef(null);
+
+
 
 
 
@@ -82,9 +90,16 @@ useEffect(() => {
     fetchUsers();
 
 
+  if (currentUsername) {
+    socket.emit('register', currentUsername);
+  } 
+
+
+  setInterval(() => {
     if (currentUsername) {
-      socket.emit('register', currentUsername);
+      socket.emit('heartbeat', { username: currentUsername });
     }
+  }, 3000); 
 
 
     socket.on("new_message", (messageData) => {
@@ -198,6 +213,7 @@ useEffect(() => {
     // }
   };
 
+
   const handleRemoteCandidate = (candidateData) => {
     console.log("Received ICE candidate:", candidateData);
     if (candidateData.candidate) {
@@ -282,23 +298,52 @@ useEffect(() => {
 //   }
 
 
-
-  const showHideButtons = () => {
-    if (!offerVisible) {
-        return(
-            <div>
-                <button onClick={createOffer}>Start Call</button>
-            </div>
-        )
-    } else {
-        return(
-            <div>
-                <button onClick={createAnswer}>Answer</button>
-            </div>
-        )
+  const startScreenShare = async () => {
+    try {
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      screenStreamRef.current = screenStream;
+  
+      const screenTrack = screenStream.getTracks()[0];
+      
+      const sender = pc.current.getSenders().find(s => s.track.kind === 'video');
+      sender.replaceTrack(screenTrack);
+  
+      setIsScreenSharing(true);
+  
+      screenTrack.onended = () => {
+        stopScreenShare();
+      };
+    } catch (error) {
+      console.error("Failed to start screen sharing:", error);
     }
-  }
+  };
+  
+  const stopScreenShare = () => {
+    const videoTrack = localVideoRef.current.srcObject.getTracks().find(track => track.kind === 'video');
+    const sender = pc.current.getSenders().find(s => s.track.kind === 'video');
+    sender.replaceTrack(videoTrack);
+  
+    screenStreamRef.current.getTracks().forEach(track => track.stop());
+    screenStreamRef.current = null;
+  
+    setIsScreenSharing(false);
+  };
 
+
+
+  const getRemoteStreamStyle = () => {
+    return isScreenSharing ? { position: 'absolute', zIndex: 1 } : {};
+  };
+  
+  const getRemoteScreenStyle = () => {
+    return isScreenSharing ? { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 } : { display: 'none' };
+  };
+
+  
+
+
+
+  
 
   const endChat = () => {
 
@@ -325,13 +370,99 @@ useEffect(() => {
     pc.current = new RTCPeerConnection(null);
     // window.location.href=`/swifconnect`;
     window.location.replace(`/swifconnect`);
-
-
   }
+
+
+
+
+
+
+const [dragging, setDragging] = useState(false);
+const [diffX, setDiffX] = useState(0);
+const [diffY, setDiffY] = useState(0);
+const [styles, setStyles] = useState({});
+
+const draggableRef = useRef(null);
+
+
+
+const handleMouseDown = (e) => {
+  setDragging(true);
+  const boundingBox = draggableRef.current.getBoundingClientRect();
+  setDiffX(e.clientX - boundingBox.left);
+  setDiffY(e.clientY - boundingBox.top);
+};
+
+const handleMouseMove = (e) => {
+  if (dragging) {
+      const left = e.clientX - diffX;
+      const top = e.clientY - diffY;
+      setStyles({ left: `${left}px`, top: `${top}px`, position: 'absolute' });
+  }
+};
+
+const handleMouseUp = () => {
+  setDragging(false);
+};
+
+
+useEffect(() => {
+
+  const handleMouseUpGlobal = () => {
+      if (dragging) {
+          setDragging(false);
+      }
+  };
+
+  window.addEventListener('mouseup', handleMouseUpGlobal);
+
+  return () => {
+      window.removeEventListener('mouseup', handleMouseUpGlobal);
+  };
+}, [dragging]);
 
 
     return (
         <div className="swif-connect-container">
+            <div
+              ref={draggableRef}
+              style={styles}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp} 
+              className="draggable-video-window"
+            > 
+              <div className="remote-user">
+                <video ref={remoteVideoRef} autoPlay muted className="remote-user-video" />
+                {!isCameraActive && <span>{recipientUsername}</span>}
+              </div>
+              <div className="remote-screen" style={getRemoteScreenStyle()}>
+                {isScreenSharing && (
+                  <video ref={remoteScreenRef} autoPlay playsInline className="remote-screen-video" />
+                )}
+              </div>
+              <div className="local-user">
+                <video ref={localVideoRef} autoPlay muted className="local-user-video" />
+                {!isCameraActive && <span>{currentUsername}</span>}
+              </div>
+            </div>
+
+
+            <div className="available-user">
+                    <div className="chat-participants">
+                        <div className="callandendchat-button">
+                            {!offerVisible ? (<button onClick={createOffer}>Start Call</button>
+                            ):(<button onClick={createOffer}>Start Call</button>)}
+                            <button onClick={startScreenShare}>share screen</button>
+                            <button onClick={endChat}>End Call</button>
+                        </div>
+                    </div>
+            </div>
+
+
+
+
             <div className="chat-container">
                 <div className="chat-box">
                     {messages.map((message, index) => (
@@ -356,23 +487,7 @@ useEffect(() => {
                 </div>
             </div>
 
-            <div className="available-user">
-                    <div className="chat-participants">
-                        <div className="participant-circle top-circle">
-                            <video ref={localVideoRef} autoPlay muted className="user-video" />
-                            {!isCameraActive && <span>{currentUsername}</span>}
-                        </div>
-                        <div className="participant-circle bottom-circle">
-                            <video ref={remoteVideoRef} autoPlay className="user-video" />
-                            {!isCameraActive && <span>{recipientUsername}</span>}
-                        </div>
-                        {/* <button onClick={() => createAnswer()}>answer</button> */}
-                        <div className="callandendchat-button">
-                             <button onClick={endChat}>End Chat</button>
-                            {showHideButtons()}
-                        </div>
-                    </div>
-            </div>
+            <Whiteboard />
         </div>
     );
 
