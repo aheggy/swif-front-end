@@ -45,8 +45,8 @@ function Home() {
 
 
   const [displayedText, setDisplayedText] = useState('');
-  const fullText = ["Study With Internet Friends."];
-  const textH2 = ["Connecting Minds", " ", "Empowering Learning","."]
+  const fullText = ["Study With Internet Friends"];
+  const textH2 = ["Connecting Minds", ", ", "Empowering Learning"]
   
   let currentTextIndex = 0;
   let charIndex = 0;
@@ -101,32 +101,19 @@ function Home() {
       <div className='mission-statment-container'>
         <div className='mission-statement'>
           <span className="typewriter">
-            <h3>{displayedText}</h3> 
-            <h3>{textH2}</h3>
-            <p>
-                Where awkwardness meets awesome. Study smarter, not harder, in a supportive, online community. Join filtered study groups, connect with like-minded peers, and transform learning from a solo act to a collaborative adventure. SWIF - your no-pressure zone for academic growth and meaningful connections.
-            </p>
+
+            
           </span>
         </div>
-        <div className='subscribe'>
-          <form className='subscribe-form' onSubmit={handleSubmit}>
-              <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-              />
-              <button type="submit">Subscribe</button>
-          </form>
-          {/* <img src="../sellectPartner.png" alt="" /> */}
-        </div>
+
       </div>
       <div className="login-image-container">
       
       
       <div className='login-container'>
         <h1>Welcome to SWIF!</h1>
+        <h3>{displayedText}</h3> 
+        <h3>{textH2}</h3>
         <form className='home-login-form' onSubmit={handleLogin}>
             <input
               className='home-login'
