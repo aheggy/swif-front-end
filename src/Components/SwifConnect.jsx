@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import "./SwifConnect.css";
 import { UserContext } from "../contexts/UserProvider";
-
+import Whiteboard from "./Whiteboard";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -298,27 +298,6 @@ useEffect(() => {
 //   }
 
 
-
-  const showHideButtons = () => {
-    if (!offerVisible) {
-        return(
-            <div>
-                <button onClick={createOffer}>Start Call</button>
-            </div>
-        )
-    } else {
-        return(
-            <div>
-                <button onClick={createAnswer}>Answer</button>
-            </div>
-        )
-    }
-  }
-
-
-
-
-
   const startScreenShare = async () => {
     try {
       const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
@@ -473,9 +452,10 @@ useEffect(() => {
             <div className="available-user">
                     <div className="chat-participants">
                         <div className="callandendchat-button">
-                             <button onClick={endChat}>End Call</button>
-                            {showHideButtons()}
+                            {!offerVisible ? (<button onClick={createOffer}>Start Call</button>
+                            ):(<button onClick={createOffer}>Start Call</button>)}
                             <button onClick={startScreenShare}>share screen</button>
+                            <button onClick={endChat}>End Call</button>
                         </div>
                     </div>
             </div>
@@ -506,6 +486,8 @@ useEffect(() => {
                     <button className='send-button' onClick={sendMessage}>Send</button>
                 </div>
             </div>
+
+            <Whiteboard />
         </div>
     );
 

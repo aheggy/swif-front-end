@@ -1,26 +1,34 @@
 .swif-connect-container {
     position: relative;
+    padding: 5px;
     min-height: 95vh;
-    background-color: aqua;
+    background-color: white;
 }
 
 .callandendchat-button {
-    border: 1px solid gray;
+    border: 2px solid yellow;
     position: absolute;
     bottom: 20px; 
-    left: 50%;
+    left: 55px;
+    gap: 2px;
     transform: translateX(-50%);
     display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100px;
+}
+
+
+
+.swif-connect-container button {
+    display: flex;
     justify-content: center;
-    width: 40%;
+    align-items: center;
+    padding: 12px 60px;
+    border-radius: 5px;
+    white-space: nowrap;
 }
 
-
-
-.callandendchat-button button {
-    margin: 0 10px;
-    padding: 10px 20px;
-}
 
 
 .draggable-video-window {
@@ -58,7 +66,7 @@
 .remote-user span, .local-user span {
     color: blue;
     position: absolute;
-    font-size: 16px; 
+    font-size: 26px; 
     text-align: center;
     width: 100%;
 }
