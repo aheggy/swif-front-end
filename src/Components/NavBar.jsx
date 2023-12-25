@@ -37,35 +37,27 @@ const NavBar = () => {
   return (
     <nav >
       <div className="logo">
-        {/* <Link to="/" className="nav-link">SWIF</Link> */}
         <Link to="/" className="nav-link"><img src="../logo.jpg" alt="" /></Link>
-        
       </div>
-      <ul className="nav-links">
-        {token && jwtDecode(token).exp > Date.now ()/ 1000 ? (
-          <>
-            <li>
-              <Link to="/people" className="nav-link">People</Link>
-            </li>
-            <li>
-              <Link to="/subjects" className="nav-link">Subjects</Link>
-            </li>
-            <li>
-              <Link onClick={logout} className="nav-link">Sign Out</Link>
-            </li>
-          </>
-      ) : (
-        <>
-        <li>
-          <Link to="/review" className="nav-link">Review</Link>
-        </li>
-        <li>
-          <Link to="/signup" className="nav-link">Sign Up</Link>
-        </li>
-        </>
-      )}
 
-      </ul>
+      <div className="nav-links-container">
+        <ul className="nav-links">
+          {token && jwtDecode(token).exp > Date.now ()/ 1000 ? (
+            <>
+              <li>
+                <Link onClick={logout} className="nav-link">Sign Out</Link>
+              </li>
+            </>
+        ) : (
+          <>
+          <li>
+            <Link to="/signup" className="nav-link">Sign Up</Link>
+          </li>
+          </>
+        )}
+
+        </ul>
+      </div>
     </nav>
   );
 };

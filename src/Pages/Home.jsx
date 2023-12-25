@@ -98,54 +98,45 @@ function Home() {
 
   return (
     <div className='home'>
-      <div className='mission-statment-container'>
-        <div className='mission-statement'>
-          <span className="typewriter">
-          <h1>Welcome to SWIF!</h1>
-            
-          </span>
-        </div>
-
+      <div className='welcome-message'>
+        <h1>Welcome to SWIF!</h1>
       </div>
       <div className="login-image-container">
-      
-      
-      <div className='login-container'>
+        <div className='login-container'>
 
-        <div className='mission-statment'>
+          <div className='mission-statment'>
+            <h3>{displayedText}</h3> 
+            <h3>{textH2}</h3>
+          </div>
 
-        <h3>{displayedText}</h3> 
-        <h3>{textH2}</h3>
+          <form className='home-login-form' onSubmit={handleLogin}>
+              <input
+                className='home-login'
+                type="text"
+                name='username'
+                placeholder="Username"
+                value={loginData.username}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                className='home-login'
+                type="password"
+                name='password'
+                placeholder="Password"
+                value={loginData.password}
+                onChange={handleInputChange}
+                required
+              />
+              <button className='login-button' type="submit">Login</button>
+              <p>
+                <a className='home-forgot-password' href="forgot-password">Forgot Password?</a>
+              </p>
+              <p>
+                Don't have an account? <Link className="home-signup" to="/signup">Sign Up</Link>
+              </p>
+          </form>
         </div>
-
-        <form className='home-login-form' onSubmit={handleLogin}>
-            <input
-              className='home-login'
-              type="text"
-              name='username'
-              placeholder="Username"
-              value={loginData.username}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              className='home-login'
-              type="password"
-              name='password'
-              placeholder="Password"
-              value={loginData.password}
-              onChange={handleInputChange}
-              required
-            />
-            <button className='login-button' type="submit">Login</button>
-            <p>
-              <a className='home-forgot-password' href="forgot-password">Forgot Password?</a>
-            </p>
-            <p>
-              Don't have an account? <Link className="home-signup" to="/signup">Sign Up</Link>
-            </p>
-        </form>
-      </div>
       <div className='landing-page-image'>
         <img className='home-image' src="../homePage.jpg" alt="" />
         {/* <img className='home-image' src="../homePageImage.webp" alt="" /> */}

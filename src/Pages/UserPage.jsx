@@ -55,8 +55,8 @@ function UserPage({currentUsername}) {
 							</p>
 						}
 						<div className="about-user">
-							<div className="profile-image">
-								<img src={userData.profile_image_url} alt="Profile Image" />
+							<div>
+								<img src={userData.profile_image_url ? (userData.profile_image_url):("/default-user-img2.jpeg")} alt="Profile Image" className="profile-image"/>
 							</div>
 							<div className="all-info">
 								<p className="user-info">Name : <span>{userData.first_name} {userData.last_name}</span></p>

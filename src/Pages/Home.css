@@ -10,7 +10,12 @@
     /* margin: auto; */
 }
 
+.welcome-message{
+    width: 100%;
+    padding-top: 5px;
+    text-align: center;
 
+}
 
 
 
@@ -139,14 +144,7 @@ footer{
     
 }
 
-.home-login:focus{
-    /* box-shadow: 0 0 10px rgb(0, 8, 255); */
 
-}
-
-a.home-forgot-password:hover, .home-signup:hover{
-    /* text-shadow: 0 0 20px rgb(0, 8, 255); */
-}
 .home-login-form{
     display: flex;
     flex-direction: column;
@@ -157,18 +155,8 @@ a.home-forgot-password:hover, .home-signup:hover{
 
 /* Media query for screens smaller than 1000px */
 @media screen and (max-width: 1000px) {
-    .mission-statment-container, .login-image-container {
+    .welcome-message, .login-image-container {
         flex-direction: column; 
-    }
-
-    .mission-statment-container {
-        height: 60%;
-    }
-    
-    .mission-statement {
-        order: 1; 
-        width: 100%;
-        margin-bottom: 20px;
     }
 
     .subscribe{
@@ -189,9 +177,13 @@ a.home-forgot-password:hover, .home-signup:hover{
         padding-top: 20px;
         order: 3; 
         width: 95%; 
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
 
     .landing-page-image {
+        margin-top: 0;
+        padding-top: 0;
         order: 4; 
         width: 95%; 
         height: 50%;

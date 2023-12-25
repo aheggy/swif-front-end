@@ -1,6 +1,4 @@
 .user-card{
-
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,31 +8,28 @@
     margin: 10px;
 }
 
-.user-image{
-    
+.user-image{  
     border-radius: 10px;
     width: 180px;
     height: 200px;
+    object-fit: cover;
 }
 
 .chat-icon {
     font-size: 24px; 
-
 }
 
 .chat-icon:hover {
     cursor: pointer; 
-
-    
 }
 
 .user-info-below-image{
-    
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     width: 100%;
+    object-fit: cover;
 }
 
 .user-info-first-line {

@@ -8,7 +8,7 @@
 .card_image {
     height: 100%;
     background: #fff;
-    border-top-right-radius: 10px;
+    border-radius: 10px;
     overflow: hidden;
     display: flex;
     flex-direction: column;

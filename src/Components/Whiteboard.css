@@ -1,8 +1,62 @@
-.background-canvas {
+.whiteboard-page-container {
+    border: 1px solid gray;
     position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1; /* Ensure it's in the background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 10px;
+    top: 10px;
+    height: 730px;
+    width: 75%;
+    overflow: hidden;
+}
+
+
+
+
+.color-picker-container{
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ justify-content: center;
+ gap: 5px;
+}
+
+.color{
+    width: 40px;
+    padding: 3px;
+    margin: auto;
+}
+
+.clear-whiteboard {
+    font-size: 12px;
+    width: auto;
+    height: 25px;
+    line-height: 10px;
+    padding: 2px 5px;
+    cursor: pointer;
+    border: 1px solid gray;
+    vertical-align: middle; 
+    text-align: center; 
+}
+
+.whiteboard-container {
+    border: 1px solid gray;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: lightskyblue;
+}
+
+.board-container{
+
     width: 100%;
     height: 100%;
+    margin: auto;
+    background-color: white;
+}
+
+.board-container canvas{
+    cursor: crosshair;
 }

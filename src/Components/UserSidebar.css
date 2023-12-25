@@ -6,7 +6,6 @@
 
 .aside-menu {
     border: 1px solid gray;
-
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
@@ -16,6 +15,7 @@
     -o-border-radius: 10px;
     height: 90vh;
 }
+
 
 .userpage-aside ul {
     list-style: none;
@@ -27,6 +27,10 @@
     margin: 0px;
 }
 
+.line-button-animation{
+    border-bottom: none;
+    
+}
 
 @media screen and (max-width: 450px) {
     .userpage-aside{

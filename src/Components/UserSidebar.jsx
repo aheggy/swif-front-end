@@ -1,18 +1,15 @@
 import "./UserSidebar.css"
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-
-
-
-
 import messages from "../assets/img/messages.png"
 import profile from "../assets/img/profile.png"
-import notification from "../assets/img/notification.png"
+import subject from "../assets/img/subject.png"
 import group from "../assets/img/group.png"
 import library from "../assets/img/library.png"
-import settings from "../assets/img/settings.png"
+import studyGuide from "../assets/img/studyGuide.png"
 import { getUsernameFromToken } from '../utilities/tokenUtilities';
 import { jwtDecode } from "jwt-decode"
+
 
 const UserSidebar = () => {
 
@@ -53,28 +50,36 @@ const UserSidebar = () => {
 						</Link>
 					</li>
 					<li>
-						<button className="line-button-animation">
-							<img src={notification} alt="" />
-							Notifications
-						</button>
+						<Link to={"/subjects"}>
+							<button className="line-button-animation">
+								<img src={subject} alt="" />
+								Subjects
+							</button>
+						</Link>
 					</li>
 					<li>
-						<button className="line-button-animation">
-							<img src={group} alt="" />
-							My groups
-						</button>
+						<Link to={"/people"}>
+							<button className="line-button-animation">
+								<img src={group} alt="" />
+								People
+							</button>
+						</Link>
 					</li>
 					<li>
-						<button className="line-button-animation">
-							<img src={library} alt="" />
-							Library
-						</button>
+						<Link to={"library"}>
+							<button className="line-button-animation">
+								<img src={library} alt="" />
+								Library
+							</button>
+						</Link>
 					</li>
 					<li>
-						<button className="line-button-animation">
-							<img src={settings} alt="" />
-							Settings
-						</button>
+						<Link to={"studyguide"}>
+							<button className="line-button-animation">
+								<img src={studyGuide} alt="" />
+								Study Guide
+							</button>
+						</Link>
 					</li>
 				</ul>
 			</div>

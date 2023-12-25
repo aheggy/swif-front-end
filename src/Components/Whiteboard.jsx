@@ -1,56 +1,110 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Whiteboard.css';  // If you have specific styles for the whiteboard
+import './Whiteboard.css';
 
-const Whiteboard = () => {
-    const [isDrawing, setIsDrawing] = useState(false);
+const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
+    const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
     const canvasRef = useRef(null);
-
-    const setupCanvas = () => {
-        const canvas = canvasRef.current;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const context = canvas.getContext('2d');
-        context.strokeStyle = 'black';
-        context.lineWidth = 2;
-    };
+    const contextRef = useRef(null);
+    const [isDrawing, setIsDrawing] = useState(false);
 
     useEffect(() => {
-        window.addEventListener('resize', setupCanvas);
-        setupCanvas();
-        return () => window.removeEventListener('resize', setupCanvas);
+        const canvas = canvasRef.current;
+        canvas.width = window.innerWidth * 2;
+        canvas.height = window.innerHeight * 2;
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+
+        const context = canvas.getContext("2d");
+        context.scale(2, 2);
+        context.lineCap = "round";
+        context.strokeStyle = "black";
+        context.lineWidth = 5;
+        contextRef.current = context;
     }, []);
+
+    const drawLine = (x0, y0, x1, y1, emit) => {
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(x0, y0);
+        contextRef.current.lineTo(x1, y1);
+        contextRef.current.stroke();
+        contextRef.current.closePath();
+
+        if (!emit) { return; }
+        const w = canvasRef.current.width;
+        const h = canvasRef.current.height;
+    
+        socket.emit('drawing', {
+            x0: x0 / w,
+            y0: y0 / h,
+            x1: x1 / w,
+            y1: y1 / h,
+            color: contextRef.current.strokeStyle,
+            recipient: recipientUsername 
+        });
+    };
 
     const startDrawing = ({ nativeEvent }) => {
         const { offsetX, offsetY } = nativeEvent;
-        const context = canvasRef.current.getContext('2d');
-        context.beginPath();
-        context.moveTo(offsetX, offsetY);
         setIsDrawing(true);
+        setLastPos({ x: offsetX, y: offsetY });
     };
 
-    const draw = ({ nativeEvent }) => {
-        if (!isDrawing) return;
-        const { offsetX, offsetY } = nativeEvent;
-        const context = canvasRef.current.getContext('2d');
-        context.lineTo(offsetX, offsetY);
-        context.stroke();
-    };
-
-    const endDrawing = () => {
-        const context = canvasRef.current.getContext('2d');
-        context.closePath();
+    const finishDrawing = () => {
         setIsDrawing(false);
     };
 
+    const draw = ({ nativeEvent }) => {
+        if (!isDrawing) {
+            return;
+        }
+        const { offsetX, offsetY } = nativeEvent;
+        drawLine(lastPos.x, lastPos.y, offsetX, offsetY, true);
+        setLastPos({ x: offsetX, y: offsetY });
+    };
+
+    const clearCanvas = () => {
+        const canvas = canvasRef.current;
+        contextRef.current.clearRect(0, 0, canvas.width, canvas.height);
+        socket.emit('clear_canvas', {recipient: recipientUsername}); 
+    };
+
+    const handleRemoteDrawing = (data) => {
+        const w = canvasRef.current.width;
+        const h = canvasRef.current.height;
+        drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, false);
+    };
+
+    useEffect(() => {
+        socket.on('drawing', handleRemoteDrawing);
+        socket.on('clear_canvas', () => {
+            const canvas = canvasRef.current;
+            contextRef.current.clearRect(0, 0, canvas.width, canvas.height);
+        });
+        return () => {
+            socket.off('drawing', handleRemoteDrawing);
+            socket.off('clear_canvas');
+        };
+    }, [socket, currentUsername]);
+
     return (
-        <canvas
-            ref={canvasRef}
-            onMouseDown={startDrawing}
-            onMouseUp={endDrawing}
-            onMouseMove={draw}
-            onMouseOut={endDrawing}
-            className="background-canvas"
-        />
+        <div className='whiteboard-page-container'>
+            <div className='color-picker-container'>
+                <input className='color' type="color" onChange={(e) => contextRef.current.strokeStyle = e.target.value} />
+                <button className='clear-whiteboard' onClick={clearCanvas}>Clear</button>
+            </div>
+            <div className='whiteboard-container'>
+                <div className='board-container'>
+                    <canvas
+                        onMouseDown={startDrawing}
+                        onMouseUp={finishDrawing}
+                        onMouseMove={draw}
+                        ref={canvasRef}
+                        className='board'
+                        id='board'
+                    />
+                </div>
+            </div>
+        </div>
     );
 };
 

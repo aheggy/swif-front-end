@@ -19,6 +19,7 @@ import UserPage from '../Pages/UserPage';
 import Review from '../Pages/Review';
 import SubjectPage from '../Pages/SubjectPage';
 import ChatWindow from './ChatWindow';
+import NavBar from "./NavBar";
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -31,14 +32,14 @@ const socket = io(API, {
 
 
 const AppRoutes = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentUsername, setCurrentUsername] = useState("")
   const [messages, setMessages] = useState([]);
   // const [userStatuses, setUserStatuses] = useState({})
+  const isSwifConnectPage = location.pathname === '/swifconnect';
 
 
-
-  const navigate = useNavigate();
-  const location = useLocation();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -65,12 +66,9 @@ const AppRoutes = () => {
 
   
 
-
-
-
-
-
   return (
+    <>
+      {!isSwifConnectPage && <NavBar />}
     <UserProvider>
       {/* <ChatWindow token={token} currentUsername={currentUsername} messages={messages} /> */}
       <Routes>
@@ -79,13 +77,13 @@ const AppRoutes = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/review" element={<Review />} />
         <Route path="/:username" element={<ProtectedRoute><UserPage currentUsername={currentUsername} /></ProtectedRoute>} />
-        
         <Route path="/messages" element={<ProtectedRoute><MessagePage currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/people" element={<ProtectedRoute><People currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/subjects" element={<ProtectedRoute><SubjectPage currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/swifconnect" element={<ProtectedRoute><SwifConnect token={token} /></ProtectedRoute>} />
       </Routes>
     </UserProvider>
+    </>
   );
 };
 

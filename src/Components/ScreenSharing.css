@@ -1,0 +1,13 @@
+.screen-sharing-container {
+    background-color: cornflowerblue;
+    border: 1px solid gray;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 10px;
+    top: 10px;
+    height: 730px;
+    width: 75%;
+    overflow: hidden;
+}
