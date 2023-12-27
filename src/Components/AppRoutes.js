@@ -5,21 +5,18 @@ import { jwtDecode } from 'jwt-decode';
 import { io } from 'socket.io-client';
 import { UserProvider } from '../contexts/UserProvider';
 
-
-
-
 import Home from '../Pages/Home';
-// import LoginPage from '../Pages/LogIn';
 import SignUpPage from '../Pages/SignUp';
 import ProtectedRoute from './ProtectedRoute';
 import SwifConnect from './SwifConnect';
 import MessagePage from './MessagePage';
 import People from '../Pages/People';
 import UserPage from '../Pages/UserPage';
-import Review from '../Pages/Review';
 import SubjectPage from '../Pages/SubjectPage';
-import ChatWindow from './ChatWindow';
 import NavBar from "./NavBar";
+import StudyGuide from '../Pages/StudyGuide';
+import Library from '../Pages/Library';
+
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -70,14 +67,13 @@ const AppRoutes = () => {
     <>
       {!isSwifConnectPage && <NavBar />}
     <UserProvider>
-      {/* <ChatWindow token={token} currentUsername={currentUsername} messages={messages} /> */}
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/login" element={<LoginPage />} /> */}
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/review" element={<Review />} />
         <Route path="/:username" element={<ProtectedRoute><UserPage currentUsername={currentUsername} /></ProtectedRoute>} />
         <Route path="/messages" element={<ProtectedRoute><MessagePage currentUsername={currentUsername}/></ProtectedRoute>} />
+        <Route path="/studyguide" element={<ProtectedRoute><StudyGuide currentUsername={currentUsername}/></ProtectedRoute>} />
+        <Route path="/library" element={<ProtectedRoute><Library currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/people" element={<ProtectedRoute><People currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/subjects" element={<ProtectedRoute><SubjectPage currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/swifconnect" element={<ProtectedRoute><SwifConnect token={token} /></ProtectedRoute>} />

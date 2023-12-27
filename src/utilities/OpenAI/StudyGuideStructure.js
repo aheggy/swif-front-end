@@ -1,41 +1,67 @@
 export const structure = `
-Title;
-Vocabulary;
-Introduction;
-Subtopics;
-Topic Importance;
-Study Methods;
+Topic Title;
+Study Guide Level;
+Brief Overview;
+Detailed Subtopics;
+Learning Objectives;
+Study Techniques and Resources;
+Weekly Study Plan;
+Daily Study Sessions;
+Total Study Period and Average Daily Hours;
 `
 
-// Structure Example
+// Structure Example for Environmental Science
 export const structureExample = `
-World History (this is a title)
+# Subject and Study Guide Level
+Environmental Science
+Beginner to Intermediate
 
 ;
 
-Ancient civilizations, medieval era, modern history (this is a vocabulary)
+# Introduction to the Topic
+An interdisciplinary study focusing on the interaction between humans and the environment.
 
 ;
 
-History is the study of past events, people, and societies. It provides insight into our present and shapes our future. (this is an introduction)
+# Specific Areas of Study with Examples
+* Climate Change - Greenhouse gases, global warming, impact on ecosystems.
+* Ecosystems - Biodiversity, food webs, ecological balance.
+* Pollution - Air, water, soil pollution, and control measures.
+* Conservation - Sustainable practices, renewable resources, wildlife protection.
 
 ;
 
-* Ancient Civilizations - Mesopotamia, Egypt, Greece, Rome, China, India, etc.
-* Medieval Era - Feudalism, Crusades, Black Death, Renaissance, etc.
-* Modern History - Industrial Revolution, World Wars, Cold War, Decolonization, etc. (this is subtopics)
+
+# Methods and Resources for Effective Studying
+* Reading Scientific Papers and Reports - For in-depth understanding of current environmental issues.
+* Participatory Learning - Engaging in community environmental projects or online forums.
+* Documentaries and Virtual Tours - To visualize and understand real-world environmental scenarios.
+* Experimentation and Projects - Conducting small-scale experiments or projects related to environmental science.
 
 ;
 
-* Understanding the Present - Studying history helps us understand current political, social, and cultural dynamics.
-* Critical Thinking and Analysis - Learning about past events and their causes and effects develops critical thinking skills.
-* Preservation of Cultural Heritage - History studies help preserve and pass on cultural heritage to future generations. (this is topic importance)
+# Structured Schedule for Studying Different Topics
+* Weekly Study Plan:
+  - Week 1-2: Climate Change
+  - Week 3-4: Ecosystems
+  - Week 5-6: Pollution
+  - Week 7-8: Conservation and Review
 
 ;
 
-* Read History Books - Read books on different historical periods and events to gain a deeper understanding.
-* Watch Historical Documentaries - Watch documentaries for visual learning and better retention of information.
-* Visit Historical Sites - Visiting museums, historical sites, and monuments provides a hands-on learning experience.
-* Take Online Courses - Enroll in online courses to learn about specific historical topics or periods.
-* Use Flashcards and Timelines - Create flashcards for important dates, events, and people, and use timelines to visualize historical events. (this is study methods)
+# Organizing Daily Study Activities for Balanced Learning
+* Daily Study Sessions:
+  - 1 hour: Reading/Research
+  - 1 hour: Interactive Learning (Experiments, Documentaries)
+  - 1 hour: Review and Practice (Quizzes, Discussions)
+
+;
+
+# Study Period
+Total Study Period and Average Daily Hours: 8 weeks, 3 hours daily
+
+
+;
+
+
 `

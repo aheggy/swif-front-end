@@ -3,9 +3,12 @@
     grid-template-columns: 300px 1fr;
     grid-template-rows: 100%;
     height: 80vh;
-}
+    
+  }
   
-.users-container {
+  .users-container {
+  background-color: #f7f7f7;
   overflow-y: auto; 
+  height: 100vh;
 }
   

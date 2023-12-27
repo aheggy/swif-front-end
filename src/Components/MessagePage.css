@@ -1,16 +1,10 @@
 .message-container {
-  display: flex;
-  flex-direction: row;
-  margin: 10px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 100%;
+    height: 100vh;
 }
 
 
-.user-sidebar{
-  width: 23%;
-}
-
-.messages-content{
-  width: 77%;
-}
 
 

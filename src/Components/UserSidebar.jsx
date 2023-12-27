@@ -66,7 +66,7 @@ const UserSidebar = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to={"library"}>
+						<Link to={"/library"}>
 							<button className="line-button-animation">
 								<img src={library} alt="" />
 								Library
@@ -74,7 +74,7 @@ const UserSidebar = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to={"studyguide"}>
+						<Link to={"/studyguide"}>
 							<button className="line-button-animation">
 								<img src={studyGuide} alt="" />
 								Study Guide

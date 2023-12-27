@@ -5,15 +5,10 @@
 }
 
 .aside-menu {
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
     padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    height: 90vh;
+    margin: 0 10px;
+    height: 100vh;
 }
 
 
@@ -25,6 +20,11 @@
 
 .userpage-aside li {
     margin: 0px;
+}
+
+.line-button-animation{
+    padding: 10px;
+
 }
 
 .line-button-animation{

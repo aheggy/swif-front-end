@@ -71,6 +71,9 @@ function UserPage({currentUsername}) {
 
 						<div className="interested-subject">
 							<h1>Interested subject</h1>
+							<ul>
+								{userData.subject_interest}
+							</ul>
 						</div>
 
 						

@@ -1,29 +1,44 @@
 .signup-page {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: 0 auto;
-  }
-  
-  h2 {
-    text-align: center;
-  }
-  
-  input {
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 100%;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    /* cursor: pointer; */
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  max-height: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 5px;
+}
+
+.singup-form{
+  display: flex;
+  flex-direction: column;
+}
+.signup-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.signup-page input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.signup-page button {
+  background-color: blue;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.signup-page button:hover {
+  background-color: #0056b3;
+}

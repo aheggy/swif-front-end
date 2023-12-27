@@ -126,6 +126,9 @@ button {
     width: 40%;
     border-radius: 5px;
     background-color: blue;
+    padding: 5px ;
+    height: 40px;
+
 
 }
 
@@ -143,13 +146,17 @@ footer{
     width: 70%;
     
 }
-
+.home-login-form input {
+    height: 40px;
+}
 
 .home-login-form{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    margin: 10px;
 
 }
 
