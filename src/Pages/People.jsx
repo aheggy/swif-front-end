@@ -15,9 +15,30 @@ const socket = io(API, {
 export default function People({currentUsername}) {
 
   const [userStatuses, setUserStatuses] = useState({})
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+    // Toggle sidebar visibility
+  const toggleSidebar = () => {
+      setIsSidebarVisible(!isSidebarVisible);
+  };
+
+    // Effect for window resize to handle sidebar visibility
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 500) {
+        setIsSidebarVisible(false);
+        } else {
+          setIsSidebarVisible(true);
+        }
+      };
 
 
+      window.addEventListener('resize', handleResize);
 
+      return () => {
+          window.removeEventListener('resize', handleResize);
+      };
+  }, []);
 
   useEffect(() => {
         // Listen for user status changes
@@ -49,7 +70,8 @@ export default function People({currentUsername}) {
 
   return (
     <div className="people-container">
-      <UserSidebar className="sidebar"></UserSidebar>
+      {/* Passing toggle function and visibility state to UserSidebar */}
+      <UserSidebar isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
       <UserCards userStatuses={userStatuses}/>
     </div>
   )
