@@ -1,3 +1,8 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const API = process.env.REACT_APP_API_URL
+
 const UserInfoForm = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
       name: '',
@@ -5,6 +10,7 @@ const UserInfoForm = ({ onSubmit }) => {
       age: '',
       country: '',
       bio: '',
+      interestedSubjects: '',
     });
   
     const handleChange = (e) => {
@@ -19,6 +25,24 @@ const UserInfoForm = ({ onSubmit }) => {
       e.preventDefault();
       onSubmit(formData);
     };
+
+    const [subjects, setSubjects] = useState([])
+    console.log(subjects)
+
+
+	useEffect (() => {
+		const fetchSubjects = async () =>{
+			try {
+				const response = await axios.get(`${API}/subjects`)
+				setSubjects(response.data)
+			} catch (error) {
+				console.error(`Error fetching subjects`, subjects)
+			}
+		}
+
+		fetchSubjects()
+
+	}, [])
   
     return (
       <form onSubmit={handleSubmit}>
@@ -66,14 +90,26 @@ const UserInfoForm = ({ onSubmit }) => {
           />
         </label>
   
-        {/* <label>
+        <label>
           BIO:
-          <textarea
+          <input
+            type="text"
             name="bio"
             value={formData.bio}
             onChange={handleChange}
           />
-        </label> */}
+        </label>
+
+        <label>
+          Interested Subjects:
+          <input
+            type="text"
+            name="subjects"
+            value={formData.interestedSubjects}
+            onChange={handleChange}
+            required
+          />
+        </label>
   
         <button type="submit">Submit</button>
       </form>
