@@ -8,6 +8,14 @@
 }
 
 @media screen and (max-width: 500px) {
+  .people-container {
+      display: grid;
+      /* grid-template-columns: 300px 1fr; */
+      /* Adjusted for dynamic sidebar */
+      grid-template-columns: minmax(0, 300px) 1fr; 
+      grid-template-rows: 100%;
+      height: 100vh;
+  }
   /* Adjusted media query for 500px */
   .userpage-aside {
       display: none; /* Hide sidebar */

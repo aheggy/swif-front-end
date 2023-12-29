@@ -6,3 +6,19 @@
     padding-top: 30px;
     justify-content: center;
 }
+
+
+
+@media screen and (max-width: 768px) {
+
+    .users-container{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 250px);
+        grid-auto-rows: 80px;
+        margin: 10px;
+        width: 100%;
+        padding-top: 30px;
+        justify-content: center;
+    }
+
+}
