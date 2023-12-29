@@ -54,7 +54,6 @@ export default function People({currentUsername}) {
         return () => {
             // Clean up listeners when the component unmounts
             socket.off('user_status_change');
-            // ... other clean up if needed ...
         };
 
 
@@ -70,7 +69,6 @@ export default function People({currentUsername}) {
 
   return (
     <div className="people-container">
-      {/* Passing toggle function and visibility state to UserSidebar */}
       <UserSidebar isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
       <UserCards userStatuses={userStatuses}/>
     </div>

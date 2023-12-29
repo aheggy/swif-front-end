@@ -130,3 +130,48 @@
 .chat-box{
     overflow-y: auto; 
 }
+
+
+@media (max-width: 768px) {
+
+  .whitebard-sharescreen {
+      display: none;
+  }
+
+  .video-window {
+    display: flex;
+      flex-direction: column;
+      position: absolute;
+      width: auto;
+      top: 5px;
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+
+  .remote-user-video, .local-user-video {
+      width: 150px;
+      height: 150px;
+  }
+
+  .remote-user, .local-user {
+      width: 150px;
+      height: 150px;
+  }
+
+  .chat-container {
+    border: 1px solid blue;
+ 
+      width: 80%;
+      height: 300px;
+      bottom: 60px; 
+      margin: auto;
+      
+      
+  }
+
+  .input-box {
+      width: 100%;
+      bottom: 10px;
+  }
+}

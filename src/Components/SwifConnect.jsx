@@ -17,6 +17,9 @@ const socket = io(API, {
 });
 
 export default function SwifConnect({ token }) {
+
+
+  
   const messageInputRef = useRef(null);
   const messagesEndRef = useRef(null);
   
@@ -460,13 +463,14 @@ const turnMicrophoneOn = () => {
                     <button className='send-button' onClick={sendMessage}>Send</button>
                 </div>
             </div>
-
+            <div className="whitebard-sharescreen">
             {activeFeature === 'whiteboard' ? 
             (
               <Whiteboard socket={socket} currentUsername={currentUsername} recipientUsername={recipientUsername}/>
             ):(
               <ScreenSharing socket={socket} currentUsername={currentUsername} recipientUsername={recipientUsername} screenShareStreamRef={screenShareStreamRef} isScreenSharing={isScreenSharing} startScreenSharing={startScreenSharing} stopScreenSharing={stopScreenSharing}/>
             )}
+            </div>
         </div>
     );
 

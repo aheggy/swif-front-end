@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode'; 
 import './Home.css';
-// this is just a test.
 
 const API = process.env.REACT_APP_API_URL
 
@@ -93,7 +92,7 @@ function Home() {
         images[currentImage].style.display = 'none';
         currentImage = (currentImage + 1) % images.length;
         images[currentImage].style.display = 'block';
-    }, 2000); // 2000 milliseconds = 2 seconds
+    }, 2000); 
 });
 
 

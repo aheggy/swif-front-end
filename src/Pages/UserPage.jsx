@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import "./UserPage.css";
@@ -15,11 +16,14 @@ function UserPage({currentUsername}) {
 	const [isOwnProfile, setIsOwnProfile] = useState(false);
 
 
+	const navigate = useNavigate(); 
 	
 	useEffect(() => {
+		console.log("Username from params:", username); 
   		setIsOwnProfile(username === currentUsername);
 
 		if (username) {
+			console.log("Fetching data for username:", username);
 			axios.get(`${API}/user/${encodeURIComponent(username)}`)
 				.then(response => {
 					setUserData(response.data[0]);
@@ -29,7 +33,9 @@ function UserPage({currentUsername}) {
 					console.error('Error fetching user data:', error);
 					setUserData({ name: "catch error" });
 				});
-		}
+		} else {
+            console.log("Username is undefined");
+        }
 	}, [username, currentUsername]);
 
 	
@@ -67,6 +73,11 @@ function UserPage({currentUsername}) {
 								<p className="user-info">BIO : <span>{userData.bio}</span></p>
 							</div>
 						</div>
+						<button
+							onClick={() => navigate(`/edit-profile?username=${encodeURIComponent(username)}`)}
+						>
+							Edit Profile
+						</button>
 						<hr />
 
 						<div className="interested-subject">

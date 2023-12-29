@@ -10,7 +10,7 @@ Daily Study Sessions;
 Total Study Period and Average Daily Hours;
 `
 
-// Structure Example for Environmental Science
+// Structure Example
 export const structureExample = `
 # Subject and Study Guide Level
 Environmental Science

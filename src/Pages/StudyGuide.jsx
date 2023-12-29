@@ -22,7 +22,7 @@ const StudyGuide = () => {
         if (location.pathname === '/studyguide') {
             setStudyGuide('');
             setIsSubmitted(false);
-            // Reset other states if needed
+            
         }
     }, [location]);
 

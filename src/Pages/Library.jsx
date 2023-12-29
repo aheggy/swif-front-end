@@ -19,7 +19,7 @@ export default function Library () {
                 `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${GOOGLE_API_KEY}`
             );
             console.log(response.data);
-            setData(response.data); // Assuming you want to store the response in state
+            setData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

@@ -16,7 +16,7 @@ import SubjectPage from '../Pages/SubjectPage';
 import NavBar from "./NavBar";
 import StudyGuide from '../Pages/StudyGuide';
 import Library from '../Pages/Library';
-
+import UserInfoForm from './UserInfoForm';
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -70,7 +70,10 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUpPage />} />
+
         <Route path="/:username" element={<ProtectedRoute><UserPage currentUsername={currentUsername} /></ProtectedRoute>} />
+        <Route path="/user/:username" element={<ProtectedRoute><UserPage currentUsername={currentUsername} /></ProtectedRoute>} />
+        <Route path="/edit-profile" element={<ProtectedRoute><UserInfoForm currentUsername={currentUsername} /></ProtectedRoute>} />
         <Route path="/messages" element={<ProtectedRoute><MessagePage currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/studyguide" element={<ProtectedRoute><StudyGuide currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/library" element={<ProtectedRoute><Library currentUsername={currentUsername}/></ProtectedRoute>} />

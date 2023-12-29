@@ -6,9 +6,6 @@ import "../assets/css/animatedImageCard.css";
 
 const API = process.env.REACT_APP_API_URL;
 
-// We can activate this component by usin the route:   <Route path="/subjectpage" element={<SubjectPage />}/>
-// in the App.js file
-
 
 const SubjectPage = ({currentUsername}) => {
 

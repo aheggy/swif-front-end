@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; 
 import {jwtDecode} from 'jwt-decode'; 
 import './Login.css';
 
@@ -34,7 +34,8 @@ const LoginPage = () => {
         // Decode token to get the username
         const decodedToken = jwtDecode(data.token);
         const username = decodedToken.username; // Ensure token has username
-        window.location.href=`/${username}`; // Navigate to user's page
+        // window.location.href=`/${username}`; // Navigate to user's page
+        navigate(`/${username}`); 
       } else {
         console.log('Login failed');
       }
