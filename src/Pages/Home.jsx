@@ -140,7 +140,7 @@ function Home() {
         </div>
       <div className='landing-page-image'>
         <img className='home-image' src="../homePage.jpg" alt="" />
-        {/* <img className='home-image' src="../homePageImage.webp" alt="" /> */}
+        {/* <img className='home-image' src="../sellectPartner.png" alt="" /> */}
       </div>
 
       
