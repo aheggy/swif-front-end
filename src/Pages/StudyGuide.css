@@ -1,6 +1,6 @@
 .studyguide-container {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;
     height: 100vh;
     color: #333;
@@ -73,11 +73,4 @@
     word-break: break-word;
     overflow-x: auto;
     overflow-y: auto;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .studyguide-container {
-        grid-template-columns: 1fr;
-    }
 }
