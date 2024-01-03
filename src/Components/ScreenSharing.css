@@ -11,3 +11,15 @@
     width: 75%;
     overflow: hidden;
 }
+
+.remote-user-Screen{
+    border: 1px solid gray;
+    object-fit: cover;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+}

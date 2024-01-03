@@ -14,6 +14,7 @@ const LoginPage = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
+    console.log(loginData)
   };
 
   const handleLogin = async (e) => {
