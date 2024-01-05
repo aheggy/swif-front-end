@@ -5,11 +5,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    left: 10px;
-    top: 10px;
+    left: 20px;
+    top: 20px;
     /* height: 730px; */
-    height: 91%;
-    width: 77%;
+    height: 88%;
+    width: 76%;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 
@@ -19,6 +19,7 @@
     background-color: blue;
     border-radius: 5px;
     color: white;
+    margin: 5px;
 }
 
 
@@ -28,21 +29,23 @@
  flex-direction: row;
  align-items: center;
  justify-content: center;
- gap: 5px;
+ gap: 10px;
 }
 
 .color{
-    width: 40px;
+    display: none;
+    width: 60px;
     padding: 3px;
     margin: auto;
+    height: 35px;
 }
 
 .clear-whiteboard {
-    font-size: 12px;
+   
     width: auto;
-    height: 25px;
+    height: 35px;
     line-height: 10px;
-    padding: 2px 5px;
+    padding: 2px 15px;
     cursor: pointer;
     border: 1px solid gray;
     vertical-align: middle; 
