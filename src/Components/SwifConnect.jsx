@@ -26,6 +26,8 @@ const socket = io(API, {
 
 export default function SwifConnect({ token }) {
 
+  const [currnetUserDate, setCurrentUserData] = useState({})
+
 
   
   const messageInputRef = useRef(null);
@@ -186,15 +188,7 @@ useEffect(() => {
 
     pc.current.ontrack = (e) => {
       if (e.track.kind === 'video') {
-        // Check if the track is part of the screen sharing stream
-        if (screenShareStreamRef.current instanceof MediaStream && 
-            screenShareStreamRef.current.getTracks().includes(e.track)) {
-          screenShareRef.current.srcObject = e.streams[0];
-          console.log("Received a screen sharing track");
-        } else {
-          remoteVideoRef.current.srcObject = e.streams[0];
-          console.log("Received a regular video track");
-        }
+        remoteVideoRef.current.srcObject = e.streams[0];
       }
     };
     
@@ -410,20 +404,31 @@ const turnMicrophoneOn = () => {
     setIsMicrophoneOn(true);
 };
 
+
 const startScreenShare = async () => {
-  navigator.mediaDevices.getDisplayMedia({ video: true })
+  try {
+    // Get the screen sharing stream
+    const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
 
-  
+    // Replace the current video track with the screen sharing track
+    const sender = pc.current.getSenders().find(s => s.track.kind === 'video');
+    if (sender) {
+      sender.replaceTrack(screenStream.getVideoTracks()[0]);
+    }
+
+    // Update the local video display to show the screen sharing stream
+    localVideoRef.current.srcObject = screenStream;
+
+  } catch (e) {
+    console.error("Error during screen sharing:", e);
+  }
 };
-
-
-  
 
     return (
         <div className="swif-connect-container">
             <div className="video-window"> 
               <div className="remote-user">
-                <video ref={remoteVideoRef} autoPlay muted className="remote-user-video" />
+                <video ref={remoteVideoRef} autoPlay className="remote-user-video" />
                 {!isCameraActive && <span>{recipientUsername}</span>}
               </div>
               {/* <div className="remote-screen" style={getRemoteScreenStyle()}>
@@ -438,7 +443,7 @@ const startScreenShare = async () => {
 
             </div>
 
-            <botton className="end-call-buttons" onClick={endChat}>End</botton>
+            <button className="end-call-buttons" onClick={endChat}>End</button>
 
             <div className="available-user">
                 <div className="call-button-icons-container">
@@ -479,9 +484,9 @@ const startScreenShare = async () => {
 
                           )}
                         </button>
-                        {/* <button className="call-buttons" onClick={startScreenShare}>
+                        <button className="call-buttons" onClick={startScreenShare}>
                           <img className="call-button-icons" src={shareScreen} alt="icon" />
-                        </button> */}
+                        </button>
                     </div>
                   ):(
                     <button className="call-buttons" onClick={createOffer}>

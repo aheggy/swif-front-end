@@ -1,18 +1,21 @@
+body{
+  background-color: #f7f7f7;
+}
 .swif-connect-container {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden;
-    background-color: white;
+    background-color: #f7f7f7;
     display: flex;
     align-items: center;
     justify-content: center;
     align-items: center;
 }
 
-
-
-
+.swif-connect-container button{
+  background-color: white;
+}
 
 .swif-connect-container {
     display: flex;
@@ -47,10 +50,13 @@
     justify-content: center;
     align-items: center;
     position: relative; 
+    
+    
+  }
+  
+  .remote-user, .local-user {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 
-}
-
-.remote-user, .local-user {
     border: 1px solid gray;
     width: 150px;
     height: 150px;
@@ -68,10 +74,6 @@
     text-align: center;
     width: 100%;
 }
-
-
-
-
 
 .remote-screen-video {
     position: absolute;
@@ -91,6 +93,9 @@
 
 
   .chat-container{
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+    background-color: white;
     border: 1px solid gray;
     border-radius: 5px;
     position: absolute;
@@ -212,7 +217,7 @@
   display: none;
 }
 
-.end-call-buttons{
+.end-call-buttons {
   font-size: larger;
   font-weight: bolder;
   position: absolute;
@@ -226,6 +231,9 @@
   height: 50px;
   align-items: center;
   align-content: center;
-  background-color: red;
   cursor: pointer;
+}
+
+.swif-connect-container .end-call-buttons{
+  background-color: red;
 }

@@ -24,7 +24,7 @@ const SubjectPage = ({currentUsername}) => {
 
 		fetchSubjects()
 
-	}, [subjects])
+	}, [])
 
 
 
