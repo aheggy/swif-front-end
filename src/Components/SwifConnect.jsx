@@ -14,6 +14,8 @@ import incomingCall from "../assets/img/incoming-call.png"
 import startCall from "../assets/img/start-call.png"
 import endCall from "../assets/img/endCall.png"
 import send from "../assets/img/send.png"
+import W_S_switch from "../assets/img/whiteboard-screenshare-switch.png"
+
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -43,7 +45,7 @@ export default function SwifConnect({ token }) {
   const localVideoRef = useRef(null)
   const remoteVideoRef = useRef(null)
 
-
+  const remoteScreenRef = useRef({})
 
   const textRef = useRef({})
   //   const candidates = useRef([])
@@ -338,7 +340,7 @@ useEffect(() => {
 
   const toggleFeature = () => {
     if (activeFeature === 'whiteboard') {
-        setActiveFeature('whiteboard');
+        setActiveFeature('screensharing');
     } else {
         setActiveFeature('whiteboard');
     }
@@ -413,7 +415,7 @@ const startScreenShare = async () => {
     // Replace the current video track with the screen sharing track
     const sender = pc.current.getSenders().find(s => s.track.kind === 'video');
     if (sender) {
-      sender.replaceTrack(screenStream.getVideoTracks()[0]);
+      sender.replaceTrack(screenStream.getVideoTracks()[1]);
     }
 
     // Update the local video display to show the screen sharing stream
@@ -424,6 +426,8 @@ const startScreenShare = async () => {
   }
 };
 
+console.log("pc is : ", pc)
+
     return (
         <div className="swif-connect-container">
             <div className="video-window"> 
@@ -431,11 +435,11 @@ const startScreenShare = async () => {
                 <video ref={remoteVideoRef} autoPlay className="remote-user-video" />
                 {!isCameraActive && <span>{recipientUsername}</span>}
               </div>
-              {/* <div className="remote-screen" style={getRemoteScreenStyle()}>
+              <div className="remote-screen">
                 {isScreenSharing && (
                   <video ref={remoteScreenRef} autoPlay playsInline className="remote-screen-video" />
                 )}
-              </div> */}
+              </div>
               <div className="local-user">
                 <video ref={localVideoRef} autoPlay muted className="local-user-video" />
                 {!isCameraActive && <span>{currentUsername}</span>}
@@ -448,9 +452,9 @@ const startScreenShare = async () => {
             <div className="available-user">
                 <div className="call-button-icons-container">
                
-                  {/* <button className="call-buttons" onClick={toggleFeature}>
-                  {activeFeature === 'whiteboard' ? "Switch to Screen Share" : "Switch to Whiteboard"}
-                  </button> */}
+                  <button className="call-buttons" onClick={toggleFeature}>
+                    <img className="call-button-icons" src={W_S_switch} alt="" />
+                  </button>
 
                   {offerVisible || isCallInitiated ? (
                     <div>
