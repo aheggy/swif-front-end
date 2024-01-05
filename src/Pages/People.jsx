@@ -14,6 +14,13 @@ const socket = io(API, {
 
 export default function People({currentUsername}) {
 
+
+  setInterval(() => {
+    if (currentUsername) {
+      socket.emit('register', currentUsername)
+    }
+  }, 10000); 
+
   const [userStatuses, setUserStatuses] = useState({})
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
@@ -24,6 +31,7 @@ export default function People({currentUsername}) {
 
     // Effect for window resize to handle sidebar visibility
   useEffect(() => {
+
     const handleResize = () => {
       if (window.innerWidth < 500) {
         setIsSidebarVisible(false);
