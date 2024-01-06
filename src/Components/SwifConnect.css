@@ -78,59 +78,57 @@ body{
 }
 
 .remote-screen-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1; 
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; 
+}
   
-  .remote-user-video {
-    z-index: 2;
-  }
+.remote-user-video, .local-user-video {
+  z-index: 2;
+}
   
 
 
 
-  .chat-container{
-    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-    position: absolute;
-    bottom: 9.7%;
-    right: 1.5%;
-    width: 19.5%;
-    height: 48%;
-    display: flex;
-    flex-direction: column;
-    padding: 1%;
-  }
+.chat-container{
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 9.7%;
+  right: 1.5%;
+  width: 19.5%;
+  height: 48%;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+}
 
-  .input-box{
-    position: absolute;
-    width: 94%;
-    bottom: 2px;
-    right: auto;
-    height: 40px;
-    display: flex;
-    margin: 3% 0;
-  }
-  .message-input{
-    width: 84%;
-  }
-  
-  .input-box .send-button{
-  
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-  }
+.input-box{
+  position: absolute;
+  width: 94%;
+  bottom: 2px;
+  right: auto;
+  height: 40px;
+  display: flex;
+  margin: 3% 0;
+}
 
-.chat-box{
-    overflow-y: auto; 
+.message-input{
+  width: 84%;
+}
+  
+.input-box .send-button{
+
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 0 3%;
 }
 
 

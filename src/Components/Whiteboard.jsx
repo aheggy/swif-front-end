@@ -18,7 +18,7 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
         context.scale(2, 2);
         context.lineCap = "round";
         context.strokeStyle = "black";
-        context.lineWidth = 5;
+        context.lineWidth = 3;
         contextRef.current = context;
     }, []);
 
