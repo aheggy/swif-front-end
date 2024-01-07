@@ -49,6 +49,10 @@ const StudyGuide = () => {
             {!isSubmitted ? (
                 <div>
                 <h2>Generate Your Custom Study Guide</h2>
+                {/* Study guide instructions */}
+                <div className="instruction-container">
+                    Enter any subject and generate a study guide below. This study guide will tell you what materials you will need to study, as well give you a specific breakdown and timeline.
+                </div>
                 <form className='curriculum-form' onSubmit={handleSubmit}>
                     <label htmlFor="topic">Topic:</label>
                     <input 
