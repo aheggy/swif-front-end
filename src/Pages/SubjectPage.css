@@ -2,11 +2,11 @@
     display: grid;
     grid-template-columns: 300px 1fr;
     grid-template-rows: 100%;
-    height: 90vh;
+    height: 100vh;
 }
 
 .subjectpage-content {
-    padding: 10px;
+    padding: 3px;
     margin: 10px;
     height: calc(100% - 60px);
     grid-row: 1;
@@ -18,7 +18,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 15px;
+    gap: 5px;
 }
 
 .subject img {

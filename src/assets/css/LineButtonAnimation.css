@@ -21,10 +21,8 @@
     -ms-transition: all .3s ease;
     -o-transition: all .3s ease;
     width: 100% !important;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+    text-align: left;
+    
 }
 
 .line-button-animation:focus,
@@ -44,7 +42,7 @@
     left: 0%;
 }
 
-.line-button-animation:after {
+/* .line-button-animation:after {
     content: "";
     pointer-events: none;
     bottom: -2px;
@@ -56,7 +54,7 @@
     transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
     transition-duration: 400ms;
     transition-property: width, left;
-}
+} */
 
 .line-button-animation img{
     height: 30px;
@@ -66,5 +64,4 @@
     -moz-border-radius: 0px ;
     -ms-border-radius: 0px ;
     -o-border-radius: 0px ;
-    margin: 0px 30px;
 }

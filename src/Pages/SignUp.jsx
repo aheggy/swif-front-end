@@ -92,7 +92,7 @@ const SignUpPage = () => {
   return (
     <div className="signup-page">
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignUp}>
+      <form className="singup-form" onSubmit={handleSignUp}>
         <input
           type="text"
           name="first_name"

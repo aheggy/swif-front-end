@@ -1,0 +1,15 @@
+.library-container{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 100%;
+    height: 100vh;
+}
+
+
+.library-content{
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f7f7;
+}

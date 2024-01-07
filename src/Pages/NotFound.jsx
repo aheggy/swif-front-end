@@ -3,9 +3,6 @@ import image1 from "../assets/img/error-404-alert.png";
 import image2 from "../assets/img/error-404-art.png";
 
 
-// We can activate this component by usin the route:   <Route path="*" element={<NotFound />}/>
-// in the App.js file
-
 const NotFound = () => {
 	useEffect(() => {
 		document.title = "Error";

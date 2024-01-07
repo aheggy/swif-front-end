@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import "./UserPage.css";
 import "../assets/css/LineButtonAnimation.css";
 import succesImg from "../assets/img/succes.png";
 import UserSidebar from "../Components/UserSidebar";
+import UserInfoForm from "../Components/UserInfoForm";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -13,29 +15,35 @@ function UserPage({currentUsername}) {
 	const { username } = useParams();
 	const [userData, setUserData] = useState(null);
 	const [isOwnProfile, setIsOwnProfile] = useState(false);
-
+	const navigate = useNavigate(); 
 
 	
 	useEffect(() => {
+		// console.log("Username from params:", username); 
   		setIsOwnProfile(username === currentUsername);
-
 		if (username) {
+			// console.log("Fetching data for username:", username);
 			axios.get(`${API}/user/${encodeURIComponent(username)}`)
 				.then(response => {
 					setUserData(response.data[0]);
-					console.log("this is the userpage", response.data[0])
+					localStorage.removeItem('userData');
+					localStorage.setItem('userData', JSON.stringify(userData));
+					// console.log("this is the userpage", response.data[0])
 				})
 				.catch(error => {
 					console.error('Error fetching user data:', error);
 					setUserData({ name: "catch error" });
 				});
-		}
-	}, [username, currentUsername]);
+		} else {
+            console.log("Username is undefined");
+        }
+	}, [username, currentUsername, userData]);
+
+
+
+	// console.log(userData)
 
 	
-
-	console.log(userData)
-
 
 	return (
 		<div className="user-page">
@@ -55,8 +63,8 @@ function UserPage({currentUsername}) {
 							</p>
 						}
 						<div className="about-user">
-							<div className="profile-image">
-								<img src={userData.profile_image_url} alt="Profile Image" />
+							<div>
+								<img src={userData.profile_image_url ? (userData.profile_image_url):("/default-user-img2.jpeg")} alt="Profile Image" className="profile-image"/>
 							</div>
 							<div className="all-info">
 								<p className="user-info">Name : <span>{userData.first_name} {userData.last_name}</span></p>
@@ -67,16 +75,25 @@ function UserPage({currentUsername}) {
 								<p className="user-info">BIO : <span>{userData.bio}</span></p>
 							</div>
 						</div>
+						<button
+							onClick={() => navigate(`/edit-profile?username=${encodeURIComponent(username)}`)}
+						>
+							Edit Profile
+						</button>
 						<hr />
 
 						<div className="interested-subject">
 							<h1>Interested subject</h1>
+							<ul>
+								{userData.subject_interest}
+							</ul>
 						</div>
 
 						
 					</section>
 					</div>
 				</div>
+				
 			</>
 			) : (
 				<p>Loading user data...</p>

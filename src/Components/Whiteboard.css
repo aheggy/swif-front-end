@@ -1,8 +1,73 @@
-.background-canvas {
+.whiteboard-page-container {
+    border: 1px solid gray;
+    border-radius: 5px;
     position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1; /* Ensure it's in the background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 1.5%;
+    top: 2.5%;
+    height: 88%;
+    width: 76%;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+}
+
+.whiteboard-page-container button {
+    background-color: blue;
+    border-radius: 5px;
+    color: white;
+    margin: 5px;
+}
+
+
+
+.color-picker-container{
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ justify-content: center;
+ gap: 10px;
+}
+
+.color{
+    display: none;
+    width: 60px;
+    padding: 3px;
+    margin: auto;
+    height: 35px;
+}
+
+.clear-whiteboard {
+   
+    width: auto;
+    height: 35px;
+    line-height: 10px;
+    padding: 2px 15px;
+    cursor: pointer;
+    border: 1px solid gray;
+    vertical-align: middle; 
+    text-align: center; 
+}
+
+.whiteboard-container {
+    border-top: 1px solid gray;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: lightskyblue;
+}
+
+.board-container{
+
     width: 100%;
     height: 100%;
+    margin: auto;
+    background-color: white;
+}
+
+.board-container canvas{
+    cursor: crosshair;
 }

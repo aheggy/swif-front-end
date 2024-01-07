@@ -1,0 +1,83 @@
+.studyguide-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 100%;
+    height: 100vh;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+.studyguide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f7f7f7;
+    /* border-left: 1px solid #ddd; */
+}
+
+.studyguide-content h2{
+    margin: 50px;
+}
+
+.curriculum-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.curriculum-form input,
+.curriculum-form select,
+.curriculum-form button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.curriculum-form button {
+    background-color: #0056b3;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.curriculum-form button:hover {
+    background-color: #003d82;
+}
+
+.curriculum-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.study-search-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.study-search-container pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .studyguide-container {
+        grid-template-columns: 1fr;
+    }
+}

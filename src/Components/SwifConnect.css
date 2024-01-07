@@ -1,26 +1,24 @@
+body{
+  background-color: #f7f7f7;
+}
 .swif-connect-container {
-    position: relative;
-    padding: 5px;
-    min-height: 95vh;
-    background-color: white;
-}
-
-.callandendchat-button {
-    border: 2px solid yellow;
-    position: absolute;
-    bottom: 20px; 
-    left: 55px;
-    gap: 2px;
-    transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f7f7f7;
     display: flex;
-    flex-direction: column;
-    justify-content: end;
-    width: 100px;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
+.swif-connect-container button{
+  background-color: white;
+  color: black;
+}
 
-
-.swif-connect-container button {
+.swif-connect-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,12 +29,16 @@
 
 
 
-.draggable-video-window {
+.video-window {
     display: flex;
     flex-direction: column;
     width: 150px;
     height: auto;
     cursor: move;
+    position: absolute;
+    top: 2.3%;
+    right: 5.5%;
+    gap: 5px;
 }
 
 
@@ -50,9 +52,13 @@
     justify-content: center;
     align-items: center;
     position: relative; 
-}
+    
+    
+  }
+  
+  .remote-user, .local-user {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 
-.remote-user, .local-user {
     border: 1px solid gray;
     width: 150px;
     height: 150px;
@@ -71,58 +77,167 @@
     width: 100%;
 }
 
-
-
-
-
 .remote-screen-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1; 
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; 
+}
   
-  .remote-user-video {
-    z-index: 2;
-  }
+.remote-user-video, .local-user-video {
+  z-index: 2;
+}
   
 
 
 
-  .chat-container{
-    border: 1px solid red;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    height: 400px;
+.chat-container{
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 9.7%;
+  right: 1.5%;
+  width: 19.5%;
+  height: 48%;
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+}
+
+.input-box{
+  position: absolute;
+  width: 94%;
+  bottom: 2px;
+  right: auto;
+  height: 40px;
+  display: flex;
+  margin: 3% 0;
+}
+
+.message-input{
+  width: 84%;
+}
+  
+.input-box .send-button{
+
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 0 3%;
+}
+
+
+
+.call-button-icons-container{
+  gap: 10px;
+  position: absolute;
+  bottom: 10px; 
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  justify-content: center;
+
+}
+
+
+.call-buttons{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: auto;
+}
+
+.call-button-icons{
+  align-items: center;
+  width: 70%;
+  height: 60%;
+  object-fit: cover;
+  padding: auto;
+}
+
+.end-call{
+  background-color: rgb(226, 6, 6);
+}
+
+.incoming-call{
+  background-color: green;
+}
+
+.hide-button{
+  display: none;
+}
+
+.end-call-buttons {
+  font-size: large;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  left: 1.5%;
+  bottom: 1.5%;
+  width: 5%;
+  align-items: center;
+  align-content: center;
+  cursor: pointer;
+}
+
+.swif-connect-container .end-call-buttons{
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+
+
+
+@media (max-width: 700px) {
+
+  .whitebard-sharescreen {
+      display: none;
+  }
+
+  .video-window {
     display: flex;
-    flex-direction: column;
-
+      flex-direction: column;
+      position: absolute;
+      width: auto;
+      top: 5px;
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
   }
 
-  .input-box{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 50px;
-    display: flex;
-    
-    
-   
-  }
-  
-  .input-box button{
-    align-items: center;
-    height: 40px;
-    text-align: center;justify-content: center;
-
-    
+  .remote-user-video, .local-user-video {
+      width: 150px;
+      height: 150px;
   }
 
-.chat-box{
-    overflow-y: auto; 
+  .remote-user, .local-user {
+      width: 150px;
+      height: 150px;
+  }
+
+  .chat-container {
+    border: 1px solid blue;
+ 
+      width: 80%;
+      height: 300px;
+      bottom: 60px; 
+      margin: auto;
+      
+      
+  }
+
+  .input-box {
+      width: 100%;
+      bottom: 10px;
+  }
 }
