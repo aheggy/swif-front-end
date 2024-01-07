@@ -138,7 +138,7 @@ function Home() {
           </form>
         </div>
       <div className='landing-page-image'>
-        <img className='home-image' src="../home-video.gif" alt="" />
+      <img className='home-image' src="../homePage.jpg" alt="" />
         {/* 
         <img className='home-image' src="../homePage.jpg" alt="" />
         <img className='home-image' src="../sellectPartner.png" alt="" /> 
