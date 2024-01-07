@@ -44,7 +44,7 @@ export default function Library () {
                     <button type="submit">Submit</button>
                 </form>
 
-                {/* Display the books here */}
+                {/* Display the books here.. */}
                 {data && data.map((book, index) => (
                     <div key={index}>
                         <h3>{book.title}</h3>
