@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './UserInfoForm.css';
 const API = process.env.REACT_APP_API_URL
 
 const UserInfoForm = ({ userData, onSubmit }) => {
+    // console.log("userData is ", userData)
+    const navigate = useNavigate()
+    
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -34,18 +38,20 @@ const UserInfoForm = ({ userData, onSubmit }) => {
     }, []);
 
     useEffect(() => {
-        if (userData) {
+        const storedUserData = JSON.parse(localStorage.getItem('userData'));
+        console.log(storedUserData)
+        if (storedUserData) {
             setFormData({
-                firstName: userData.first_name || '',
-                lastName: userData.last_name || '',
-                gender: userData.gender || '',
-                age: userData.age || '',
-                country: userData.country || '',
-                city: userData.city || '',
-                profileImage: userData.profile_image_url || '',
-                bio: userData.bio || '',
-                contactInfo: userData.contact_info || '',
-                subjectInterests: userData.subject_interest ? userData.subject_interest.split(',') : [],
+                firstName: storedUserData.first_name || '',
+                lastName: storedUserData.last_name || '',
+                gender: storedUserData.gender || '',
+                age: storedUserData.age || '',
+                country: storedUserData.country || '',
+                city: storedUserData.city || '',
+                profileImage: storedUserData.profile_image_url || '',
+                bio: storedUserData.bio || '',
+                contactInfo: storedUserData.contact_info || '',
+                subjectInterests: storedUserData.subject_interest ? storedUserData.subject_interest.split(',') : [],
             });
         }
     }, [userData]);
@@ -67,9 +73,18 @@ const UserInfoForm = ({ userData, onSubmit }) => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSubmit(formData);
+        const storedUserData = JSON.parse(localStorage.getItem('userData'));
+        const username = storedUserData.username
+        try {
+            const response = await axios.put(`${API}/user/${username}`, formData);
+            if (onSubmit) onSubmit(response.data);
+            navigate(`/${username}`)
+            
+        } catch (error) {
+            console.error('Error updating user info', error);
+        }
     };
 
     return (
@@ -136,7 +151,6 @@ const UserInfoForm = ({ userData, onSubmit }) => {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  required
               />
           </label>
   

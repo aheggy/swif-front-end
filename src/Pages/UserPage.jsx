@@ -7,6 +7,7 @@ import "./UserPage.css";
 import "../assets/css/LineButtonAnimation.css";
 import succesImg from "../assets/img/succes.png";
 import UserSidebar from "../Components/UserSidebar";
+import UserInfoForm from "../Components/UserInfoForm";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -14,20 +15,20 @@ function UserPage({currentUsername}) {
 	const { username } = useParams();
 	const [userData, setUserData] = useState(null);
 	const [isOwnProfile, setIsOwnProfile] = useState(false);
-
-
 	const navigate = useNavigate(); 
+
 	
 	useEffect(() => {
-		console.log("Username from params:", username); 
+		// console.log("Username from params:", username); 
   		setIsOwnProfile(username === currentUsername);
-
 		if (username) {
-			console.log("Fetching data for username:", username);
+			// console.log("Fetching data for username:", username);
 			axios.get(`${API}/user/${encodeURIComponent(username)}`)
 				.then(response => {
 					setUserData(response.data[0]);
-					console.log("this is the userpage", response.data[0])
+					localStorage.removeItem('userData');
+					localStorage.setItem('userData', JSON.stringify(userData));
+					// console.log("this is the userpage", response.data[0])
 				})
 				.catch(error => {
 					console.error('Error fetching user data:', error);
@@ -36,12 +37,13 @@ function UserPage({currentUsername}) {
 		} else {
             console.log("Username is undefined");
         }
-	}, [username, currentUsername]);
+	}, [username, currentUsername, userData]);
+
+
+
+	// console.log(userData)
 
 	
-
-	console.log(userData)
-
 
 	return (
 		<div className="user-page">
@@ -91,6 +93,7 @@ function UserPage({currentUsername}) {
 					</section>
 					</div>
 				</div>
+				
 			</>
 			) : (
 				<p>Loading user data...</p>

@@ -2,9 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import "./SwifConnect.css";
+import "./ScreenSharing.css"
 import Whiteboard from "./Whiteboard";
 import ScreenSharing from './ScreenSharing';
-
+import mic from "../assets/img/mic.png"
+import shareScreen from "../assets/img/shareScreen.png"
+import micMute from "../assets/img/mic_mute.png"
+import cameraOff from "../assets/img/cameraOff.png"
+import cameraOn from "../assets/img/cameraOn.png"
+import incomingCall from "../assets/img/incoming-call.png"
+import startCall from "../assets/img/start-call.png"
+import endCall from "../assets/img/endCall.png"
+import send from "../assets/img/send.png"
+import W_S_switch from "../assets/img/whiteboard-screenshare-switch.png"
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -17,6 +27,8 @@ const socket = io(API, {
 });
 
 export default function SwifConnect({ token }) {
+
+  const [currnetUserDate, setCurrentUserData] = useState({})
 
 
   
@@ -32,12 +44,23 @@ export default function SwifConnect({ token }) {
 
   const localVideoRef = useRef(null)
   const remoteVideoRef = useRef(null)
-  const pc = useRef(new RTCPeerConnection(null))
+
+  const remoteScreenRef = useRef({})
+
   const textRef = useRef({})
-//   const candidates = useRef([])
+  //   const candidates = useRef([])
   const [offerVisible, setOfferVisible] = useState(false)
   // const [answerVisible, setAnswerVisible] = useState(false)
-  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [isCameraActive, setIsCameraActive] = useState(false);  
+  const [callActive, setCallActive] = useState(false);
+
+  const [isCallInitiated, setIsCallInitiated] = useState(false);
+
+
+    // screen sharing 
+    const [isScreenSharing, setIsScreenSharing] = useState(false);
+    const screenShareRef = useRef(null);
+    const screenShareStreamRef = useRef(null);
 
 
   // const { recipientUser } = useContext(UserContext);
@@ -65,21 +88,21 @@ export default function SwifConnect({ token }) {
 
 
 
-
-useEffect(() => {
-
-
-
   if (currentUsername) {
     socket.emit('register', currentUsername);
   } 
 
 
-  setInterval(() => {
-    if (currentUsername) {
-      socket.emit('heartbeat', { username: currentUsername });
-    }
-  }, 3000); 
+  // setInterval(() => {
+  //   if (currentUsername) {
+  //     socket.emit('heartbeat', { username: currentUsername });
+  //   }
+  // }, 30000); 
+
+useEffect(() => {
+
+
+
 
 
     socket.on("new_message", (messageData) => {
@@ -147,6 +170,9 @@ useEffect(() => {
 
 
   
+
+  const pc = useRef(new RTCPeerConnection(null))
+  // const pc = useRef(new RTCPeerConnection(configuration));
   
   useEffect(() => {
     const pcConfig = {
@@ -163,10 +189,11 @@ useEffect(() => {
     };
 
     pc.current.ontrack = (e) => {
-      if (remoteVideoRef.current && e.streams && e.streams[0]) {
+      if (e.track.kind === 'video') {
         remoteVideoRef.current.srcObject = e.streams[0];
-    }
+      }
     };
+    
 
     socket.on('sdp', handleRemoteSDP);
     socket.on('candidate', handleRemoteCandidate);
@@ -208,36 +235,50 @@ useEffect(() => {
   
 
   const createOffer = () => {
-    console.log("1- offer created")
+    console.log("1- offer created");
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-    .then(stream => {
-      localVideoRef.current.srcObject = stream;
-      stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
-      setIsCameraActive(true);
+      .then(stream => {
+        localVideoRef.current.srcObject = stream;
+        if (pc.current instanceof RTCPeerConnection) {
+          stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
+        } else {
+          console.error('pc is not an instance of RTCPeerConnection', pc.current);
+          return;
+        }
+        setIsCameraActive(true);
+        setIsCallInitiated(true); 
+        setCallActive(true);  
+        
 
-      return pc.current.createOffer({
-        offerToReceiveVideo: 1,
-        offerToReceiveAudio: 1,
+        console.log("returned pc", pc)
+
+        return pc.current.createOffer({
+          offerToReceiveVideo: 1,
+          offerToReceiveAudio: 1,
+        });
       })
-    })
-    .then( offer => {
-      return pc.current.setLocalDescription(offer);
-    })
-    .then (() => {
-      // const offer = pc.current.createOffer();
-      sendToPeer('sdp', { sdp: pc.current.localDescription }); 
-      
-    })
-    .catch(e => console.log("Error creating offer or accessing user media:", e));
+      .then(offer => {
+        return pc.current.setLocalDescription(offer);
+      })
+      .then(() => {
+        sendToPeer('sdp', { sdp: pc.current.localDescription }); 
+      })
+      .catch(e => console.log("Error creating offer or accessing user media:", e));
   };
-
+  
   const createAnswer = () => {
     console.log("1- Answer created");
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then(stream => {
         localVideoRef.current.srcObject = stream;
-        stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
+        if (pc.current instanceof RTCPeerConnection) {
+          stream.getTracks().forEach(track => pc.current.addTrack(track, stream));
+        } else {
+          console.error('pc is not an instance of RTCPeerConnection', pc.current);
+          return;
+        }
         setIsCameraActive(true);
+        setCallActive(true);    
   
         return pc.current.createAnswer(); 
       })
@@ -249,7 +290,7 @@ useEffect(() => {
       })
       .catch(e => console.log("Error creating answer or accessing user media:", e)); 
   };
-  
+    
 
   const sendToPeer = (eventType, payload) => {
     const fullPayload = {
@@ -285,18 +326,21 @@ useEffect(() => {
     pc.current.close();
     pc.current = new RTCPeerConnection(null);
     // window.location.href=`/swifconnect`;
+    setCallActive(false);    
+    setIsCallInitiated(false);
     window.location.replace(`/${currentUsername}`);
   }
 
 
   //toggle between screen sharing and whiteboard
 
+  // const [activeFeature, setActiveFeature] = useState('whiteboard');
   const [activeFeature, setActiveFeature] = useState('whiteboard');
 
 
   const toggleFeature = () => {
     if (activeFeature === 'whiteboard') {
-        setActiveFeature('screenShare');
+        setActiveFeature('screensharing');
     } else {
         setActiveFeature('whiteboard');
     }
@@ -304,42 +348,8 @@ useEffect(() => {
 
 
 
-  // screen sharing 
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
-    const screenShareStreamRef = useRef(null);
 
-    // ... existing useEffect and functions
-
-    // Function to start screen sharing
-    const startScreenSharing = async () => {
-        try {
-            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-            screenShareStreamRef.current = screenStream;
-
-            // Add the screen sharing track to the peer connection
-            const screenTrack = screenStream.getVideoTracks()[0];
-            pc.current.addTrack(screenTrack, screenStream);
-
-              setIsScreenSharing(true);
-        } catch (error) {
-              console.error('Error starting screen sharing:', error);
-        }
-    }
-
-    // Function to stop screen sharing
-    const stopScreenSharing = () => {
-      if (screenShareStreamRef.current) {
-          const screenTrack = screenShareStreamRef.current.getTracks().find(track => track.kind === 'video');
-          if (screenTrack) {
-              const sender = pc.current.getSenders().find(s => s.track === screenTrack);
-              if (sender) {
-                  pc.current.removeTrack(sender);
-              }
-              screenTrack.stop();
-          }
-          setIsScreenSharing(false);
-      }
-    };
+    
 
 
 // controle the video and audio
@@ -396,7 +406,27 @@ const turnMicrophoneOn = () => {
     setIsMicrophoneOn(true);
 };
 
-  
+
+const startScreenShare = async () => {
+  try {
+    // Get the screen sharing stream
+    const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+
+    // Replace the current video track with the screen sharing track
+    const sender = pc.current.getSenders().find(s => s.track.kind === 'video');
+    if (sender) {
+      sender.replaceTrack(screenStream.getVideoTracks()[1]);
+    }
+
+    // Update the local video display to show the screen sharing stream
+    localVideoRef.current.srcObject = screenStream;
+
+  } catch (e) {
+    console.error("Error during screen sharing:", e);
+  }
+};
+
+console.log("pc is : ", pc)
 
     return (
         <div className="swif-connect-container">
@@ -405,36 +435,69 @@ const turnMicrophoneOn = () => {
                 <video ref={remoteVideoRef} autoPlay className="remote-user-video" />
                 {!isCameraActive && <span>{recipientUsername}</span>}
               </div>
-              {/* <div className="remote-screen" style={getRemoteScreenStyle()}>
+              <div className="remote-screen">
                 {isScreenSharing && (
                   <video ref={remoteScreenRef} autoPlay playsInline className="remote-screen-video" />
                 )}
-              </div> */}
+              </div>
               <div className="local-user">
                 <video ref={localVideoRef} autoPlay muted className="local-user-video" />
                 {!isCameraActive && <span>{currentUsername}</span>}
               </div>
-                <button onClick={toggleCamera}>
-                    {isCameraOn ? 'Turn Camera Off' : 'Turn Camera On'}
-                </button>
-                <button onClick={toggleMicrophone}>
-                    {isMicrophoneOn ? 'Mute Microphone' : 'Unmute Microphone'}
-                </button>
+
             </div>
 
+            <button className="end-call-buttons" onClick={endChat}>End</button>
 
             <div className="available-user">
-                    <div className="chat-participants">
-                        <div className="callandendchat-button">
-                            <button onClick={toggleFeature}>
-                            {activeFeature === 'whiteboard' ? "Switch to Screen Share" : "Switch to Whiteboard"}
-                            </button>
-                            {!offerVisible ? (<button onClick={createOffer}>Start Call</button>
-                            ):(<button onClick={createAnswer}>Answer</button>)}
-                            <button onClick={endChat}>End Call</button>
-                            {/* <button onClick={startScreenShare}>share screen</button> */}
-                        </div>
+                <div className="call-button-icons-container">
+               
+                  <button className="call-buttons" onClick={toggleFeature}>
+                    <img className="call-button-icons" src={W_S_switch} alt="" />
+                  </button>
+
+                  {offerVisible || isCallInitiated ? (
+                    <div>
+
+                      {isCallInitiated || callActive? (
+                        <button className="call-buttons end-call" onClick={endChat}>
+                          <img className="call-button-icons" src={endCall} alt="icon"></img>
+                        </button>
+                      ) : (
+                        offerVisible? (
+                          <button className="call-buttons incoming-call" onClick={createAnswer}>
+                            <img className="call-button-icons" src={incomingCall} alt="icon"></img>
+                          </button>
+                        ):( 
+                            ""
+                          ) 
+                        )}
+                        {/* <button onClick={startScreenShare}>share screen</button> */}
+                        <button className="call-buttons" onClick={toggleCamera}>
+                          {!isCameraOn ? (
+                            <img className="call-button-icons" src={cameraOff} alt="icon"></img>
+                          ) : (
+                             <img className="call-button-icons" src={cameraOn} alt="icon"></img>
+                          )}
+                        </button>
+                        <button className="call-buttons" onClick={toggleMicrophone}>
+                          {!isMicrophoneOn ? (
+                            <img className="call-button-icons" src={micMute} alt="icon" />
+                          ) : (
+                            <img className="call-button-icons" src={mic} alt="icon" />
+
+                          )}
+                        </button>
+                        <button className="call-buttons" onClick={startScreenShare}>
+                          <img className="call-button-icons" src={shareScreen} alt="icon" />
+                        </button>
                     </div>
+                  ):(
+                    <button className="call-buttons" onClick={createOffer}>
+                      <img className="call-button-icons" src={startCall} alt="icon"></img>
+                    </button>
+                  )}
+                </div>
             </div>
 
 
@@ -460,18 +523,33 @@ const turnMicrophoneOn = () => {
                         onKeyDown={handleKeyPress}
                         ref={messageInputRef}
                     />
-                    <button className='send-button' onClick={sendMessage}>Send</button>
+                    <button className='send-button' onClick={sendMessage}>
+                      <img className="call-button-icons" src={send} alt="icon" />
+                    </button>
                 </div>
             </div>
             <div className="whitebard-sharescreen">
             {activeFeature === 'whiteboard' ? 
             (
-              <Whiteboard socket={socket} currentUsername={currentUsername} recipientUsername={recipientUsername}/>
+              <Whiteboard 
+                socket={socket} 
+                currentUsername={currentUsername} 
+                recipientUsername={recipientUsername}
+              />
             ):(
-              <ScreenSharing socket={socket} currentUsername={currentUsername} recipientUsername={recipientUsername} screenShareStreamRef={screenShareStreamRef} isScreenSharing={isScreenSharing} startScreenSharing={startScreenSharing} stopScreenSharing={stopScreenSharing}/>
+              <ScreenSharing 
+                socket={socket} 
+                currentUsername={currentUsername} 
+                recipientUsername={recipientUsername} 
+                screenShareStreamRef={screenShareStreamRef} 
+                isScreenSharing={isScreenSharing} 
+                setIsScreenSharing={setIsScreenSharing}
+                remoteVideoRef={remoteVideoRef}
+              />  
             )}
             </div>
         </div>
     );
 
 }
+
