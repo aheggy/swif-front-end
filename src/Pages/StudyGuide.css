@@ -1,6 +1,6 @@
 .studyguide-container {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;
     height: 100vh;
     color: #333;
@@ -73,6 +73,19 @@
     word-break: break-word;
     overflow-x: auto;
     overflow-y: auto;
+}
+
+/*instructions container*/
+
+.instruction-container {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #eef2f7; /* light blue background for testing, adjust to brand colors needed */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 1.1em;
+    line-height: 1.4;
 }
 
 /* Responsive adjustments */
