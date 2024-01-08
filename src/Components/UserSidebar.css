@@ -5,12 +5,40 @@
 }
 
 .aside-menu {
-    /* border: 1px solid gray; */
+    padding: 10px;
+    width: 250px;
+    margin: 0 10px;
+    height: 100vh;
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+    -moz-transition: width 0.3s ease;
+    -ms-transition: width 0.3s ease;
+    -o-transition: width 0.3s ease;
+}
+
+
+.aside-menu-active {
+    width: 250px;
     padding: 10px;
     margin: 0 10px;
     height: 100vh;
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+    -moz-transition: width 0.3s ease;
+    -ms-transition: width 0.3s ease;
+    -o-transition: width 0.3s ease;
 }
 
+.userpage-aside button{
+    width: 100%;
+    text-wrap: nowrap;
+    overflow: hidden;
+    transition: all.3s ease;
+    -webkit-transition: all.3s ease;
+    -moz-transition: all.3s ease;
+    -ms-transition: all.3s ease;
+    -o-transition: all.3s ease;
+}
 
 .userpage-aside ul {
     list-style: none;
@@ -24,16 +52,19 @@
 
 .line-button-animation{
     padding: 10px;
-
-}
-
-.line-button-animation{
     border-bottom: none;
-    
 }
 
-@media screen and (max-width: 450px) {
-    .userpage-aside{
-        display: none;
+.line-button-animation img{
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .aside-menu{
+        width: 0px;
+        overflow: hidden;
+    }
+    .userpage-aside button{
+        width: 0px;
     }
 }

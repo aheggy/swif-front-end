@@ -1,6 +1,6 @@
 .subjectpage-container {
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;
     height: 100vh;
 }
@@ -16,9 +16,27 @@
 
 .subjects-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
     gap: 5px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .subjects-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .subjects-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .subjects-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .subject img {

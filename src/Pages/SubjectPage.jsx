@@ -27,12 +27,6 @@ const SubjectPage = ({currentUsername}) => {
 	}, [])
 
 
-
-
-	
- 
-
-	console.log(subjects)
 	return (
 		<div>
 			<div className="subjectpage-container">
@@ -45,7 +39,7 @@ const SubjectPage = ({currentUsername}) => {
 									<a className="card_image" href="/people">
 										<div className="circle">
 											<div className="img">
-												{/* <img src={subject.img} alt="" /> */}
+												<img src={subject.image_url} alt="" />
 											</div>
 										</div>
 										<p>{subject.subject_name}</p>

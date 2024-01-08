@@ -74,12 +74,19 @@
 }
 
 
-.profile-image{
+.profile-image {
     border: 1px solid blue;
-    width: 230px;
-    height: 220px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+@media screen and (min-width: 1024px) {
+    .profile-image {
+        width: 220px;
+        height: 220px;
+    }
 }
 
 .about-user{
