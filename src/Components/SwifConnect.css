@@ -93,7 +93,6 @@ body{
   
 
 
-
 .chat-container{
   box-shadow: 0 2px 4px blue;
   /* box-shadow: 0 2px 4px rgba(0,0,0,0.5); */
@@ -108,6 +107,9 @@ body{
   display: flex;
   flex-direction: column;
   padding: 1%;
+  overflow-y: auto;
+  word-break: break-word;
+
 }
 
 .input-box{
@@ -122,6 +124,10 @@ body{
 
 .message-input{
   width: 84%;
+  border-color: blue;
+  border-radius: 5px;
+  padding: 5px;
+  
 }
   
 .input-box .send-button{
@@ -196,8 +202,16 @@ body{
   border: none;
 }
 
-.stop-screen-sharing button{
-  background-color: red;
+.swif-connect-container .stop-screen-sharing,
+.swif-connect-container .mute-mic,
+.swif-connect-container .camera-off,
+.swif-connect-container .end-call{
+  background-color: rgb(214, 0, 0);
+}
+
+
+.swif-connect-container .call-offer-visible{
+  background-color: green;
 }
 
 
