@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './UserInfoForm.css';
+import DataContext, { DataProvider } from '../contexts/DataProvider';
 const API = process.env.REACT_APP_API_URL
+
 
 const UserInfoForm = ({ userData, onSubmit }) => {
     // console.log("userData is ", userData)
     const navigate = useNavigate()
-    
+    const {people} = useContext(DataContext)
+    console.log(people)
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -33,12 +36,11 @@ const UserInfoForm = ({ userData, onSubmit }) => {
                 console.error('Error fetching subjects', error);
             }
         };
-
         fetchSubjects();
-    }, [subjects]);
+    }, []);
 
     useEffect(() => {
-        const storedUserData = JSON.parse(localStorage.getItem('userData'));
+        const storedUserData = people;
         console.log(storedUserData)
         if (storedUserData) {
             setFormData({

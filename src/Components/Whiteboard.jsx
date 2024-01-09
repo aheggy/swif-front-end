@@ -44,7 +44,7 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
     };
 
     const startDrawing = ({ nativeEvent }) => {
-        const { offsetX, offsetY } = nativeEvent;
+        const { offsetX, offsetY } = getCoordinates(nativeEvent);
         setIsDrawing(true);
         setLastPos({ x: offsetX, y: offsetY });
     };
@@ -57,9 +57,24 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
         if (!isDrawing) {
             return;
         }
-        const { offsetX, offsetY } = nativeEvent;
+        const { offsetX, offsetY } = getCoordinates(nativeEvent);
         drawLine(lastPos.x, lastPos.y, offsetX, offsetY, true);
         setLastPos({ x: offsetX, y: offsetY });
+    };
+
+    const getCoordinates = (event) => {
+        if (event.touches) {
+            // Touch event
+            const canvas = canvasRef.current;
+            const rect = canvas.getBoundingClientRect();
+            return {
+                offsetX: (event.touches[0].clientX - rect.left) * 2, // Multiply by 2 due to the canvas scaling
+                offsetY: (event.touches[0].clientY - rect.top) * 2
+            };
+        } else {
+            // Mouse event
+            return { offsetX: event.offsetX, offsetY: event.offsetY };
+        }
     };
 
     const clearCanvas = () => {
@@ -98,6 +113,9 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
                         onMouseDown={startDrawing}
                         onMouseUp={finishDrawing}
                         onMouseMove={draw}
+                        onTouchStart={startDrawing}
+                        onTouchEnd={finishDrawing}
+                        onTouchMove={draw}
                         ref={canvasRef}
                         className='board'
                         id='board'

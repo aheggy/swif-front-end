@@ -13,7 +13,6 @@ import cameraOff from "../assets/img/cameraOff.png"
 import cameraOn from "../assets/img/cameraOn.png"
 import incomingCall from "../assets/img/incoming-call.png"
 import startCall from "../assets/img/start-call.png"
-import endCall from "../assets/img/endCall.png"
 import send from "../assets/img/send.png"
 import StopScreenSharing from "../assets/img/stopScreenSharing.png"
 import DataContext from "../contexts/DataProvider";
@@ -43,19 +42,14 @@ export default function SwifConnect({ token }) {
   const localVideoRef = useRef(null)
   const remoteVideoRef = useRef(null)
   const screenShareRef = useRef(null);
-  const textRef = useRef({})
   const [offerVisible, setOfferVisible] = useState(false)
   const [isLocalCameraActive, setIsLocalCameraActive] = useState(false);  
   const [isRemoteCameraActive, setIsRemoteCameraActive] = useState(false);  
   const [callActive, setCallActive] = useState(false);
-  const [isCallInitiated, setIsCallInitiated] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const screenShareStreamRef = useRef(null);
-  const [screenShareVisible, setScreenShareVisible] = useState(false)
   const [activeFeature, setActiveFeature] = useState('whiteboard');
   const [currentUsernameData, setCurrentUsernameData] = useState("")
   const [recipientUsernameData, setRecipientUsernameData] = useState("")
-  const [isMicMuted, setIsMicMuted] = useState(true)
 
 
   // if (!people || people.length === 0) {
@@ -108,17 +102,7 @@ useEffect(() => {
         console.log("messageData.sender_username", messageData.sender_username)
         console.log("messageData.recipientUsername", messageData.recipient_username)
         console.log("recipientUsername", recipientUsername)
-
-        // if ((messageData.sender_username === currentUsername && messageData.recipient_username === recipientUsername) ||
-        // (messageData.sender_username === recipientUsername && messageData.recipient_username === currentUsername)) {
-        // console.log("done")
         setMessages((msgs) => [...msgs, messageData]);
-        // if (messageData.recipient_username === currentUsername && messageData.sender_username !== currentUsername) {
-            // Display a notification
-            // alert(`New message from ${messageData.sender_username}`);
-            // Or update a state to show a notification in the UI
-          // }
-      // }
     });
   
     return () => {
@@ -137,7 +121,6 @@ useEffect(() => {
   
       socket.emit("new_message", messageData);
   
-      // Optionally update UI immediately for the local user
       setMessages((msgs) => [...msgs, messageData]);
   
       setNewMessage("");
@@ -166,7 +149,7 @@ useEffect(() => {
 
 
 
-  const isNegotiating = useRef(false); // Add this flag outside of your useEffect
+  const isNegotiating = useRef(false); 
   const pc = useRef({})
   
   useEffect(() => {
@@ -276,12 +259,9 @@ useEffect(() => {
       sender: currentUsername,
       recipient: recipientUsername,
     };
-    // console.log("2- SDP created")
     socket.emit(eventType, fullPayload)
-    // console.log("3- SDP created and emited", fullPayload)
   };
 
-  // When initiating the call
   const createOffer = async () => {
     setCallActive(true)
     setIsLocalCameraActive(true)
@@ -295,7 +275,6 @@ useEffect(() => {
   };
 
 
-  // When responding to the call
   const createAnswer = async () => {
     setCallActive(true)
     try {
@@ -338,7 +317,6 @@ useEffect(() => {
       screenStream.getTracks().forEach(track => {
         track.stop();
   
-        // Remove the track from the peer connection
         const sender = pc.current.getSenders().find(s => s.track === track);
         if (sender) {
           pc.current.removeTrack(sender);
@@ -353,7 +331,6 @@ useEffect(() => {
     }
   
     // Optionally, handle UI changes here
-    setScreenShareVisible(false);
     setActiveFeature("whiteboard")
   };
   
@@ -408,7 +385,6 @@ useEffect(() => {
     pc.current = new RTCPeerConnection(null);
     // window.location.href=`/swifconnect`;
     setCallActive(false);    
-    setIsCallInitiated(false);
     window.location.replace(`/${currentUsername}`);
   }
 
@@ -469,10 +445,6 @@ useEffect(() => {
                  
                     {callActive ? (
                       <>
-                          {/* <button className="call-buttons end-call" onClick={endChat}>
-                            <img className="call-button-icons" src={endCall} alt="icon"></img>
-                          </button> */}
-
                           {isCameraOn ?(
                             <button className="call-buttons camera-off" onClick={toggleCamera}>
                                 <img className="call-button-icons" src={cameraOff} alt="icon"></img>
@@ -516,21 +488,8 @@ useEffect(() => {
                       </button>
                     ))}
 
-                     
-                        
-                          {/* <button className="call-buttons incoming-call" onClick={createAnswer}>
-                            <img className="call-button-icons" src={incomingCall} alt="icon"></img>
-                          </button> */}
-                      
-                        {/* <button onClick={startScreenShare}>share screen</button> */}
-
-             
                 </div>
             </div>
-
-
-
-
             <div className="chat-container">
                 <div className="chat-box">
                     {messages.map((message, index) => (
