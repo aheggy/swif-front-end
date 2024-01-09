@@ -385,20 +385,20 @@ useEffect(() => {
   const endChat = () => {
 
     if (localVideoRef.current && localVideoRef.current.srcObject) {
-        const tracks = localVideoRef.current.srcObject.getTracks();
-        tracks.forEach(track => track.stop());
-        localVideoRef.current.srcObject = null;
-        setIsLocalCameraActive(false)
-        setIsRemoteCameraActive(false)
-      }
+      setIsRemoteCameraActive(false)
+      setIsLocalCameraActive(false)
+      const tracks = localVideoRef.current.srcObject.getTracks();
+      tracks.forEach(track => track.stop());
+      localVideoRef.current.srcObject = null;
+    }
     
-      if (remoteVideoRef.current && remoteVideoRef.current.srcObject) {
-        const remoteTracks = remoteVideoRef.current.srcObject.getTracks();
-        remoteTracks.forEach(track => track.stop());
-        remoteVideoRef.current.srcObject = null;
-        setIsLocalCameraActive(false)
-        setIsRemoteCameraActive(false)
-      }
+    if (remoteVideoRef.current && remoteVideoRef.current.srcObject) {
+      setIsLocalCameraActive(false)
+      setIsRemoteCameraActive(false)
+      const remoteTracks = remoteVideoRef.current.srcObject.getTracks();
+      remoteTracks.forEach(track => track.stop());
+      remoteVideoRef.current.srcObject = null;
+    }
 
     setMessages([]);
     setRecipientUsername(null);
@@ -503,7 +503,6 @@ const toggleScreenShare = () =>{
   }
     return (
       <>
-        { (people.length > 1) ? (
           <div className="swif-connect-container">
             <div className="video-window"> 
               <div className="remote-user">
@@ -633,10 +632,7 @@ const toggleScreenShare = () =>{
             )}
             </div>
         </div>
-        ):(
-          "loading..."
-        )}
-        </>
+      </>
     );
 
 }
