@@ -8,6 +8,7 @@ import subject from "../assets/img/subject.png";
 import group from "../assets/img/group.png";
 import library from "../assets/img/library.png";
 import studyGuide from "../assets/img/studyGuide.png";
+import subjects from "../assets/img/subjects.png"
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import { jwtDecode } from "jwt-decode";
 
@@ -38,9 +39,9 @@ const UserSidebar = () => {
 	}
 
 	return (
-		<>
+		<div className="side-bar">
 			<aside className="userpage-aside">
-				<label for="burger" class="burger" onClick={handleBurgerChange}>
+				<label for="burger" className="burger" onClick={handleBurgerChange}>
 					<input id="burger" type="checkbox" />
 					<span></span>
 					<span></span>
@@ -67,7 +68,7 @@ const UserSidebar = () => {
 						<li>
 							<Link to={"/subjects"}>
 								<button className="line-button-animation">
-									<img src={subject} alt="" />
+									<img src={subjects} alt="" />
 									Subjects
 								</button>
 							</Link>
@@ -99,7 +100,7 @@ const UserSidebar = () => {
 					</ul>
 				</div>
 			</aside>
-		</>
+		</div>
 	);
 };
 

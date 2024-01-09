@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import axios from "axios"
+import React, { useState, useEffect, useRef, useContext } from "react";
 import io from "socket.io-client";
 import { getUsernameFromToken } from "../utilities/tokenUtilities";
 import "./SwifConnect.css";
@@ -15,6 +16,7 @@ import startCall from "../assets/img/start-call.png"
 import endCall from "../assets/img/endCall.png"
 import send from "../assets/img/send.png"
 import StopScreenSharing from "../assets/img/stopScreenSharing.png"
+import DataContext from "../contexts/DataProvider";
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -27,8 +29,11 @@ const socket = io(API, {
 });
 
 export default function SwifConnect({ token }) {
+  // if (!people || people.length === 0) {
+  //   return <div>Loading...</div>; 
+  // }
 
-
+  const {people}= useContext(DataContext)
   const messageInputRef = useRef(null);
   const messagesEndRef = useRef(null);
   const currentUsername = getUsernameFromToken(token);
@@ -40,15 +45,41 @@ export default function SwifConnect({ token }) {
   const screenShareRef = useRef(null);
   const textRef = useRef({})
   const [offerVisible, setOfferVisible] = useState(false)
-  const [isCameraActive, setIsCameraActive] = useState(false);  
+  const [isLocalCameraActive, setIsLocalCameraActive] = useState(false);  
+  const [isRemoteCameraActive, setIsRemoteCameraActive] = useState(false);  
   const [callActive, setCallActive] = useState(false);
   const [isCallInitiated, setIsCallInitiated] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const screenShareStreamRef = useRef(null);
   const [screenShareVisible, setScreenShareVisible] = useState(false)
   const [activeFeature, setActiveFeature] = useState('whiteboard');
+  const [currentUsernameData, setCurrentUsernameData] = useState("")
+  const [recipientUsernameData, setRecipientUsernameData] = useState("")
 
 
+  // if (!people || people.length === 0) {
+  //   return <div>Loading...</div>; 
+  // }
+
+  useEffect(() => {
+    if (people && people.length > 0) {
+      const currentUserData = people.find(user => user.username === currentUsername);
+      const recipientUserData = people.find(user => user.username === recipientUsername);
+
+      if (currentUserData) {
+        setCurrentUsernameData(currentUserData);
+      }
+
+      if (recipientUserData) {
+        setRecipientUsernameData(recipientUserData);
+      }
+    }
+  }, [people, currentUsername, recipientUsername]);
+
+
+
+  console.log(people);
+  console.log(currentUsernameData);
   // const { recipientUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -141,7 +172,7 @@ useEffect(() => {
 
 
   const isNegotiating = useRef(false); // Add this flag outside of your useEffect
-  const pc = useRef(new RTCPeerConnection(null))
+  const pc = useRef({})
   
   useEffect(() => {
     const pcConfig = {
@@ -173,6 +204,13 @@ useEffect(() => {
       setActiveFeature("screenshare")
       if (data.type === 'screen-share') {
         screenShareTrackIds.push(data.trackId);
+      }
+    });
+
+    socket.on('screen-share-ended', (data) => {
+      setActiveFeature("whiteboard")
+      if (screenShareRef.current) {
+        screenShareRef.current.srcObject = null;
       }
     });
 
@@ -214,6 +252,7 @@ useEffect(() => {
 
   // Handling remote SDP
   const handleRemoteSDP = async (data) => {
+    setIsRemoteCameraActive(true)
     await pc.current.setRemoteDescription(new RTCSessionDescription(data.sdp));
     if (data.sdp.type === 'offer') {
       const answer = await pc.current.createAnswer();
@@ -248,6 +287,7 @@ useEffect(() => {
 
   // When initiating the call
   const createOffer = async () => {
+    setIsLocalCameraActive(true)
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       localVideoRef.current.srcObject = stream;
@@ -314,6 +354,7 @@ useEffect(() => {
   
     // Optionally, handle UI changes here
     setScreenShareVisible(false);
+    setActiveFeature("whiteboard")
   };
   
 
@@ -347,14 +388,16 @@ useEffect(() => {
         const tracks = localVideoRef.current.srcObject.getTracks();
         tracks.forEach(track => track.stop());
         localVideoRef.current.srcObject = null;
-        setIsCameraActive(false)
+        setIsLocalCameraActive(false)
+        setIsRemoteCameraActive(false)
       }
     
       if (remoteVideoRef.current && remoteVideoRef.current.srcObject) {
         const remoteTracks = remoteVideoRef.current.srcObject.getTracks();
         remoteTracks.forEach(track => track.stop());
         remoteVideoRef.current.srcObject = null;
-        setIsCameraActive(false)
+        setIsLocalCameraActive(false)
+        setIsRemoteCameraActive(false)
       }
 
     setMessages([]);
@@ -390,8 +433,8 @@ useEffect(() => {
 
 
 // controle the video and audio
-    const [isCameraOn, setIsCameraOn] = useState(true); // Initially, the camera is on
-    const [isMicrophoneOn, setIsMicrophoneOn] = useState(true); // Initially, the microphone is on
+    const [isCameraOn, setIsCameraOn] = useState(true); 
+    const [isMicrophoneOn, setIsMicrophoneOn] = useState(true); 
 
     const toggleCamera = () => {
       if (isCameraOn) {
@@ -443,21 +486,41 @@ const turnMicrophoneOn = () => {
     setIsMicrophoneOn(true);
 };
 
-
+const toggleScreenShare = () =>{
+  if (!isScreenSharing){
+    startScreenShare()
+  } else {
+    stopScreenShare()
+  }
+}
 
 // console.log("pc is : ", pc)
 
+  // const remoteUserImgURL = recipientUsernameData[0].profile_image_url
+  if(people.length > 4){
+
+    console.log (recipientUsernameData.profile_image_url)
+  }
     return (
-        <div className="swif-connect-container">
+      <>
+        { (people.length > 1) ? (
+          <div className="swif-connect-container">
             <div className="video-window"> 
               <div className="remote-user">
-                <video ref={remoteVideoRef} autoPlay muted className="remote-user-video" />
-                {!isCameraActive && <span>{recipientUsername}</span>}
+                { isRemoteCameraActive ? (
+                  <video ref={remoteVideoRef} autoPlay muted className="remote-user-video" />
+                ):(
+                  <img className="remote-user-image" src={recipientUsernameData.profile_image_url}/>
+                )}
+              
               </div>
 
               <div className="local-user">
-                <video ref={localVideoRef} autoPlay muted className="local-user-video" />
-                {!isCameraActive && <span>{currentUsername}</span>}
+                { isLocalCameraActive ? (
+                  <video ref={localVideoRef} autoPlay muted className="local-user-video" />
+                ):(
+                  <img className="local-user-image" src={currentUsernameData.profile_image_url}/>
+                )}
               </div>
 
             </div>
@@ -509,15 +572,18 @@ const turnMicrophoneOn = () => {
                     </div>
                   ):(
                     <div>
-                    <button className="call-buttons" onClick={stopScreenShare}>
-                      <img className="call-button-icons" src={StopScreenSharing} alt="icon" />
-                    </button>
-                    <button className="call-buttons" onClick={ startScreenShare }>
-                      <img className="call-button-icons" src={shareScreen} alt="icon" />
-                    </button>
-                    <button className="call-buttons" onClick={createOffer}>
-                      <img className="call-button-icons" src={startCall} alt="icon"></img>
-                    </button>
+                      
+                      <button className="call-buttons stop-screen-sharing" onClick={stopScreenShare}>
+                        <img className="call-button-icons stop-screen-sharing" src={StopScreenSharing} alt="icon" />
+                      </button>
+
+                      <button className="call-buttons" onClick={ startScreenShare }>
+                        <img className="call-button-icons" src={shareScreen} alt="icon" />
+                      </button>
+
+                      <button className="call-buttons" onClick={createOffer}>
+                        <img className="call-button-icons" src={startCall} alt="icon"></img>
+                      </button>
 
                     </div>
                   )}
@@ -567,6 +633,10 @@ const turnMicrophoneOn = () => {
             )}
             </div>
         </div>
+        ):(
+          "loading..."
+        )}
+        </>
     );
 
 }

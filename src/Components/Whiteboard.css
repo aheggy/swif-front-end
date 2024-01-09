@@ -1,5 +1,5 @@
 .whiteboard-page-container {
-    border: 1px solid gray;
+    border: 1px solid blue;
     border-radius: 5px;
     position: fixed;
     display: flex;
@@ -10,15 +10,18 @@
     height: 88%;
     width: 76%;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    /* box-shadow: 0 2px 4px rgba(255, 255, 255, 0.5); */
+    box-shadow: 0 2px 4px blue;
+
 
 }
 
-.whiteboard-page-container button {
+.whiteboard-page-container .color-picker-container button {
+    border: none;
     background-color: blue;
     border-radius: 5px;
     color: white;
-    margin: 5px;
+    margin: 4px;
 }
 
 
@@ -36,28 +39,25 @@
     width: 60px;
     padding: 3px;
     margin: auto;
-    height: 35px;
+    height: 30px;
 }
 
-.clear-whiteboard {
-   
-    width: auto;
-    height: 35px;
+.whiteboard-page-container .color-picker-container button{
+    height: 30px;
     line-height: 10px;
-    padding: 2px 15px;
+    padding: 1px 15px;
     cursor: pointer;
-    border: 1px solid gray;
+    border: 1px solid blue;
     vertical-align: middle; 
     text-align: center; 
 }
 
 .whiteboard-container {
-    border-top: 1px solid gray;
+    border-top: 1px solid blue;
     position: relative;
     height: 100%;
     width: 100%;
     overflow: hidden;
-    background-color: lightskyblue;
 }
 
 .board-container{

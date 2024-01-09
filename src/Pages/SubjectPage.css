@@ -1,4 +1,5 @@
 .subjectpage-container {
+    background-color: #e9f1fb;
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;

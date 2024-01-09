@@ -1,4 +1,5 @@
 .library-container{
+    background-color: white;
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;
@@ -11,5 +12,6 @@
     padding: 20px;
     flex-direction: column;
     align-items: center;
-    background-color: #f7f7f7;
+    /* background-color: #f7f7f7; */
+    background-color: #e9f1fb;
 }

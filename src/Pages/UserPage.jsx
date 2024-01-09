@@ -37,7 +37,7 @@ function UserPage({currentUsername}) {
 		} else {
             console.log("Username is undefined");
         }
-	}, [username, currentUsername, userData]);
+	}, [username, currentUsername]);
 
 
 
@@ -75,11 +75,11 @@ function UserPage({currentUsername}) {
 								<p className="user-info">BIO : <span>{userData.bio}</span></p>
 							</div>
 						</div>
-						<button
+						{ isOwnProfile && <button
 							onClick={() => navigate(`/edit-profile?username=${encodeURIComponent(username)}`)}
 						>
 							Edit Profile
-						</button>
+						</button>}
 						<hr />
 
 						<div className="interested-subject">

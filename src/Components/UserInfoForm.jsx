@@ -35,7 +35,7 @@ const UserInfoForm = ({ userData, onSubmit }) => {
         };
 
         fetchSubjects();
-    }, []);
+    }, [subjects]);
 
     useEffect(() => {
         const storedUserData = JSON.parse(localStorage.getItem('userData'));
@@ -54,7 +54,7 @@ const UserInfoForm = ({ userData, onSubmit }) => {
                 subjectInterests: storedUserData.subject_interest ? storedUserData.subject_interest.split(',') : [],
             });
         }
-    }, [userData]);
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

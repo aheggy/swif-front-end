@@ -4,6 +4,7 @@ import { getUsernameFromToken } from '../utilities/tokenUtilities';
 import { jwtDecode } from 'jwt-decode';
 import { io } from 'socket.io-client';
 import { UserProvider } from '../contexts/UserProvider';
+import { DataProvider } from '../contexts/DataProvider';
 
 import Home from '../Pages/Home';
 import SignUpPage from '../Pages/SignUp';
@@ -67,6 +68,7 @@ const AppRoutes = () => {
     <>
       {!isSwifConnectPage && <NavBar />}
     <UserProvider>
+      <DataProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUpPage />} />
@@ -81,6 +83,7 @@ const AppRoutes = () => {
         <Route path="/subjects" element={<ProtectedRoute><SubjectPage currentUsername={currentUsername}/></ProtectedRoute>} />
         <Route path="/swifconnect" element={<ProtectedRoute><SwifConnect token={token} /></ProtectedRoute>} />
       </Routes>
+      </DataProvider>
     </UserProvider>
     </>
   );

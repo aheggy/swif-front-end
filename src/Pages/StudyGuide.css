@@ -1,10 +1,12 @@
 .studyguide-container {
+    background-color: white;
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;
     height: 100vh;
     color: #333;
     font-family: 'Arial', sans-serif;
+    text-align: center;
 }
 
 .studyguide-content {
@@ -13,12 +15,13 @@
     align-items: center;
     padding: 20px;
     overflow-y: auto;
-    background-color: #f7f7f7;
+    /* background-color: #f7f7f7; */
+    background-color: #e9f1fb;
     /* border-left: 1px solid #ddd; */
 }
 
 .studyguide-content h2{
-    margin: 50px;
+    margin-top: 50px;
 }
 
 .curriculum-form {
@@ -86,6 +89,7 @@
     text-align: center;
     font-size: 1.1em;
     line-height: 1.4;
+    margin-bottom: 50px;
 }
 
 /* Responsive adjustments */
