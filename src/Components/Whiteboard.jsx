@@ -43,8 +43,23 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
         });
     };
 
+    const getCoordinates = (event) => {
+        if(event.touches) {
+            // Touch event
+            const canvas = canvasRef.current;
+            const rect = canvas.getBoundingClientRect();
+            return {
+                offsetX: (event.touches[0].clientX - rect.left) * 2,
+                offsetY: (event.touches[0].clientY - rect.top) * 2
+            };
+        } else {
+            // Mouse event
+            return { offsetX: event.offsetX, offsetY: event.offsetY };
+        }
+    };
+
     const startDrawing = ({ nativeEvent }) => {
-        const { offsetX, offsetY } = nativeEvent;
+        const { offsetX, offsetY } = getCoordinates(nativeEvent);
         setIsDrawing(true);
         setLastPos({ x: offsetX, y: offsetY });
     };
@@ -57,7 +72,7 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
         if (!isDrawing) {
             return;
         }
-        const { offsetX, offsetY } = nativeEvent;
+        const { offsetX, offsetY } = getCoordinates(nativeEvent);
         drawLine(lastPos.x, lastPos.y, offsetX, offsetY, true);
         setLastPos({ x: offsetX, y: offsetY });
     };

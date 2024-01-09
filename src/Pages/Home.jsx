@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode'; 
 import './Home.css';
+import axios from "axios"
 
 const API = process.env.REACT_APP_API_URL
 
@@ -19,22 +20,16 @@ function Home() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
+      const response = await axios.post(`${API}/login`, loginData);
+  
+      if (response.status === 200) {
+        const data = response.data;
         localStorage.setItem('token', data.token);
-
+  
         // Decode token to get the username
         const decodedToken = jwtDecode(data.token);
         const username = decodedToken.username; 
-        window.location.href=`/${username}`;
+        window.location.href = `/${username}`;
       } else {
         console.log('Login failed');
       }
