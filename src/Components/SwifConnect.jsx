@@ -50,7 +50,7 @@ export default function SwifConnect({ token }) {
   const [activeFeature, setActiveFeature] = useState('whiteboard');
   const [currentUsernameData, setCurrentUsernameData] = useState("")
   const [recipientUsernameData, setRecipientUsernameData] = useState("")
-
+  
 
   // if (!people || people.length === 0) {
   //   return <div>Loading...</div>; 
