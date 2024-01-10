@@ -54,8 +54,6 @@ export default function Library() {
                             >
                                 {book.cover_i && <img src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`} alt={book.title} />}
                                 <p className="title">{book.title}</p>
-                                {/* Optional: Display the author */}
-                                {/* {book.author_name && <p className="author">Author: {book.author_name.join(', ')}</p>} */}
                             </a>
                         ))}
                     </div>
