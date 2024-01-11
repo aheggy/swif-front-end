@@ -76,6 +76,7 @@ function UserPage({currentUsername}) {
 							</div>
 						</div>
 						{ isOwnProfile && <button
+							className="edit-profile"
 							onClick={() => navigate(`/edit-profile?username=${encodeURIComponent(username)}`)}
 						>
 							Edit Profile

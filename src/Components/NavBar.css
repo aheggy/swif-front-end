@@ -39,7 +39,7 @@
   padding: 2px 15px;
   cursor: pointer;
   border-radius: 5px;
-  background-color: blue;
+  background-color: #00029d;
   color: white;
   }
   
@@ -47,7 +47,7 @@
     /* text-decoration: underline; */
     transition: 0.2s;
     background-color: white;
-    color: blue;
+    color: #00029d;
     border: 1px solid blue;
     /* box-shadow: 0 0 20px rgb(0, 8, 255); */
   }

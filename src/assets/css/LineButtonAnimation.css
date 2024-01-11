@@ -29,7 +29,7 @@
 .line-button-animation:hover {
     transform: scale(1.05);
     color: #000000;
-    background-color: #0099fe;
+    background-color: #017bfd88;
     -webkit-transform: scale(1.05);
     -moz-transform: scale(1.05);
     -ms-transform: scale(1.05);

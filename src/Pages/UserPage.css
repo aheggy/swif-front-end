@@ -45,7 +45,6 @@
 
 .about-user{
     width: 100%;
-
     border-radius: 5px;
     padding: 10px;
     border-radius: 1px solid blue;
@@ -77,6 +76,11 @@
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+button{
+    border-radius: 5px;
+    background-color: #00029d;
 }
 
 @media screen and (min-width: 1024px) {

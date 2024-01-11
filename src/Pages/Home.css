@@ -68,7 +68,6 @@
     /* border: 1px solid blue; */
     margin: 50px;
     width: 50%;
-    font-weight: bold;
 
 }
 
@@ -81,7 +80,7 @@
 
 
 .landing-page-image {
-    positizon: relative;
+    position: relative;
 }
 
 .landing-page-image .image {
@@ -111,7 +110,7 @@ button {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-weight: bolder;
+    /* font-weight: bold; */
 }
 
 .login-button:hover {
@@ -125,9 +124,10 @@ button {
 .login-button{
     width: 40%;
     border-radius: 5px;
-    background-color: blue;
+    background-color: #00029d;
     padding: 5px ;
     height: 40px;
+    font-size: large;
 
 
 }
