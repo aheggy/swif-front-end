@@ -50,13 +50,16 @@
 .curriculum-form button {
     background-color: #00029d;
     color: white;
-    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .curriculum-form button:hover {
-    background-color: #003d82;
+    background-color: #017bfd88;
+    border: 1px solid  #00029d;
+    font-weight: bolder;
+    color: #00029d;
+    cursor: pointer;
 }
 
 .curriculum-form label {

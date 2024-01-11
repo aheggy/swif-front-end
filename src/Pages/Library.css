@@ -97,6 +97,11 @@ input{
     background-color: #00029d;
 }
 
+.library-content button:hover{
+    background-color: #017bfd88;
+    color: #00029d;
+    border: 1px solid #00029d;
+}
 @media (max-width: 1024px) {
     .book-item {
         flex: 0 1 calc(25% - 20px);
