@@ -27,10 +27,12 @@ export default function Library() {
         <div className="library-container">
             <UserSidebar />
             <div className="library-content">
-                <h1>Library Page</h1>
+                <div className="search_container">
+                <h2>Library Page</h2>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="subject">Subject:</label>
+                    <label htmlFor="subject"></label>
                     <input 
+                        className="subject_search_field"
                         type="text" 
                         name="subject" 
                         id="subject" 
@@ -40,8 +42,10 @@ export default function Library() {
                     />
                     <button type="submit">Submit</button>
                 </form>
+                </div>
 
                 {/* Display the books here.. */}
+                <div className="book-cards">
                 {data.length > 0 && (
                     <div className="books-list">
                         {data.map((book, index) => (
@@ -58,6 +62,7 @@ export default function Library() {
                         ))}
                     </div>
                 )}
+                </div>
             </div>
         </div>
     );
