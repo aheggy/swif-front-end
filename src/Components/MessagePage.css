@@ -6,6 +6,11 @@
     background-color: #e9f1fb;
 }
 
+.messages-content{
+    padding: 0 20px;
+    overflow: scroll;
+}
+
 
 
 

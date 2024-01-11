@@ -74,9 +74,13 @@ h2{
 
 .subject_search_field{
     width: 100%;
-    margin-bottom: 15px;
-}
+    /* margin-bottom: 15px; */
+    margin: 5px 0 15px 0;
+}   
 
+input{
+    padding: 5px;
+}
 
 .search_container{
     width: 100%;
@@ -85,6 +89,12 @@ h2{
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+.library-content button{
+    padding: 3px 20px;
+    border-radius: 5px;
+    background-color: #0156b3;
 }
 
 @media (max-width: 1024px) {
