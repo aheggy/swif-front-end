@@ -56,7 +56,7 @@ function UserPage({currentUsername}) {
 						{
 							isOwnProfile && 
 							<p className="userpage-message">
-								Welcome <strong> {username} </strong>
+								Welcome <span> {username.slice(0, 1).toUpperCase() + username.slice(1)} </span>
 								<i>
 									{/* <img src={succesImg} alt="" /> */}
 								</i>
