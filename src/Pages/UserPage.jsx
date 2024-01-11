@@ -83,7 +83,7 @@ function UserPage({currentUsername}) {
 						<hr />
 
 						<div className="interested-subject">
-							<h1>Interested subject</h1>
+							<h1>Subjects I Want To Study</h1>
 							<ul>
 								{userData.subject_interest}
 							</ul>
