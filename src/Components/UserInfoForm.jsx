@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './UserInfoForm.css';
-import DataContext, { DataProvider } from '../contexts/DataProvider';
+import DataContext from '../contexts/DataProvider';
 const API = process.env.REACT_APP_API_URL
 
 
@@ -10,7 +10,7 @@ const UserInfoForm = ({ userData, onSubmit }) => {
     // console.log("userData is ", userData)
     const navigate = useNavigate()
     const {people} = useContext(DataContext)
-    console.log(people)
+    // console.log(people)
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -31,7 +31,7 @@ const UserInfoForm = ({ userData, onSubmit }) => {
             try {
                 const response = await axios.get(`${API}/subjects`);
                 setSubjects(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             } catch (error) {
                 console.error('Error fetching subjects', error);
             }
@@ -41,7 +41,7 @@ const UserInfoForm = ({ userData, onSubmit }) => {
 
     useEffect(() => {
         const storedUserData = people;
-        console.log(storedUserData)
+        // console.log(storedUserData)
         if (storedUserData) {
             setFormData({
                 firstName: storedUserData.first_name || '',
@@ -56,7 +56,7 @@ const UserInfoForm = ({ userData, onSubmit }) => {
                 subjectInterests: storedUserData.subject_interest ? storedUserData.subject_interest.split(',') : [],
             });
         }
-    }, []);
+    }, [people]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

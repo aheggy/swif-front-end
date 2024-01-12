@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: #e9f1fb;
 }
 
@@ -10,6 +10,53 @@
     padding: 0 20px;
     overflow: scroll;
 }
+
+.message-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .recipients-list {
+    width: 20%;
+    background-color: #e9f1fb; 
+    overflow-y: auto; 
+    padding: 10px;
+  }
+  
+  .recipient-button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+    background-color: #77b7fd;
+}
+
+.recipient-button:hover {
+      background-color: #00029d;
+      color: white;
+      font-weight: bold;
+  }
+  
+  .messages-content {
+    flex-grow: 1;
+    padding: 10px;
+    background-color: #bbdeff; 
+    overflow-y: auto; 
+  }
+  
+  .message-user {
+    font-weight: bold;
+  }
+
+  .message-user span{
+    font-weight: lighter;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+  }
+    
 
 
 

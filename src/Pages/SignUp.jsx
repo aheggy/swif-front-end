@@ -28,25 +28,27 @@ const SignUpPage = () => {
       return; // Stop the function if passwords don't match
     }
   
+    const dataToSend = {
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      username: formData.username.toLowerCase(), // Converting the username to lowercase
+      password: formData.password.toLowerCase(),
+    };
+
     try {
       const response = await fetch(`${API}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          first_name: formData.first_name,
-          last_name: formData.last_name,
-          username: formData.username,
-          password: formData.password,
-        }),
+        body: JSON.stringify(dataToSend),
       });
   
       if (response.ok) {
         console.log('Sign-up successful!');
         const loginData = {
-          username: formData.username,
-          password: formData.password,
+          username: formData.username.toLowerCase(),
+          password: formData.password.toLowerCase(),
         }
         login(loginData)
         

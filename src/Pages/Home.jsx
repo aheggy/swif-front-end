@@ -74,13 +74,13 @@ function Home() {
 
 
 
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
 
-  const handleSubmit = (e) => {
-      e.preventDefault(); 
-      console.log('Subscribing with email:', email);
-      setEmail('');
-  };
+  // const handleSubmit = (e) => {
+  //     e.preventDefault(); 
+  //     console.log('Subscribing with email:', email);
+  //     setEmail('');
+  // };
 
 
 

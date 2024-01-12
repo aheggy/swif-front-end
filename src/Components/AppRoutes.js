@@ -22,18 +22,17 @@ import UserInfoForm from './UserInfoForm';
 
 const API = process.env.REACT_APP_API_URL;
 
-const socket = io(API, {
-  reconnection: true,
-  reconnectionAttempts: Infinity,
-  reconnectionDelay: 1000,
-});
+// const socket = io(API, {
+//   reconnection: true,
+//   reconnectionAttempts: Infinity,
+//   reconnectionDelay: 1000,
+// });
 
 
 const AppRoutes = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentUsername, setCurrentUsername] = useState("")
-  const [messages, setMessages] = useState([]);
   // const [userStatuses, setUserStatuses] = useState({})
   const isSwifConnectPage = location.pathname === '/swifconnect';
 

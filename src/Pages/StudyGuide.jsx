@@ -9,8 +9,8 @@ const StudyGuide = () => {
     const location = useLocation();
     const [topic, setTopic] = useState('');
     const [studyGuide, setStudyGuide] = useState('');
-    const [studyDays, setStudyDays] = useState(60); // default value
-    const [hoursPerDay, setHoursPerDay] = useState(1); // default value
+    // const [studyDays, setStudyDays] = useState(60); // default value
+    // const [hoursPerDay, setHoursPerDay] = useState(1); // default value
     const [curriculumLevel, setCurriculumLevel] = useState('Beginner'); // default value
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -30,7 +30,7 @@ const StudyGuide = () => {
         e.preventDefault();
         setIsSubmitted(true);
         if (topic) {
-            getCompletionAxios(topic, studyDays, hoursPerDay, curriculumLevel).then((res) => {
+            getCompletionAxios(topic, curriculumLevel).then((res) => {
                 if (res) {
                     const formattedGuide = res.data.choices[0].text.replace(/;/g, '\n');
                     setStudyGuide(formattedGuide);
@@ -49,7 +49,6 @@ const StudyGuide = () => {
             {!isSubmitted ? (
                 <div>
                 <h2>Generate Your Custom Study Guide</h2>
-                {/* Study guide instructions */}
                 <div className="instruction-container">
                     Enter any subject and generate a study guide below. This study guide will tell you what materials you will need to study, as well give you a specific breakdown and timeline.
                 </div>

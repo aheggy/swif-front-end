@@ -41,7 +41,7 @@ const UserSidebar = () => {
 	return (
 		<div className="side-bar">
 			<aside className="userpage-aside">
-				<label for="burger" className="burger" onClick={handleBurgerChange}>
+				<label className="burger" onClick={handleBurgerChange}>
 					<input id="burger" type="checkbox" />
 					<span></span>
 					<span></span>

@@ -5,9 +5,7 @@ import axios from "axios";
 
 import "./UserPage.css";
 import "../assets/css/LineButtonAnimation.css";
-import succesImg from "../assets/img/succes.png";
 import UserSidebar from "../Components/UserSidebar";
-import UserInfoForm from "../Components/UserInfoForm";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -40,11 +38,6 @@ function UserPage({currentUsername}) {
 	}, [username, currentUsername]);
 
 
-
-	// console.log(userData)
-
-	
-
 	return (
 		<div className="user-page">
 			{userData ? (
@@ -64,7 +57,7 @@ function UserPage({currentUsername}) {
 						}
 						<div className="about-user">
 							<div>
-								<img src={userData.profile_image_url ? (userData.profile_image_url):("/default-user-img2.jpeg")} alt="Profile Image" className="profile-image"/>
+								<img src={userData.profile_image_url ? (userData.profile_image_url):("/default-user-img2.jpeg")} alt="Profile" className="profile-image"/>
 							</div>
 							<div className="all-info">
 								<p className="user-info">Name : <span>{userData.first_name} {userData.last_name}</span></p>
@@ -84,7 +77,7 @@ function UserPage({currentUsername}) {
 						<hr />
 
 						<div className="interested-subject">
-							<h1>Interested subject</h1>
+							<h4>Interested subject: </h4>
 							<ul>
 								{userData.subject_interest}
 							</ul>

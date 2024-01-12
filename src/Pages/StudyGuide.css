@@ -83,12 +83,10 @@
     overflow-y: auto;
 }
 
-/*instructions container*/
-
 .instruction-container {
     margin: 20px 0;
     padding: 15px;
-    background-color: #eef2f7; /* light blue background for testing, adjust to brand colors needed */
+    background-color: #eef2f7; 
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
