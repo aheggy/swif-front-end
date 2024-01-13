@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: large;
 
 }
 .userpage-container {
@@ -92,6 +93,10 @@ button:hover{
 .interested-subject h4{
     font-weight: bold;
     text-decoration: underline;
+}
+
+.all-info span, .interested-subject ul{
+    font-weight: lighter;
 }
 
 
