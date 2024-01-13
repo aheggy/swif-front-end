@@ -79,7 +79,9 @@ function UserPage({currentUsername}) {
 						<div className="interested-subject">
 							<h4>Interested subject: </h4>
 							<ul>
-								{userData.subject_interest}
+								{userData.subject_interest.split(",").map((interest, index) => (
+									<li key={index}>{interest.trim()}</li>
+								))}
 							</ul>
 						</div>
 
