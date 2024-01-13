@@ -3,7 +3,7 @@ import axios from 'axios';
 import UserSidebar from './UserSidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./MessagePage.css";
-import {jwtDecode} from 'jwt-decode'; 
+// import {jwtDecode} from 'jwt-decode'; 
 import { getUsernameFromToken } from '../utilities/tokenUtilities';
 
 const API = process.env.REACT_APP_API_URL;
