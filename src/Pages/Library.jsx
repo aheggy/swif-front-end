@@ -28,7 +28,7 @@ export default function Library() {
             <UserSidebar />
             <div className="library-content">
                 <div className="search_container">
-                <h2>Library Page</h2>
+                <h2>Library</h2>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="subject"></label>
                     <input 
@@ -40,7 +40,7 @@ export default function Library() {
                         onChange={(e) => setSubject(e.target.value)}
                         placeholder="Enter a subject"
                     />
-                    <button type="submit">Submit</button>
+                    <button type="submit">Search</button>
                 </form>
                 </div>
 
