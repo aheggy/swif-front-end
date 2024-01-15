@@ -108,7 +108,7 @@ const StudyGuide = () => {
                     </select>
 
                     <button type="submit" disabled={isSubmitted}>
-                        {isSubmitted ? "Submitted" : "Submit"}
+                        {isSubmitted ? "Submitted" : "Generate"}
                     </button>
                 </form>
                 </div>
