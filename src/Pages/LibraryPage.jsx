@@ -30,7 +30,11 @@ export default function Library () {
         <div className="library-container">
             <UserSidebar />
             <div className="library-content">
-                <h1>Library page</h1>
+                <h1>Library</h1>
+                {/* Library instructions */}
+                <div className="library-instruction-container">
+                    Enter any subject, author or book title to see if we have it on file.
+                </div>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="subject">Subject:</label>
                     <input 

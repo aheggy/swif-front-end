@@ -38,6 +38,11 @@ const SubjectPage = ({currentUsername}) => {
 			<div className="subjectpage-container">
 				<UserSidebar currentUsername={currentUsername}/>
 				<section className="subjectpage-content">
+                <h1>Subjects</h1>
+                {/*Subject page instructions */}
+                <div className="subject-instruction-container">
+                    Select a subject to see what other SWIF users are studying this same subject.
+                </div>
 					<div className="subjects-container">
 						{subjects.map((subject) => {
 							return (
