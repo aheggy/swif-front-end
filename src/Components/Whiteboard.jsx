@@ -1,11 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Whiteboard.css';
 
-const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
+const Whiteboard = ({ socket, currentUsername, recipientUsername, recipientUsernameData }) => {
     const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+    useEffect(() => {
+        if (recipientUsernameData && recipientUsernameData.first_name) {
+            setIsDataLoaded(true);
+        }
+    }, [recipientUsernameData]);
+
+
+    
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -20,7 +30,35 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
         context.strokeStyle = "black";
         context.lineWidth = 3;
         contextRef.current = context;
-    }, []);
+
+        if (isDataLoaded) {
+            setTimeout(() => {
+                displayInitialMessage();
+            }, 500);
+        }
+    }, [isDataLoaded]);
+
+    const displayInitialMessage = () => {
+        const ctx = contextRef.current;
+        console.log('Displaying initial message');
+        ctx.save();
+    
+        ctx.fillStyle = 'black';
+        ctx.font = '40px Comic Sans MS';
+        ctx.textAlign = 'center';
+    
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        ctx.shadowBlur = 2;
+
+        ctx.fillText(`You started a study session with ${recipientUsernameData.first_name}`, canvasRef.current.width / 5.3, canvasRef.current.height / 6);
+        // ctx.fillText(`Collaborate in real-time!`, canvasRef.current.width / 5.3, canvasRef.current.height / 5);
+        // ctx.fillText(`Click 'Clear' to wipe the whiteboard.`, canvasRef.current.width / 5.3, canvasRef.current.height / 4);
+        ctx.fillText(`'Clear' the whiteboard and Collaborate in real-time!`, canvasRef.current.width / 5.3, canvasRef.current.height / 4.3);
+        
+        ctx.restore();
+    };
 
     const drawLine = (x0, y0, x1, y1, emit) => {
         contextRef.current.beginPath();
@@ -68,7 +106,7 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
             const canvas = canvasRef.current;
             const rect = canvas.getBoundingClientRect();
             return {
-                offsetX: (event.touches[0].clientX - rect.left) * 2, // Multiply by 2 due to the canvas scaling
+                offsetX: (event.touches[0].clientX - rect.left) * 2,
                 offsetY: (event.touches[0].clientY - rect.top) * 2
             };
         } else {
@@ -104,7 +142,8 @@ const Whiteboard = ({ socket, currentUsername, recipientUsername }) => {
     return (
         <div className='whiteboard-page-container'>
             <div className='color-picker-container'>
-                <input className='color' type="color" onChange={(e) => contextRef.current.strokeStyle = e.target.value} />
+                {/* <input className='color' type="color" onChange={(e) => contextRef.current.strokeStyle = e.target.value} /> */}
+                {/* <p>Study Session Between <span>{currentUsername, recipientUsername}</span></p> */}
                 <button className='clear-whiteboard' onClick={clearCanvas}>Clear</button>
             </div>
             <div className='whiteboard-container'>
