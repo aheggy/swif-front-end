@@ -43,7 +43,7 @@ export default function Library() {
                         onChange={(e) => setSubject(e.target.value)}
                         placeholder="Enter a subject"
                     />
-                    <button type="submit">Search</button>
+                    <button type="submit">Submit</button>
                 </form>
                 </div>
 
