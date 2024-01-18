@@ -1,3 +1,4 @@
+
 .users-container{
     display: grid;
     grid-template-columns: repeat(auto-fill, 200px);
@@ -8,6 +9,16 @@
     justify-content: center;
 }
 
+.people-instruction{
+    margin: 25px 20px 0 20px;
+    padding: 15px;
+    background-color: #eef2f7; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 1.1em;
+    line-height: 1.4;
+}
 
 
 @media screen and (max-width: 768px) {

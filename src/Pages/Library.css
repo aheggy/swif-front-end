@@ -103,6 +103,19 @@ input{
     color: #00029d;
     border: 1px solid #00029d;
 }
+
+.library-instruction-container {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #eef2f7; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 1.1em;
+    line-height: 1.4;
+    width: 100%;
+}
+
 @media (max-width: 1024px) {
     .book-item {
         flex: 0 1 calc(25% - 20px);

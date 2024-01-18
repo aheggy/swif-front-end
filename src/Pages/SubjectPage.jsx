@@ -21,9 +21,7 @@ const SubjectPage = ({currentUsername}) => {
 				console.error(`Error fetching subjects`, subjects)
 			}
 		}
-
 		fetchSubjects()
-
 	}, [])
 
 
@@ -32,11 +30,18 @@ const SubjectPage = ({currentUsername}) => {
 			<div className="subjectpage-container">
 				<UserSidebar currentUsername={currentUsername}/>
 				<section className="subjectpage-content">
+					{/* <h2>Subjects</h2> */}
+					<div className="subject-instruction-container">
+						Choose a subject to see other SWIF users who are also studying it.
+					</div>
+					{/* <div className="subject-instruction-container">
+						Select a subject to see what other SWIF users are studying this same subject.
+					</div> */}
 					<div className="subjects-container">
 						{subjects.map((subject) => {
 							return (
 								<div className="subject" key={subject.subject_id}>
-									<a className="card_image" href="/people">
+									<a className="card_image" href={`/people?subjectName=${encodeURIComponent(subject.subject_name)}`}>
 										<div className="circle">
 											<div className="subject_icon">
 												<img src={subject.icon_url} alt="" />

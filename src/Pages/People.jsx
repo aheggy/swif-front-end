@@ -3,6 +3,7 @@ import "./People.css"
 import UserSidebar from "../Components/UserSidebar";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { useLocation } from "react-router-dom";
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -13,6 +14,10 @@ const socket = io(API, {
 });
 
 export default function People({currentUsername}) {
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search)
+  const subjectName = searchParams.get('subjectName')
 
   
 
@@ -82,7 +87,7 @@ export default function People({currentUsername}) {
   return (
     <div className="people-container">
       <UserSidebar isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
-      <UserCards userStatuses={userStatuses}/>
+      <UserCards userStatuses={userStatuses} subjectName={subjectName}/>
     </div>
   )
 }

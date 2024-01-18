@@ -6,7 +6,13 @@
     height: 100vh;
 }
 
+.subjectpage-content h2{
+    margin-top: 50px;
+    font-weight: bold;
+}
+
 .subjectpage-content {
+    text-align: center;
     padding: 5px;
     margin: 20px;
     height: calc(100% - 60px);
@@ -28,6 +34,16 @@
     justify-content: center;
 }
 
+.subject-instruction-container {
+    margin: 0 0 25px 0;
+    padding: 15px;
+    background-color: #eef2f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    font-size: 1.1em;
+    line-height: 1.4;
+}
 
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {

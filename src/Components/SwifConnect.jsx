@@ -411,6 +411,7 @@ useEffect(() => {
         setIsMicrophoneOn(audioTrack.enabled);
     }
   };
+  
 
 
 
@@ -522,6 +523,8 @@ useEffect(() => {
                 socket={socket} 
                 currentUsername={currentUsername} 
                 recipientUsername={recipientUsername}
+                recipientUsernameData={recipientUsernameData}
+
               />
             ):(
               <ScreenSharing 
