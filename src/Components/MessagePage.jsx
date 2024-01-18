@@ -17,6 +17,8 @@ const MessagePage = () => {
 
   
   useEffect(() => {
+    document.title = "SWIF - Messages";
+
     const token = localStorage.getItem("token")
     // console.log(token)
     setCurrentUser(getUsernameFromToken(token));

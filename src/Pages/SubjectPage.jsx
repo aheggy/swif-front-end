@@ -11,7 +11,10 @@ const SubjectPage = ({currentUsername}) => {
 
 	const [subjects, setSubjects] = useState([])
 
-
+	useEffect (()=>{
+		document.title = "SWIF - Subjects";
+	})
+	
 	useEffect (() => {
 		const fetchSubjects = async () =>{
 			try {

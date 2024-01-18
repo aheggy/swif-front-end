@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserSidebar from "../Components/UserSidebar";
 import "./Library.css";
@@ -6,6 +6,11 @@ import "./Library.css";
 export default function Library() {
     const [subject, setSubject] = useState("");
     const [data, setData] = useState([]);
+
+
+    useEffect(() => {
+        document.title = "SWIF - Library";
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

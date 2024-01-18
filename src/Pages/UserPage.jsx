@@ -17,6 +17,8 @@ function UserPage({currentUsername}) {
 
 	
 	useEffect(() => {
+		document.title = "SWIF - Profile";
+
 		// console.log("Username from params:", username); 
   		setIsOwnProfile(username === currentUsername);
 		if (username) {

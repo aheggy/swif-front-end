@@ -57,6 +57,8 @@ export default function SwifConnect({ token }) {
   // }
 
   useEffect(() => {
+    document.title = "SWIF Connect";
+
     if (people && people.length > 0) {
       const currentUserData = people.find(user => user.username === currentUsername);
       const recipientUserData = people.find(user => user.username === recipientUsername);

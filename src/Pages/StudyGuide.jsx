@@ -34,7 +34,7 @@ const StudyGuide = () => {
 
 
     useEffect(() => {
-        document.title = "Study Guide";
+        document.title = "SWIF - Study Guide";
     }, []);
 
     useEffect(() => {

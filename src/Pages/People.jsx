@@ -39,7 +39,7 @@ export default function People({currentUsername}) {
     // Effect for window resize to handle sidebar visibility
   useEffect(() => {
 
-    
+    document.title = "SWIF - People";
 
     const handleResize = () => {
       if (window.innerWidth < 500) {
