@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './UserInfoForm.css';
 import DataContext from '../contexts/DataProvider';
-const API = process.env.REACT_APP_API_URL
+import './UserInfoForm.css';
 
+const API = process.env.REACT_APP_API_URL;
 
-const UserInfoForm = ({ userData, onSubmit }) => {
-    // console.log("userData is ", userData)
-    const navigate = useNavigate()
-    const {people} = useContext(DataContext)
-    // console.log(people)
+const UserInfoForm = ({ currentUsername, onSubmit }) => {
+    const navigate = useNavigate();
+    const { people, subjects } = useContext(DataContext);
+
+    const formRef = useRef(null);
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -24,187 +24,178 @@ const UserInfoForm = ({ userData, onSubmit }) => {
         subjectInterests: [],
     });
 
-    const [subjects, setSubjects] = useState([]);
-
     useEffect(() => {
-        const fetchSubjects = async () => {
-            try {
-                const response = await axios.get(`${API}/subjects`);
-                setSubjects(response.data);
-                // console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching subjects', error);
-            }
-        };
-        fetchSubjects();
-    }, []);
-
-    useEffect(() => {
-        const storedUserData = people;
-        // console.log(storedUserData)
-        if (storedUserData) {
+        const user = people.find(person => person.username === currentUsername);
+        if (user) {
             setFormData({
-                firstName: storedUserData.first_name || '',
-                lastName: storedUserData.last_name || '',
-                gender: storedUserData.gender || '',
-                age: storedUserData.age || '',
-                country: storedUserData.country || '',
-                city: storedUserData.city || '',
-                profileImage: storedUserData.profile_image_url || '',
-                bio: storedUserData.bio || '',
-                contactInfo: storedUserData.contact_info || '',
-                subjectInterests: storedUserData.subject_interest ? storedUserData.subject_interest.split(',') : [],
+                firstName: user.first_name || '',
+                lastName: user.last_name || '',
+                gender: user.gender || '',
+                age: user.age || '',
+                country: user.country || '',
+                city: user.city || '',
+                profileImage: user.profile_image_url || '',
+                bio: user.bio || '',
+                contactInfo: user.contact_info || '',
+                subjectInterests: user.subject_interest ? user.subject_interest.split(',') : [],
             });
         }
-    }, [people]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: value,
-        }));
-    };
-
-    const handleCheckboxChange = (subject) => {
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            subjectInterests: prevFormData.subjectInterests.includes(subject)
-                ? prevFormData.subjectInterests.filter(s => s !== subject)
-                : [...prevFormData.subjectInterests, subject],
-        }));
-    };
+    }, [people, currentUsername]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const storedUserData = JSON.parse(localStorage.getItem('userData'));
-        const username = storedUserData.username
+        const formElements = formRef.current.elements;
+
+        const updatedFormData = {
+            firstName: formElements.firstName.value,
+            lastName: formElements.lastName.value,
+            gender: formElements.gender.value,
+            age: formElements.age.value ? parseInt(formElements.age.value, 10) : null,
+            country: formElements.country.value,
+            city: formElements.city.value,
+            profileImage: formElements.profileImage.value,
+            bio: formElements.bio.value,
+            contactInfo: formElements.contactInfo.value,
+            subjectInterests: Array.from(formElements.subjectInterests)
+                .filter(input => input.checked)
+                .map(input => input.value),
+        };
+
         try {
-            const response = await axios.put(`${API}/user/${username}`, formData);
-            if (onSubmit) onSubmit(response.data);
-            navigate(`/${username}`)
-            
+            const response = await fetch(`${API}/user/${currentUsername}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedFormData),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Network response was not ok: ${errorText}`);
+            }
+
+            const data = await response.json();
+            if (onSubmit) onSubmit(data);
+            navigate(`/${currentUsername}`);
         } catch (error) {
             console.error('Error updating user info', error);
         }
     };
 
+    const getSubjectNames = (subjectIds) => {
+        return subjectIds.map(id => {
+            const subject = subjects.find(sub => sub.subject_id === id);
+            return subject ? subject.subject_name : id;
+        }).join(', ');
+    };
+
     return (
-      <form onSubmit={handleSubmit} className="user-info-form">
-          <label>
-              First Name:
-              <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
-              />
-          </label>
-  
-          <label>
-              Last Name:
-              <input
-                  type="text"
-                  name="lastName" 
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-              />
-          </label>
-  
-          <label>
-              Gender:
-              <input
-                  type="text"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  required
-              />
-          </label>
-  
-          <label>
-              Age:
-              <input
-                  type="number" 
-                  name="age"
-                  value={formData.age}
-                  onChange={handleChange}
-                  required
-              />
-          </label>
-  
-          <label>
-              Country:
-              <input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  required
-              />
-          </label>
-  
-          <label>
-              City:
-              <input
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-              />
-          </label>
-  
-          <label>
-              Profile Image URL:
-              <input
-                  type="text"
-                  name="profileImage"
-                  value={formData.profileImage}
-                  onChange={handleChange}
-              />
-          </label>
-  
-          <label>
-              BIO:
-              <textarea
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleChange}
-              />
-          </label>
-  
-          <label>
-              Contact Info:
-              <input
-                  type="text"
-                  name="contactInfo"
-                  value={formData.contactInfo}
-                  onChange={handleChange}
-              />
-          </label>
-  
-          <fieldset>
-              <legend>Subject Interests</legend>
-                {subjects.map((subject, index) => (
-                  <label key={subject.subject_id}>
-                      <input
-                          type="checkbox"
-                          name="subjectInterests"
-                          value={subject.subject_id} 
-                          checked={formData.subjectInterests.includes(subject.subject_id)}
-                          onChange={() => handleCheckboxChange(subject.subject_id)}
-                      />
-                      {subject.subject_name}
-                  </label>
-              ))}
-          </fieldset>
-  
-          <button type="submit">Submit</button>
-      </form>
-  );
-  
+        <form ref={formRef} onSubmit={handleSubmit} className="user-info-form">
+            <label>
+                First Name:
+                <input
+                    type="text"
+                    name="firstName"
+                    defaultValue={formData.firstName}
+                    required
+                />
+            </label>
+
+            <label>
+                Last Name:
+                <input
+                    type="text"
+                    name="lastName"
+                    defaultValue={formData.lastName}
+                    required
+                />
+            </label>
+
+            <label>
+                Gender:
+                <input
+                    type="text"
+                    name="gender"
+                    defaultValue={formData.gender}
+                />
+            </label>
+
+            <label>
+                Age:
+                <input
+                    type="number"
+                    name="age"
+                    defaultValue={formData.age}
+                />
+            </label>
+
+            <label>
+                Country:
+                <input
+                    type="text"
+                    name="country"
+                    defaultValue={formData.country}
+                />
+            </label>
+
+            <label>
+                City:
+                <input
+                    type="text"
+                    name="city"
+                    defaultValue={formData.city}
+                />
+            </label>
+
+            <label>
+                Profile Image URL:
+                <input
+                    type="text"
+                    name="profileImage"
+                    defaultValue={formData.profileImage}
+                />
+            </label>
+
+            <label>
+                BIO:
+                <textarea
+                    name="bio"
+                    defaultValue={formData.bio}
+                />
+            </label>
+
+            <label>
+                Contact Info:
+                <input
+                    type="text"
+                    name="contactInfo"
+                    defaultValue={formData.contactInfo}
+                />
+            </label>
+
+            <fieldset>
+                <legend>Subject Interests</legend>
+                {subjects.map((subject) => (
+                    <label key={subject.subject_id}>
+                        <input
+                            type="checkbox"
+                            name="subjectInterests"
+                            value={subject.subject_id}
+                            defaultChecked={formData.subjectInterests.includes(subject.subject_id)}
+                        />
+                        {subject.subject_name}
+                    </label>
+                ))}
+            </fieldset>
+
+            <div>
+                <strong>Interested Subjects:</strong> {getSubjectNames(formData.subjectInterests)}
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    );
 };
 
 export default UserInfoForm;
